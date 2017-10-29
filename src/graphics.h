@@ -5,11 +5,9 @@
 #include "SDL.h"
 
 #include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
-#include "glm/gtc/matrix_transform.hpp"
 
 #include "config.h"
-#include "main_camera.h"
+#include "orthographic_camera.h"
 
 namespace graphics
 {
@@ -35,7 +33,7 @@ namespace graphics
 			2, 1, 3
 		};
 
-		std::unique_ptr<MainCamera> camera_;
+		std::unique_ptr<OrthographicCamera> camera_;
 
 	public:
 
@@ -57,7 +55,7 @@ namespace graphics
 
 		inline const glm::vec2 * const GetQuadVertices() const { return quad_vertices_; }
 
-		inline AbstractCamera * GetMainCamera() const { return camera_.get(); }
+		inline AbstractCamera * GetOrthographicCamera() const { return camera_.get(); }
 
 	};
 }

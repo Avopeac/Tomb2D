@@ -71,14 +71,11 @@ GraphicsBase::GraphicsBase(const input::Config & config)
 	window_width_ = config.GetWindowWidth();
 	window_height_ = config.GetWindowHeight();
 
-	camera_ = std::make_unique<MainCamera>("Debug camera", 
-		(float)GetBackbufferWidth() / GetBackbufferHeight(),
-		glm::radians(60.0f),
-		0.01f,
-		100.0f,
-		glm::vec4(0, 0, 0, 1),
-		glm::vec4(0, 0, -1, 0), 
-		glm::vec4(0, 1, 0, 0));
+	camera_ = std::make_unique<OrthographicCamera>("Orthographic",
+		glm::vec3(1.0f),
+		glm::vec3(0.0f),
+		glm::vec3(0.0f, 0.0f, -1.0f),
+		glm::vec3(0.0f, 1.0f, 0.0f));
 }  
  
 GraphicsBase::~GraphicsBase()

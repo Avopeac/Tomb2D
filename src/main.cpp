@@ -3,6 +3,7 @@
 #include "SDL_ttf.h"
 
 #include "glm/glm.hpp"
+#include "glm/gtx/transform.hpp"
 
 #include "keymap.h"
 #include "graphics.h"
@@ -31,7 +32,9 @@ Sint32 main(Sint32 argc, char * argv[])
 	auto &entity_manager = entity::EntityManager::Get();
 	entity_manager.AddSystem(new entity::SpriteRenderSystem());
 	auto * e0 = entity_manager.CreateEntity("test");
-	auto * c0 = entity_manager.AddEntityComponent<entity::SpriteComponent>(e0->id, "assets/textures/white_dot.png");
+	auto * c0 = entity_manager.AddEntityComponent<entity::SpriteComponent>(e0->id, "assets/textures/smiley.png",
+		glm::vec4(1.0f),
+		glm::scale(glm::vec3(0.01f)));
 
 	// Main loop
 	bool running = true;

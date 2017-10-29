@@ -7,21 +7,27 @@ namespace graphics
 	class MainCamera : public AbstractCamera
 	{
 		glm::vec3 euler_angles_;
-		glm::vec4 initial_position;
-		glm::vec4 initial_forward_;
-		glm::vec4 initial_up_;
-		glm::vec2 window_size_;
+
+		glm::vec3 initial_eye_;
+		glm::vec3 initial_forward_;
+		glm::vec3 initial_up_;
+
+		glm::vec3 eye_;
+		glm::vec3 forward_;
+		glm::vec3 up_;
+
 		float aspect_ratio_;
 		float fov_;
 		float near_, far_;
 
 	public:
 
-		MainCamera(const std::string &name, float aspect_ratio, float fov,
+		MainCamera(const std::string &name, 
+			float aspect_ratio, float fov,
 			float near, float far,
-			const glm::vec4 &position,
-			const glm::vec4 &direction,
-			const glm::vec4 &up);
+			const glm::vec3 &eye,
+			const glm::vec3 &forward,
+			const glm::vec3 &up);
 
 		~MainCamera();
 

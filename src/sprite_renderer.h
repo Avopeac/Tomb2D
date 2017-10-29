@@ -48,9 +48,9 @@ namespace graphics
 
 		const glm::vec2 quad_vertices_[4] =
 		{
-			glm::vec2(0.0f, 0.0f),
-			glm::vec2(1.0f, 0.0f),
-			glm::vec2(0.0f,  1.0f),
+			glm::vec2(-1.0f, -1.0f),
+			glm::vec2(1.0f, -1.0f),
+			glm::vec2(-1.0f,  1.0f),
 			glm::vec2(1.0f,  1.0f),
 		};
 
@@ -62,9 +62,9 @@ namespace graphics
 
 		struct BatchElement
 		{
-			size_t sprite_layer;
-			glm::vec4 sprite_color;
 			glm::mat4 sprite_transform;
+			glm::vec4 sprite_color;
+			size_t sprite_layer;
 		};
 
 		struct Batch

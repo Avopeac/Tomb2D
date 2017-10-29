@@ -38,9 +38,6 @@
     <ClCompile Include="..\src\resource_manager.cpp">
       <Filter>Source\Graphics.Resources</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\main_camera.cpp">
-      <Filter>Source\Graphics.Camera</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\entity_manager.cpp">
       <Filter>Source\Entity</Filter>
     </ClCompile>
@@ -52,6 +49,9 @@
     </ClCompile>
     <ClCompile Include="..\src\sprite_render_system.cpp">
       <Filter>Source\Entity.System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\orthographic_camera.cpp">
+      <Filter>Source\Graphics.Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,9 +103,6 @@
     <ClInclude Include="..\src\resource_manager.h">
       <Filter>Source\Graphics.Resources</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\main_camera.h">
-      <Filter>Source\Graphics.Camera</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\data_pipe_hub.h">
       <Filter>Source\Graphics.Data</Filter>
     </ClInclude>
@@ -141,6 +138,9 @@
     </ClInclude>
     <ClInclude Include="..\src\sprite_component.h">
       <Filter>Source\Entity.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\orthographic_camera.h">
+      <Filter>Source\Graphics.Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

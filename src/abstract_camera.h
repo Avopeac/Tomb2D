@@ -13,10 +13,6 @@ namespace graphics
 
 	protected:
 
-		glm::vec4 position_;
-		glm::vec4 up_;
-		glm::vec4 forward_;
-
 		glm::mat4 view_;
 		glm::mat4 proj_;
 		glm::mat4 view_proj_;
@@ -26,17 +22,7 @@ namespace graphics
 
 	public:
 
-		AbstractCamera(const std::string &name,
-			const glm::vec4 &position,
-			const glm::vec4 &forward,
-			const glm::vec4 &up) :
-			name_(name),
-			position_(position),
-			forward_(forward),
-			up_(up)
-		{
-
-		}
+		AbstractCamera(const std::string &name) : name_(name) {}
 
 		virtual ~AbstractCamera() {};
 
@@ -55,13 +41,5 @@ namespace graphics
 		const glm::mat4 &GetInvViewProj() const { return inv_view_proj_; }
 
 		const std::string &GetName() const { return name_; }
-
-		const glm::vec4 &GetForward() const { return forward_; }
-
-		const glm::vec4 &GetPosition() const { return position_; }
-
-		void SetPosition(const glm::vec4 &position) { position_ = position; }
-
-		const glm::vec4 &GetUp() const { return up_; }
 	};
 }

@@ -2,6 +2,8 @@
 
 #include "renderer.h"
 
+#include "glm/gtc/type_ptr.hpp"
+
 #include <algorithm>
 
 using namespace graphics;
@@ -43,6 +45,7 @@ void SpriteRenderer::Draw(float delta_time)
 		switch (it->sprite_shape)
 		{
 			case SpriteShape::FlatHex: { PushToBatchObject(flat_hex_batches_, *it); } break;
+			case SpriteShape::SharpHex: { PushToBatchObject(sharp_hex_batches_, *it); } break;
 			case SpriteShape::Quad: { PushToBatchObject(quad_batches_, *it); } break;
 			default:
 			{
@@ -59,9 +62,16 @@ void SpriteRenderer::Draw(float delta_time)
 	FrameBuffer * render_target = 
 		ResourceManager::Get().GetFrameBufferCache().GetFromName(Renderer::render_target_name);
 
-	render_target->BindDraw(GL_COLOR_BUFFER_BIT, 1.0f, 1.0f, 1.0f, 1.0f);
+	render_target->BindDraw(GL_COLOR_BUFFER_BIT, 0.0f, 0.0f, 0.0f, 0.0f);
 
 	pipeline_.Bind();
+
+	int texture_index = 2;
+
+	default_vert_program_->SetUniform("u_viewproj", 
+		(void*)glm::value_ptr(graphics_base_.GetOrthographicCamera()->GetViewProj()));
+	default_frag_program_->SetUniform("u_texture",
+		(void*)&texture_index); 
 
 	DrawBatchObject(sharp_hex_batch_object_, sharp_hex_batches_);
 	DrawBatchObject(flat_hex_batch_object_, flat_hex_batches_);
@@ -139,10 +149,17 @@ void SpriteRenderer::CreateBatchObject(BatchObject & object, const glm::vec2 * c
 	glVertexAttribDivisor(attrib_index, 1);
 	attrib_index++;
 
+	// Color attribute
+
+	glEnableVertexAttribArray(attrib_index);
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)(4 * sizeof(glm::vec4)));
+	glVertexAttribDivisor(attrib_index, 1);
+	attrib_index++;
+
 	// Layer attribute
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 1, GL_UNSIGNED_INT, GL_FALSE, (GLsizei)instance_size, (const void *)(4 * sizeof(glm::vec4)));
+	glVertexAttribPointer(attrib_index, 1, GL_UNSIGNED_INT, GL_FALSE, (GLsizei)instance_size, (const void *)(5 * sizeof(glm::vec4)));
 	glVertexBindingDivisor(attrib_index, 1);
 	attrib_index++;
 
@@ -210,8 +227,8 @@ void SpriteRenderer::DrawBatchObject(BatchObject & object, std::vector<Batch> &b
 		// Set sampler and texture if present
 		if (batch.sampler_hash && batch.texture_hash)
 		{
-			sampler_cache.GetFromHash(batch.sampler_hash)->Bind(0);
-			texture_cache.GetFromHash(batch.texture_hash)->Bind(0);
+			sampler_cache.GetFromHash(batch.sampler_hash)->Bind(2);
+			texture_cache.GetFromHash(batch.texture_hash)->Bind(2);
 		}
 
 		// Re-upload subdata for instance buffer
