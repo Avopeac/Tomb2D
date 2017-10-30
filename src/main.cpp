@@ -29,12 +29,14 @@ Sint32 main(Sint32 argc, char * argv[])
 	graphics::GraphicsBase graphics_base(config);
 	graphics::Renderer renderer(&graphics_base);
 
+
+	float aspect = graphics_base.GetAspectRatio();
 	auto &entity_manager = entity::EntityManager::Get();
-	entity_manager.AddSystem(new entity::SpriteRenderSystem());
+	entity_manager.AddSystem(new entity::SpriteRenderSystem()); 
 	auto * e0 = entity_manager.CreateEntity("test");
 	auto * c0 = entity_manager.AddEntityComponent<entity::SpriteComponent>(e0->id, "assets/textures/smiley.png",
 		glm::vec4(1.0f),
-		glm::scale(glm::vec3(0.01f)));
+		glm::scale(glm::vec3(0.1f, 0.1f * aspect, 1.0f)));
 
 	// Main loop
 	bool running = true;

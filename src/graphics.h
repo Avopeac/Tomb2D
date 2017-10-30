@@ -57,5 +57,7 @@ namespace graphics
 
 		inline AbstractCamera * GetOrthographicCamera() const { return camera_.get(); }
 
+		inline float GetAspectRatio() const { return float(window_width_) / window_height_; }
+
 	};
 }

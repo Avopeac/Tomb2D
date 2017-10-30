@@ -66,8 +66,7 @@ void SpriteRenderer::Draw(float delta_time)
 
 	pipeline_.Bind();
 
-	int texture_index = 2;
-
+	int texture_index = 0;
 	default_vert_program_->SetUniform("u_viewproj", 
 		(void*)glm::value_ptr(graphics_base_.GetOrthographicCamera()->GetViewProj()));
 	default_frag_program_->SetUniform("u_texture",
@@ -180,6 +179,7 @@ void SpriteRenderer::PushToBatchObject(std::vector<Batch> &batches, const Sprite
 
 	BatchElement element;
 	element.sprite_color = data.sprite_color;
+	element.sprite_layer = data.sprite_layer;
 	element.sprite_transform = data.sprite_transform;
 
 	if (batches.empty() ||
@@ -225,10 +225,10 @@ void SpriteRenderer::DrawBatchObject(BatchObject & object, std::vector<Batch> &b
 		blend_cache.GetFromHash(batch.blend_hash)->Set();
 
 		// Set sampler and texture if present
-		if (batch.sampler_hash && batch.texture_hash)
+		if (batch.sampler_hash && batch.texture_hash) 
 		{
-			sampler_cache.GetFromHash(batch.sampler_hash)->Bind(2);
-			texture_cache.GetFromHash(batch.texture_hash)->Bind(2);
+			sampler_cache.GetFromHash(batch.sampler_hash)->Bind(0);
+			texture_cache.GetFromHash(batch.texture_hash)->Bind(0);
 		}
 
 		// Re-upload subdata for instance buffer
@@ -246,4 +246,5 @@ void SpriteRenderer::DrawBatchObject(BatchObject & object, std::vector<Batch> &b
 	}
 
 	glBindVertexArray(0);
+
 }

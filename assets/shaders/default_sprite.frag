@@ -10,5 +10,5 @@ uniform sampler2D u_texture;
 
 void main()
 {
-	o_color = texture(u_texture, v_texcoord) * v_color;
+	o_color = textureLod(u_texture, v_texcoord, 0); // v_color;
 }

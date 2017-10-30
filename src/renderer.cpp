@@ -16,7 +16,7 @@ Renderer::Renderer(GraphicsBase *graphics_base) :
 	post_processing_->Add(std::move(std::make_unique<PostEffect>()));  
 
 	glEnable(GL_CULL_FACE);
-	glDisable(GL_MULTISAMPLE);
+	glDisable(GL_MULTISAMPLE); 
 	glCullFace(GL_BACK); 
 }
 
@@ -33,6 +33,8 @@ void Renderer::Invoke(float frame_time)
 	orthographic_camera->Update(frame_time);
 
 	sprite_renderer_->Draw(frame_time);
+
+	glDisable(GL_BLEND);
 	post_processing_->Process();
 }
 
@@ -41,11 +43,11 @@ FrameBuffer * Renderer::CreateRenderTarget()
 	std::vector<FrameBufferAttachmentDescriptor> descriptors;
 
 	FrameBufferAttachmentDescriptor composition;
-	composition.format = GL_RGB;
-	composition.internal_format = GL_RGB16F;
+	composition.format = GL_RGBA;
+	composition.internal_format = GL_RGBA16F;
 	composition.type = GL_FLOAT;
 
-	descriptors.push_back(composition);
+	descriptors.push_back(composition); 
 
 	auto &frame_buffer_cache = ResourceManager::Get().GetFrameBufferCache();
 	return frame_buffer_cache.GetFromParameters(render_target_name,

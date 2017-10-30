@@ -99,9 +99,9 @@ void Texture::Create(SDL_Surface * surface, bool mips)
 	SDL_Surface * converted_surface = SDL_ConvertSurface(surface, &pixel_format, 0);
 
 	glBindTexture(GL_TEXTURE_2D, id_);
-	glTexImage2D(GL_TEXTURE_2D, 1, internal_format, converted_surface->w, converted_surface->h,
+	glTexImage2D(GL_TEXTURE_2D, 0, internal_format, converted_surface->w, converted_surface->h,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, converted_surface->pixels);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

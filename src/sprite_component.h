@@ -28,9 +28,9 @@ namespace entity
 		glm::mat4 sprite_transform_;
 		graphics::SpriteShape sprite_shape_;
 
-		size_t texture_hash_;
-		size_t blend_hash_;
-		size_t sampler_hash_;
+		size_t texture_hash_ = 0;
+		size_t blend_hash_ = 0;
+		size_t sampler_hash_ = 0;
 
 	public:
 
@@ -39,10 +39,10 @@ namespace entity
 			const glm::mat4 &transform = glm::mat4(1.0f),
 			size_t layer = 0,
 			graphics::SpriteShape shape = graphics::SpriteShape::Quad,
-			graphics::BlendMode src_blend = graphics::BlendMode::SrcAlpha, 
-			graphics::BlendMode dst_blend = graphics::BlendMode::OneMinusSrcAlpha,
+			graphics::BlendMode src_blend = graphics::BlendMode::One, 
+			graphics::BlendMode dst_blend = graphics::BlendMode::One,
 			graphics::MagnificationFiltering magnification = graphics::MagnificationFiltering::Linear,
-			graphics::MinificationFiltering minification = graphics::MinificationFiltering::LinearMipmapLinear, 
+			graphics::MinificationFiltering minification = graphics::MinificationFiltering::Linear, 
 			graphics::Wrapping s = graphics::Wrapping::ClampToEdge,
 			graphics::Wrapping t = graphics::Wrapping::ClampToEdge) :
 			texture_path_(texture_path),
