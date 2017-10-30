@@ -39,6 +39,11 @@ SpriteRenderer::~SpriteRenderer()
 
 void SpriteRenderer::Draw(float delta_time)
 {
+
+	flat_hex_batches_.clear();
+	sharp_hex_batches_.clear();
+	quad_batches_.clear();
+
 	auto &data = DataPipeHub::Get().GetSpriteDataPipe().GetData();
 	for (auto it = data.begin(); it != data.end(); ++it)
 	{
@@ -57,7 +62,6 @@ void SpriteRenderer::Draw(float delta_time)
 	}
 
 	DataPipeHub::Get().GetSpriteDataPipe().Flush();
-
 
 	FrameBuffer * render_target = 
 		ResourceManager::Get().GetFrameBufferCache().GetFromName(Renderer::render_target_name);
@@ -176,7 +180,6 @@ void SpriteRenderer::DeleteBatchObject(BatchObject & object)
 
 void SpriteRenderer::PushToBatchObject(std::vector<Batch> &batches, const SpriteData & data)
 {
-
 	BatchElement element;
 	element.sprite_color = data.sprite_color;
 	element.sprite_layer = data.sprite_layer;

@@ -33,8 +33,15 @@ Sint32 main(Sint32 argc, char * argv[])
 	float aspect = graphics_base.GetAspectRatio();
 	auto &entity_manager = entity::EntityManager::Get();
 	entity_manager.AddSystem(new entity::SpriteRenderSystem()); 
-	auto * e0 = entity_manager.CreateEntity("test");
-	auto * c0 = entity_manager.AddEntityComponent<entity::SpriteComponent>(e0->id, "assets/textures/smiley.png",
+	
+	auto * e0 = entity_manager.CreateEntity("backdrop");
+	auto * c0 = entity_manager.AddEntityComponent<entity::SpriteComponent>(e0->id, "assets/textures/temp/sand.png",
+		glm::vec4(1.0f),
+		glm::scale(glm::vec3(1.0f)));
+
+
+	auto * e1 = entity_manager.CreateEntity("character");
+	auto * c1 = entity_manager.AddEntityComponent<entity::SpriteComponent>(e1->id, "assets/textures/temp/smiley.png",
 		glm::vec4(1.0f),
 		glm::scale(glm::vec3(0.1f, 0.1f * aspect, 1.0f)));
 
