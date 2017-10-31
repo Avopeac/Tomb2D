@@ -65,6 +65,7 @@ namespace graphics
 			glm::mat4 sprite_transform;
 			glm::vec4 sprite_color;
 			size_t sprite_layer;
+			glm::vec4 sprite_animation;
 		};
 
 		struct Batch

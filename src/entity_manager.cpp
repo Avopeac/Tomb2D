@@ -41,7 +41,7 @@ void EntityManager::Update(float delta_time)
 			{
 				if (entities_[i])
 				{
-					system->TryUpdate(entities_[i]);
+					system->TryUpdate(entities_[i], delta_time);
 				}
 			}
 		}

@@ -21,6 +21,7 @@ namespace graphics {
 		size_t sprite_layer;
 		SpriteShape sprite_shape;
 		glm::vec4 sprite_color;
+		glm::vec4 sprite_animation;
 		glm::mat4 sprite_transform;
 	};
 

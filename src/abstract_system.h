@@ -11,7 +11,7 @@ namespace entity
 
 		virtual void TryInitialize(Entity * entity) = 0;
 
-		virtual void TryUpdate(Entity * entity) = 0;
+		virtual void TryUpdate(Entity * entity, float delta_time) = 0;
 
 		virtual void TryClean(Entity * entity) = 0;
 

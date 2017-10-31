@@ -53,6 +53,9 @@
     <ClCompile Include="..\src\orthographic_camera.cpp">
       <Filter>Source\Graphics.Camera</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\controller_system.cpp">
+      <Filter>Source\Entity.System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\graphics.h">
@@ -142,6 +145,15 @@
     <ClInclude Include="..\src\orthographic_camera.h">
       <Filter>Source\Graphics.Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\controller_component.h">
+      <Filter>Source\Entity.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\controller_system.h">
+      <Filter>Source\Entity.System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sprite_animation_component.h">
+      <Filter>Source\Entity.Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -185,6 +197,9 @@
     </Filter>
     <Filter Include="Source\Graphics.Effects">
       <UniqueIdentifier>{d110f301-960a-4b07-81bf-a20c6ea1971e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Audio">
+      <UniqueIdentifier>{f4eedc32-c649-47a2-864a-153d1c4cab00}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

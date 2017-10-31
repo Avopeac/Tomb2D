@@ -31,25 +31,8 @@ OrthographicCamera::~OrthographicCamera()
 
 void OrthographicCamera::Update(float delta_time)
 {
-	using namespace input;
-	auto &keymap = Keymap::Get();
-
-	glm::vec3 velocity{};
-
-	glm::vec3 initial_right = glm::normalize(glm::cross(initial_forward_, initial_up_));
-
-	if (keymap.KeyPressed(Key::KeyA)) { velocity -= initial_right; }
-	if (keymap.KeyPressed(Key::KeyD)) { velocity += initial_right; }
-	if (keymap.KeyPressed(Key::KeyQ)) { velocity += initial_up_; }
-	if (keymap.KeyPressed(Key::KeyE)) { velocity -= initial_up_; }
-
 	forward_ = initial_forward_;
 	up_ = initial_up_;
-
-	if (glm::length(velocity) > 0.001f)
-	{
-		eye_ = eye_ + 10.0f * glm::normalize(velocity) * delta_time;
-	}
 
 	view_ = glm::lookAt(eye_, eye_ + forward_, up_); 
 	proj_ = glm::ortho(-volume_.x, volume_.x, -volume_.y, volume_.y, -volume_.z, volume_.z);

@@ -13,6 +13,7 @@
 #include "entity_manager.h"
 
 #include "sprite_render_system.h"
+#include "controller_system.h"
 
 Sint32 main(Sint32 argc, char * argv[])
 {
@@ -29,21 +30,21 @@ Sint32 main(Sint32 argc, char * argv[])
 	graphics::GraphicsBase graphics_base(config);
 	graphics::Renderer renderer(&graphics_base);
 
-
 	float aspect = graphics_base.GetAspectRatio();
 	auto &entity_manager = entity::EntityManager::Get();
 	entity_manager.AddSystem(new entity::SpriteRenderSystem()); 
+	entity_manager.AddSystem(new entity::ControllerSystem());
 	
 	auto * e0 = entity_manager.CreateEntity("backdrop");
-	auto * c0 = entity_manager.AddEntityComponent<entity::SpriteComponent>(e0->id, "assets/textures/temp/sand.png",
-		glm::vec4(1.0f),
-		glm::scale(glm::vec3(1.0f)));
-
+	auto * c0 = entity_manager.AddEntityComponent<entity::SpriteComponent>(
+		e0->id, "assets/textures/temp/sand.png", glm::vec4(1.0f), glm::scale(glm::vec3(1.0f)));
 
 	auto * e1 = entity_manager.CreateEntity("character");
-	auto * c1 = entity_manager.AddEntityComponent<entity::SpriteComponent>(e1->id, "assets/textures/temp/smiley.png",
-		glm::vec4(1.0f),
+	auto * c1 = entity_manager.AddEntityComponent<entity::SpriteComponent>(
+		e1->id, "assets/textures/temp/smiley.png", glm::vec4(1.0f),
 		glm::scale(glm::vec3(0.1f, 0.1f * aspect, 1.0f)));
+	auto * c2 = entity_manager.AddEntityComponent<entity::ControllerComponent>(
+		e1->id, glm::vec2(0, 0), glm::vec2(0, 0), 0.0f);
 
 	// Main loop
 	bool running = true;

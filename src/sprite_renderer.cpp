@@ -132,39 +132,49 @@ void SpriteRenderer::CreateBatchObject(BatchObject & object, const glm::vec2 * c
 
 	// Transform attribute
 
-	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)(0 * sizeof(glm::vec4)));
-	glVertexAttribDivisor(attrib_index, 1);
-	attrib_index++;
+
+	GLsizei attribute_offset = 0;
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)(1 * sizeof(glm::vec4)));
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
 	glVertexAttribDivisor(attrib_index, 1);
-	attrib_index++;
+	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)(2 * sizeof(glm::vec4)));
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
 	glVertexAttribDivisor(attrib_index, 1);
-	attrib_index++;
+	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)(3 * sizeof(glm::vec4)));
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
 	glVertexAttribDivisor(attrib_index, 1);
-	attrib_index++;
+	attrib_index++; attribute_offset += sizeof(glm::vec4);
+
+	glEnableVertexAttribArray(attrib_index);
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
+	glVertexAttribDivisor(attrib_index, 1);
+	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	// Color attribute
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)(4 * sizeof(glm::vec4)));
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
 	glVertexAttribDivisor(attrib_index, 1);
-	attrib_index++;
+	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	// Layer attribute
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 1, GL_UNSIGNED_INT, GL_FALSE, (GLsizei)instance_size, (const void *)(5 * sizeof(glm::vec4)));
+	glVertexAttribPointer(attrib_index, 1, GL_UNSIGNED_INT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
 	glVertexBindingDivisor(attrib_index, 1);
-	attrib_index++;
+	attrib_index++; attribute_offset += sizeof(uint32_t);
+
+	// Animation attribute
+
+	glEnableVertexAttribArray(attrib_index);
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
+	glVertexBindingDivisor(attrib_index, 1);
+	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);

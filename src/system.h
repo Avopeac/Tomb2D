@@ -42,17 +42,17 @@ namespace entity
 			}
 		}
 
-		virtual void TryUpdate(Entity * entity) override
+		virtual void TryUpdate(Entity * entity, float delta_time) override
 		{
 			if ((entity->component_key & required_component_keys_) == required_component_keys_)
 			{
-				static_cast<T*>(this)->Update(entity);
+				static_cast<T*>(this)->Update(entity, delta_time);
 			}
 		}
 
 		virtual void Initialize(Entity * entity) = 0;
 
-		virtual void Update(Entity * entity) = 0;
+		virtual void Update(Entity * entity, float delta_time) = 0;
 
 		virtual void Clean(Entity * entity) = 0;
 

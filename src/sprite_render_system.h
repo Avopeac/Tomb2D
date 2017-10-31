@@ -5,6 +5,7 @@
 #include "system.h"
 
 #include "sprite_component.h"
+#include "sprite_animation_component.h"
 
 namespace entity
 {
@@ -21,9 +22,16 @@ namespace entity
 		// Inherited via System
 		virtual void Initialize(Entity * entity) override;
 
-		virtual void Update(Entity * entity) override;
+		virtual void Update(Entity * entity, float delta_time) override;
 
 		virtual void Clean(Entity * entity) override;
+
+	private:
+
+		void InitializeSpriteComponent(SpriteComponent * sprite_component);
+
+
+		void InitializeSpriteAnimationComponent(SpriteAnimationComponent * sprite_animation_component);
 
 	};
 }
