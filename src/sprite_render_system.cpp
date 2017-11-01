@@ -87,18 +87,19 @@ void SpriteRenderSystem::Update(Entity * entity, float delta_time)
 		sprite_data.sprite_shape = sprite_component->GetShape();
 		sprite_data.sprite_transform = sprite_component->GetTransform();
 		
-		// Push data
-		sprite_data_pipe.Push(sprite_data);
+		// Push data 
+		sprite_data_pipe.Push(sprite_data);  
 	}
 
 	if (sprite_animation_component)
 	{
 
 		float elapsed_time = sprite_animation_component->GetElapsedTime();
+
 		if (elapsed_time > 1.0f / float(sprite_animation_component->GetFramesPerSecond()))
 		{
 			int32_t current = sprite_animation_component->GetCurrentFrame();
-			if (current + 1 > sprite_animation_component->GetEndFrame())
+			if (current + 1 > sprite_animation_component->GetEndFrame()) 
 			{
 				// TODO: Conditional for loop animations
 				sprite_animation_component->SetCurrentFrame(sprite_animation_component->GetStartFrame());

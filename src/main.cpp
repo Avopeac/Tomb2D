@@ -30,23 +30,43 @@ Sint32 main(Sint32 argc, char * argv[])
 	graphics::GraphicsBase graphics_base(config);
 	graphics::Renderer renderer(&graphics_base);
 
-	float aspect = graphics_base.GetAspectRatio();
 	auto &entity_manager = entity::EntityManager::Get();
-	entity_manager.AddSystem(new entity::SpriteRenderSystem()); 
-	entity_manager.AddSystem(new entity::ControllerSystem());
+
+	// Setup scene
+	{
+		using namespace entity;
+
+		float aspect = graphics_base.GetAspectRatio();
+		
+		entity_manager.AddSystem(new SpriteRenderSystem());
+		entity_manager.AddSystem(new ControllerSystem());
+		auto * backdrop_entity = entity_manager.CreateEntity("backdrop");
+		auto * backdrop_sprite = entity_manager.AddEntityComponent<SpriteComponent>(
+			backdrop_entity->id, 
+			"assets/textures/temp/sand.png", 
+			glm::vec4(1.0f), 
+			glm::scale(glm::vec3(1.0f)));
+
+		auto * character_entity = entity_manager.CreateEntity("character");
+		auto * character_sprite = entity_manager.AddEntityComponent<SpriteComponent>(
+			character_entity->id, 
+			"assets/textures/temp/smiley.png", 
+			glm::vec4(1.0f),
+			glm::scale(glm::vec3(0.1f, 0.1f * aspect, 1.0f)));
+
+		auto * character_controller = entity_manager.AddEntityComponent<ControllerComponent>(
+			character_entity->id, 
+			glm::vec2(0, 0), 
+			glm::vec2(0, 0),
+			0.0f);
+
+		auto * character_animation = entity_manager.AddEntityComponent<SpriteAnimationComponent>(
+			character_entity->id, 
+			"assets/textures/temp/player_topdown.png", 
+			24, 11, 4, 1, 6);
+	}
 	
-	auto * e0 = entity_manager.CreateEntity("backdrop");
-	auto * c0 = entity_manager.AddEntityComponent<entity::SpriteComponent>(
-		e0->id, "assets/textures/temp/sand.png", glm::vec4(1.0f), glm::scale(glm::vec3(1.0f)));
-
-	auto * e1 = entity_manager.CreateEntity("character");
-	auto * c1 = entity_manager.AddEntityComponent<entity::SpriteComponent>(
-		e1->id, "assets/textures/temp/smiley.png", glm::vec4(1.0f),
-		glm::scale(glm::vec3(0.1f, 0.1f * aspect, 1.0f)));
-	auto * c2 = entity_manager.AddEntityComponent<entity::ControllerComponent>(
-		e1->id, glm::vec2(0, 0), glm::vec2(0, 0), 0.0f);
-
-	// Main loop
+	// Main loop 
 	bool running = true;
 	double previous_time = util::GetSeconds();
 	while(running)

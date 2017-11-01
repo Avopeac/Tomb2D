@@ -32,7 +32,7 @@ namespace entity
 			int32_t frames_per_second, 
 			int32_t num_row_frames,
 			int32_t num_column_frames, 
-			int32_t start_frame,
+			int32_t start_frame, 
 			int32_t end_frame) :
 			texture_path_(texture_path),
 			frames_per_second_(frames_per_second),

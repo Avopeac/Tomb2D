@@ -131,8 +131,7 @@ void SpriteRenderer::CreateBatchObject(BatchObject & object, const glm::vec2 * c
 	glBindBuffer(GL_ARRAY_BUFFER, object.instance_buffer);
 
 	// Transform attribute
-
-
+	
 	GLsizei attribute_offset = 0;
 
 	glEnableVertexAttribArray(attrib_index);
@@ -161,6 +160,13 @@ void SpriteRenderer::CreateBatchObject(BatchObject & object, const glm::vec2 * c
 	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
 	glVertexAttribDivisor(attrib_index, 1);
 	attrib_index++; attribute_offset += sizeof(glm::vec4);
+	 
+	// Animation attribute
+
+	glEnableVertexAttribArray(attrib_index);
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
+	glVertexBindingDivisor(attrib_index, 1);
+	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	// Layer attribute
 
@@ -168,13 +174,6 @@ void SpriteRenderer::CreateBatchObject(BatchObject & object, const glm::vec2 * c
 	glVertexAttribPointer(attrib_index, 1, GL_UNSIGNED_INT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
 	glVertexBindingDivisor(attrib_index, 1);
 	attrib_index++; attribute_offset += sizeof(uint32_t);
-
-	// Animation attribute
-
-	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
-	glVertexBindingDivisor(attrib_index, 1);
-	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -194,6 +193,7 @@ void SpriteRenderer::PushToBatchObject(std::vector<Batch> &batches, const Sprite
 	element.sprite_color = data.sprite_color;
 	element.sprite_layer = data.sprite_layer;
 	element.sprite_transform = data.sprite_transform;
+	element.sprite_animation = data.sprite_animation;
 
 	if (batches.empty() ||
 		data.texture_hash != batches.back().texture_hash ||
