@@ -11,7 +11,7 @@
 
 namespace graphics 
 {
-	constexpr size_t MAX_SPRITES_PER_BATCH{ 8192 };
+	constexpr size_t MAX_SPRITE_INSTANCES{ 8192 };
 
 	class SpriteRenderer
 	{
@@ -65,7 +65,7 @@ namespace graphics
 			glm::mat4 sprite_transform;
 			glm::vec4 sprite_color;
 			glm::vec4 sprite_animation;
-			size_t sprite_layer;
+			uint32_t sprite_layer;
 		};
 
 		struct Batch
@@ -81,10 +81,11 @@ namespace graphics
 			GLuint vertex_array = 0;
 			GLuint vertex_buffer = 0;
 			GLuint element_buffer = 0;
-			GLuint instance_buffer = 0;
 			size_t num_indices = 0;
 			size_t num_vertices = 0;
 		};
+
+		GLuint instance_buffer_ = 0;
 
 		const GraphicsBase &graphics_base_;
 
@@ -115,6 +116,10 @@ namespace graphics
 		void Draw(float delta_time);
 
 	private:
+
+		void CreateInstanceBuffer();
+
+		void DeleteInstanceBuffer();
 
 		void CreateBatchObject(BatchObject &object, const glm::vec2 * const vertices,
 			Uint32 num_vertices, const Uint32 * const indices, Uint32 num_indices);

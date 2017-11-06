@@ -7,6 +7,7 @@
 #include "sampler.h"
 #include "shader.h"
 #include "texture.h"
+#include "font.h"
 
 namespace graphics
 {
@@ -21,6 +22,7 @@ namespace graphics
 		std::unique_ptr<SamplerCache> sampler_cache_;
 		std::unique_ptr<ProgramCache> program_cache_;
 		std::unique_ptr<TextureCache> texture_cache_;
+		std::unique_ptr<FontCache> font_cache_;
 
 	public:
 
@@ -49,6 +51,8 @@ namespace graphics
 		inline ProgramCache &GetProgramCache() { return *program_cache_.get(); }
 
 		inline TextureCache &GetTextureCache() { return *texture_cache_.get(); }
+
+		inline FontCache &GetFontCache() { return *font_cache_.get(); }
 
 	private:
 

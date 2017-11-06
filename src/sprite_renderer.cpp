@@ -17,6 +17,8 @@ SpriteRenderer::SpriteRenderer(const GraphicsBase &graphics_base) :
 	pipeline_.SetStages(*default_vert_program_);
 	pipeline_.SetStages(*default_frag_program_);
 
+	CreateInstanceBuffer();
+
 	CreateBatchObject(flat_hex_batch_object_,
 		flat_hexagon_vertices_, sizeof(flat_hexagon_vertices_) / sizeof(flat_hexagon_vertices_[0]),
 		hexagon_indices_, sizeof(hexagon_indices_) / sizeof(hexagon_indices_[0])
@@ -35,6 +37,7 @@ SpriteRenderer::SpriteRenderer(const GraphicsBase &graphics_base) :
 
 SpriteRenderer::~SpriteRenderer()
 {
+	DeleteInstanceBuffer();
 }
 
 void SpriteRenderer::Draw(float delta_time)
@@ -83,6 +86,21 @@ void SpriteRenderer::Draw(float delta_time)
 	pipeline_.Unbind();
 }
 
+void SpriteRenderer::CreateInstanceBuffer()
+{
+	glGenBuffers(1, &instance_buffer_);
+	glBindBuffer(GL_ARRAY_BUFFER, instance_buffer_);
+	glBufferData(GL_ARRAY_BUFFER, MAX_SPRITE_INSTANCES * sizeof(BatchElement), nullptr, GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+}
+
+void SpriteRenderer::DeleteInstanceBuffer()
+{
+	glDeleteBuffers(1, &instance_buffer_);
+}
+
 void SpriteRenderer::CreateBatchObject(BatchObject & object, const glm::vec2 * const vertices, Uint32 num_vertices, const Uint32 * const indices, Uint32 num_indices)
 {
 	object.num_vertices = num_vertices;
@@ -92,16 +110,10 @@ void SpriteRenderer::CreateBatchObject(BatchObject & object, const glm::vec2 * c
 	auto index_size = sizeof(indices[0]);
 	auto vertices_size = object.num_vertices * vertex_size;
 	auto indices_size = object.num_indices * index_size;
-	auto instance_size = sizeof(BatchElement);
 
 	glGenBuffers(1, &object.vertex_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, object.vertex_buffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices_size, vertices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glGenBuffers(1, &object.instance_buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, object.instance_buffer);
-	glBufferData(GL_ARRAY_BUFFER, MAX_SPRITES_PER_BATCH * instance_size, nullptr, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glGenBuffers(1, &object.element_buffer);
@@ -128,50 +140,50 @@ void SpriteRenderer::CreateBatchObject(BatchObject & object, const glm::vec2 * c
 
 	// Instance data
 
-	glBindBuffer(GL_ARRAY_BUFFER, object.instance_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, instance_buffer_);
 
 	// Transform attribute
 	
-	GLsizei attribute_offset = 0;
+	size_t attribute_offset = 0;
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)sizeof(BatchElement), (const void *)attribute_offset);
 	glVertexAttribDivisor(attrib_index, 1);
 	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)sizeof(BatchElement), (const void *)attribute_offset);
 	glVertexAttribDivisor(attrib_index, 1);
 	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)sizeof(BatchElement), (const void *)attribute_offset);
 	glVertexAttribDivisor(attrib_index, 1);
 	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)sizeof(BatchElement), (const void *)attribute_offset);
 	glVertexAttribDivisor(attrib_index, 1);
 	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	// Color attribute
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)sizeof(BatchElement), (const void *)attribute_offset);
 	glVertexAttribDivisor(attrib_index, 1);
 	attrib_index++; attribute_offset += sizeof(glm::vec4);
 	 
 	// Animation attribute
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
+	glVertexAttribPointer(attrib_index, 4, GL_FLOAT, GL_FALSE, (GLsizei)sizeof(BatchElement), (const void *)attribute_offset);
 	glVertexBindingDivisor(attrib_index, 1);
 	attrib_index++; attribute_offset += sizeof(glm::vec4);
 
 	// Layer attribute
 
 	glEnableVertexAttribArray(attrib_index);
-	glVertexAttribPointer(attrib_index, 1, GL_UNSIGNED_INT, GL_FALSE, (GLsizei)instance_size, (const void *)attribute_offset);
+	glVertexAttribPointer(attrib_index, 1, GL_UNSIGNED_INT, GL_FALSE, (GLsizei)sizeof(BatchElement), (const void *)attribute_offset);
 	glVertexBindingDivisor(attrib_index, 1);
 	attrib_index++; attribute_offset += sizeof(uint32_t);
 
@@ -184,14 +196,13 @@ void SpriteRenderer::DeleteBatchObject(BatchObject & object)
 	glDeleteVertexArrays(1, &object.vertex_array);
 	glDeleteBuffers(1, &object.vertex_buffer);
 	glDeleteBuffers(1, &object.element_buffer);
-	glDeleteBuffers(1, &object.instance_buffer);
 }
 
 void SpriteRenderer::PushToBatchObject(std::vector<Batch> &batches, const SpriteData & data)
 {
 	BatchElement element;
 	element.sprite_color = data.sprite_color;
-	element.sprite_layer = data.sprite_layer;
+	element.sprite_layer = uint32_t(data.sprite_layer);
 	element.sprite_transform = data.sprite_transform;
 	element.sprite_animation = data.sprite_animation;
 
@@ -245,9 +256,9 @@ void SpriteRenderer::DrawBatchObject(BatchObject & object, std::vector<Batch> &b
 		}
 
 		// Re-upload subdata for instance buffer
-		glBindBuffer(GL_ARRAY_BUFFER, object.instance_buffer);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, (GLsizei)(batch.elements.size() * sizeof(BatchElement)),
-			&batch.elements[0]);
+		size_t instance_size = batch.elements.size() * sizeof(BatchElement);
+		glBindBuffer(GL_ARRAY_BUFFER, instance_buffer_);
+		glBufferSubData(GL_ARRAY_BUFFER, (GLintptr)0, (GLsizei)instance_size, &batch.elements[0]);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		// Draw all sprites for the batch

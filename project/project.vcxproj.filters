@@ -56,6 +56,15 @@
     <ClCompile Include="..\src\controller_system.cpp">
       <Filter>Source\Entity.System</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\font.cpp">
+      <Filter>Source\Graphics.Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\font_renderer.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\text_render_system.cpp">
+      <Filter>Source\Entity.System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\graphics.h">
@@ -153,6 +162,21 @@
     </ClInclude>
     <ClInclude Include="..\src\sprite_animation_component.h">
       <Filter>Source\Entity.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\font.h">
+      <Filter>Source\Graphics.Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\text_data_pipe.h">
+      <Filter>Source\Graphics.Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\font_renderer.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\text_component.h">
+      <Filter>Source\Entity.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\text_render_system.h">
+      <Filter>Source\Entity.System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -88,11 +88,11 @@ void SpriteRenderSystem::Update(Entity * entity, float delta_time)
 		sprite_data.sprite_transform = sprite_component->GetTransform();
 		
 		// Push data 
-		sprite_data_pipe.Push(sprite_data);  
+		sprite_data_pipe.Push(sprite_data);
 	}
 
 	if (sprite_animation_component)
-	{
+	{ 
 
 		float elapsed_time = sprite_animation_component->GetElapsedTime();
 
@@ -108,9 +108,15 @@ void SpriteRenderSystem::Update(Entity * entity, float delta_time)
 			{
 				sprite_animation_component->SetCurrentFrame(current + 1);
 			}
+
+			sprite_animation_component->SetElapsedTime(0.0f);
+		}
+		else
+		{
+			sprite_animation_component->SetElapsedTime(elapsed_time + delta_time);
 		}
 
-		sprite_animation_component->SetElapsedTime(elapsed_time + delta_time);
+		
 	}
 }
 

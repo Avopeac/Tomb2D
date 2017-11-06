@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sprite_data_pipe.h"
+#include "text_data_pipe.h"
 
 namespace graphics
 {
@@ -8,6 +9,7 @@ namespace graphics
 	{
 
 		SpriteDataPipe sprite_data_pipe_;
+		TextDataPipe text_data_pipe_;
 
 	public:
 
@@ -20,6 +22,7 @@ namespace graphics
 		~DataPipeHub() {}
 
 		inline SpriteDataPipe &GetSpriteDataPipe() { return sprite_data_pipe_; }
+		inline TextDataPipe &GetTextDataPipe() { return text_data_pipe_; }
 
 	private:
 

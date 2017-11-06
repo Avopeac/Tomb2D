@@ -1,6 +1,5 @@
 #include "SDL.h"
 #include "SDL_image.h"
-#include "SDL_ttf.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtx/transform.hpp"
@@ -12,6 +11,7 @@
 #include "renderer.h"
 #include "entity_manager.h"
 
+#include "text_render_system.h"
 #include "sprite_render_system.h"
 #include "controller_system.h"
 
@@ -20,7 +20,8 @@ Sint32 main(Sint32 argc, char * argv[])
 	// Initialization
 	SDL_Init(SDL_INIT_EVERYTHING);
 	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
-	TTF_Init();
+
+
 
 	// Load config
 	input::Config config;
@@ -40,6 +41,14 @@ Sint32 main(Sint32 argc, char * argv[])
 		
 		entity_manager.AddSystem(new SpriteRenderSystem());
 		entity_manager.AddSystem(new ControllerSystem());
+		entity_manager.AddSystem(new TextRenderSystem());
+
+		auto * text_entity = entity_manager.CreateEntity("text");
+		auto * text_drawable = entity_manager.AddEntityComponent<TextComponent>(
+			text_entity->id, "assets/fonts/arial/arial.ttf", 16, 16, "test", 
+			glm::vec2(0.1f),
+			glm::vec2(0.0f));
+
 		auto * backdrop_entity = entity_manager.CreateEntity("backdrop");
 		auto * backdrop_sprite = entity_manager.AddEntityComponent<SpriteComponent>(
 			backdrop_entity->id, 
@@ -63,7 +72,7 @@ Sint32 main(Sint32 argc, char * argv[])
 		auto * character_animation = entity_manager.AddEntityComponent<SpriteAnimationComponent>(
 			character_entity->id, 
 			"assets/textures/temp/player_topdown.png", 
-			24, 11, 4, 1, 6);
+			24, 11, 4, 0, 6);
 	}
 	
 	// Main loop 
@@ -95,7 +104,6 @@ Sint32 main(Sint32 argc, char * argv[])
 		input::Keymap::Get().CarryCurrentInput();
 	}
 
-	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
 	
