@@ -20,7 +20,19 @@ FontRenderer::FontRenderer(const GraphicsBase & graphics_base) :
 	size_t vertex_size = sizeof(float) * 2;
 	size_t index_size = sizeof(Uint32);
 
-	proj_ = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+	/*proj_ = glm::ortho(
+		-(float)graphics_base_.GetBackbufferWidth() * 0.5f,
+		(float)graphics_base_.GetBackbufferWidth() * 0.5f,
+		-(float)graphics_base_.GetBackbufferHeight() * 0.5f, 
+		(float)graphics_base_.GetBackbufferHeight() * 0.5f,
+		-1.0f, 1.0f);*/
+
+	proj_ = glm::ortho(
+		0.0f,
+		(float)graphics_base_.GetBackbufferWidth(),
+		0.0f,
+		(float)graphics_base_.GetBackbufferHeight(),
+		-1.0f, 1.0f);
 
 	glGenBuffers(1, &vbo_);
 	glGenBuffers(1, &ebo_);
@@ -67,16 +79,26 @@ void FontRenderer::Draw(float delta_time)
 		auto * font = ResourceManager::Get().GetFontCache().GetFromHash(it->font_hash);
 		auto * sampler = ResourceManager::Get().GetSamplerCache().GetFromHash(it->sampler_hash);
 
-		glm::vec2 offset = glm::vec2(0.0f);
+		glm::vec2 position = it->position;
 		 
 		int texture_index = 0; 
 		for (size_t i = 0; i < it->text_string.size(); ++i)
 		{
 			auto * texture = font->GetGlyphTexture(it->text_string[i]);
+			auto * glyph = font->GetGlyph(it->text_string[i]);
 			
-			
-			glm::mat4 mvp = proj_ * glm::translate(glm::mat4(1.0f), glm::vec3(it->position + offset, 0.0f)) * 
-				glm::scale(glm::mat4(1.0f), glm::vec3(it->scale, 1.0f));
+			if (!texture || !glyph)
+			{
+				continue;
+			}
+
+			glm::vec2 offset;
+			offset.x = position.x + glyph->min_x;
+			offset.y = position.y;
+
+			glm::mat4 mvp = proj_ *
+				glm::translate(glm::mat4(1.0f), glm::vec3(offset, 0.0f)) *
+				glm::scale(glm::mat4(1.0f), glm::vec3(glyph->bitmap_width, glyph->bitmap_height, 1.0f));
 
 			default_vert_program_->SetUniform("u_mvp", (void *)&mvp);
 
@@ -89,9 +111,12 @@ void FontRenderer::Draw(float delta_time)
 
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-			glm::vec2 advance = font->GetGlyphAdvance(it->text_string[i]);
-			offset.x += advance.x;
-			offset.y = advance.y;
+			position.x += glyph->advance;
+
+			if (i < it->text_string.size() - 1)
+			{
+				offset.x += font->GetKerningDistance(it->text_string[i], it->text_string[i + 1]);
+			}
 		}
 
 		glBindTexture(GL_TEXTURE_2D, 0);

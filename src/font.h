@@ -7,11 +7,7 @@
 
 #include "glm/glm.hpp"
 
-#include "ft2build.h"
-#include "freetype/freetype.h"
-#include <freetype/ftglyph.h>
-#include <freetype/ftoutln.h>
-#include <freetype/fttrigon.h>
+#include "SDL_ttf.h"
 
 #include "disposable.h"
 
@@ -43,13 +39,22 @@ namespace graphics {
 		'<', '>', '[', ']',
 		'{', '}', '\\', '|' };
 
+	struct Glyph
+	{
+		int min_x;
+		int max_x;
+		int min_y;
+		int max_y;
+		int advance;
+		int bitmap_width;
+		int bitmap_height;
+	};
+
 	class Font : public base::Disposable
 	{
-
-		FT_Face face_;
-
-		std::vector<FT_Glyph> glyphs_;
+		TTF_Font * font_;
 		std::vector<GLuint> glyph_textures_;
+		std::vector<Glyph> glyph_data_;
 		std::unordered_map<char, size_t> glyph_index_map_;
 
 	public:
@@ -58,12 +63,13 @@ namespace graphics {
 
 		~Font();
 
-		void Create(FT_Library * library, const std::string &path,
-			uint32_t width, uint32_t height);
+		void Create(const std::string &path, uint32_t width, uint32_t height);
 
-		glm::vec2 GetKerningDistance(char first, char second);
+		float GetKerningDistance(char first, char second);
 
-		glm::vec2 GetGlyphAdvance(char letter);
+		float GetFontAscent();
+
+		Glyph * GetGlyph(char letter);
 
 		GLuint * GetGlyphTexture(char letter);
 
@@ -74,8 +80,6 @@ namespace graphics {
 
 	class FontCache
 	{
-
-		FT_Library library_;
 
 		std::unordered_map<size_t, std::unique_ptr<Font>> fonts_;
 

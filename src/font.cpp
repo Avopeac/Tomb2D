@@ -8,91 +8,79 @@ using namespace graphics;
 
 Font::Font()
 {
-
 }
 
 Font::~Font()
 {
 }
 
-void Font::Create(FT_Library * library, const std::string &path, 
-	uint32_t width, uint32_t height)
+void Font::Create(const std::string &path, uint32_t width, uint32_t height)
 {
-	if (FT_New_Face(*library, path.c_str(), 0, &face_))
+
+	font_ = TTF_OpenFont(path.c_str(), 36);
+
+	if (!font_)
 	{
 		debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_INPUT,
 			"Could not load the requested font.");
 	}
 
-	FT_Set_Char_Size(face_, width << 6, height << 6, 128, 128);
-
-	glyphs_.resize(CHAR_MAP_LENGTH);
 	glyph_textures_.resize(CHAR_MAP_LENGTH);
-	glGenTextures(glyph_textures_.size(), glyph_textures_.data());
-	
-	GLint pack_alignment, unpack_alignment;
-	glGetIntegerv(GL_PACK_ALIGNMENT, &pack_alignment);
-	glGetIntegerv(GL_UNPACK_ALIGNMENT, &unpack_alignment);
+	glyph_data_.resize(CHAR_MAP_LENGTH);
 
-	glPixelStorei(GL_PACK_ALIGNMENT, 1);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures((GLsizei)glyph_textures_.size(), glyph_textures_.data());
+
+	SDL_Color fg_color{ 255, 255, 255, 255 };
+	SDL_Color bg_color{ 0, 0, 0, 0 };
+
 	for (size_t i = 0; i < CHAR_MAP_LENGTH; ++i)
 	{
-
-		glyph_index_map_[CHAR_MAP[i]] = i;
-
-		if (FT_Load_Glyph(face_, FT_Get_Char_Index(face_, CHAR_MAP[i]), FT_LOAD_DEFAULT))
+		SDL_Surface * surface = TTF_RenderGlyph_Shaded(font_, CHAR_MAP[i], fg_color, bg_color);
+		if (!surface)
 		{
 			debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_INPUT,
 				"Could not load the requested glyph from font.");
-		}
-		
-		if (FT_Get_Glyph(face_->glyph, &glyphs_[i]))
-		{
-			debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_INPUT,
-				"Could not get the requested glyph from font.");
+			continue;
 		}
 
-		FT_Glyph_To_Bitmap(&glyphs_[i], FT_Render_Mode::FT_RENDER_MODE_NORMAL, 0, 1);
-		FT_BitmapGlyph bitmap_glyph = (FT_BitmapGlyph)glyphs_[i];
-		FT_Bitmap bitmap = bitmap_glyph->bitmap;
+		glyph_index_map_[CHAR_MAP[i]] = i;
+
+		TTF_GlyphMetrics(font_, CHAR_MAP[i], &glyph_data_[i].min_x,
+			&glyph_data_[i].max_x, &glyph_data_[i].min_y, &glyph_data_[i].max_y, &glyph_data_[i].advance);
+
+		glyph_data_[i].bitmap_width = surface->w;
+		glyph_data_[i].bitmap_height = surface->h;
 
 		glBindTexture(GL_TEXTURE_2D, glyph_textures_[i]);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, bitmap.width, bitmap.rows,
-			0, GL_RED, GL_UNSIGNED_BYTE, bitmap.buffer);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, surface->w, surface->h,
+			0, GL_RED, GL_UNSIGNED_BYTE, surface->pixels);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
+
+		SDL_FreeSurface(surface);
 	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	glPixelStorei(GL_PACK_ALIGNMENT, pack_alignment);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, unpack_alignment);
 }
 
-glm::vec2 Font::GetKerningDistance(char first, char second)
+float Font::GetKerningDistance(char first, char second)
 {
-	FT_Vector kerning_pair;
-	FT_Get_Kerning(face_, FT_Get_Char_Index(face_, first), FT_Get_Char_Index(face_, second),
-		FT_Kerning_Mode::FT_KERNING_DEFAULT, &kerning_pair);
-
-	return glm::vec2(kerning_pair.x, kerning_pair.y);
+	return (float)TTF_GetFontKerningSizeGlyphs(font_, first, second);
 }
 
-glm::vec2 Font::GetGlyphAdvance(char letter)
+float Font::GetFontAscent()
 {
-	FT_Vector advance;
-	if (glyph_index_map_.find(letter) != glyph_index_map_.end())
-	{
-		advance = glyphs_[glyph_index_map_[letter]]->advance;
+	return float(TTF_FontAscent(font_));
+}
 
-		return glm::vec2(advance.x >> 6, advance.y >> 6);
-	}
-
-	return glm::vec2();
+Glyph * Font::GetGlyph(char letter)
+{
+	return glyph_index_map_.find(letter) != glyph_index_map_.end() ?
+		&glyph_data_[glyph_index_map_[letter]] : nullptr;
 }
 
 GLuint * Font::GetGlyphTexture(char letter)
@@ -103,28 +91,23 @@ GLuint * Font::GetGlyphTexture(char letter)
 
 void Font::Free()
 {
-	for (auto & glyph : glyphs_)
-	{
-		FT_Done_Glyph(glyph);
-	}
+	TTF_CloseFont(font_);
 
-	FT_Done_Face(face_);
-
-	glDeleteTextures(glyph_textures_.size(), glyph_textures_.data());
+	glDeleteTextures((GLsizei)glyph_textures_.size(), glyph_textures_.data());
 }
 
 FontCache::FontCache()
 {
-	if (FT_Init_FreeType(&library_))
+	if (TTF_Init() < 0)
 	{
 		debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER,
-			"Could not initialize FreeType library.");
+			"Could not initialize SDL TTF library.");
 	}
 }
 
 FontCache::~FontCache()
 {
-	FT_Done_FreeType(library_);
+	TTF_Quit();
 }
 
 Font * FontCache::GetFromFile(const std::string & path, uint32_t width, uint32_t height, size_t * hash)
@@ -135,7 +118,7 @@ Font * FontCache::GetFromFile(const std::string & path, uint32_t width, uint32_t
 	{
 
 		auto font_ptr = std::make_unique<Font>();
-		font_ptr->Create(&library_, path, width, height);
+		font_ptr->Create(path, width, height);
 		fonts_.insert({ path_hash, std::move(font_ptr) });
 	}
 

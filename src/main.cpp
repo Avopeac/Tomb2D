@@ -45,9 +45,9 @@ Sint32 main(Sint32 argc, char * argv[])
 
 		auto * text_entity = entity_manager.CreateEntity("text");
 		auto * text_drawable = entity_manager.AddEntityComponent<TextComponent>(
-			text_entity->id, "assets/fonts/arial/arial.ttf", 16, 16, "test", 
-			glm::vec2(0.1f),
-			glm::vec2(0.0f));
+			text_entity->id, "assets/fonts/arial/arial.ttf", 48, 48, "abcdefghijklmnopqrstuvwxyz", 
+			glm::vec2(24.0f), 
+			glm::vec2(128.0f, 128.0f));
 
 		auto * backdrop_entity = entity_manager.CreateEntity("backdrop");
 		auto * backdrop_sprite = entity_manager.AddEntityComponent<SpriteComponent>(
@@ -94,6 +94,17 @@ Sint32 main(Sint32 argc, char * argv[])
 
 			input::Keymap::Get().UpdateCurrentInput(event);
 		}
+
+		auto * text_entity = entity_manager.GetEntityByName("text");
+		if (text_entity)
+		{
+			auto * text_drawable = entity_manager.GetEntityComponent<entity::TextComponent>(text_entity->id);
+			if (text_drawable)
+			{
+				text_drawable->SetText("FPS: " + std::to_string(1.0 / frame_time));
+			}
+		}
+		
 
 		entity_manager.Update((float)frame_time);
 
