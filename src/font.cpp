@@ -33,6 +33,9 @@ void Font::Create(const std::string &path, uint32_t width, uint32_t height)
 	SDL_Color fg_color{ 255, 255, 255, 255 };
 	SDL_Color bg_color{ 0, 0, 0, 0 };
 
+	//GLint alignment;
+	//glGetIntegerv(GL_UNPACK_ALIGNMENT, &alignment);
+	//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	for (size_t i = 0; i < CHAR_MAP_LENGTH; ++i)
 	{
 		SDL_Surface * surface = TTF_RenderGlyph_Shaded(font_, CHAR_MAP[i], fg_color, bg_color);
@@ -65,11 +68,33 @@ void Font::Create(const std::string &path, uint32_t width, uint32_t height)
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	// Add space to glyph map
+	glyph_index_map_[' '] = CHAR_MAP_LENGTH;
+	glyph_data_.push_back(Glyph());
+	glyph_textures_.push_back(0);
+	TTF_GlyphMetrics(font_, ' ',
+		&glyph_data_[CHAR_MAP_LENGTH].min_x,
+		&glyph_data_[CHAR_MAP_LENGTH].max_x,
+		&glyph_data_[CHAR_MAP_LENGTH].min_y, 
+		&glyph_data_[CHAR_MAP_LENGTH].max_y, 
+		&glyph_data_[CHAR_MAP_LENGTH].advance);
+
+	// Add new line to glyph map
+	glyph_index_map_[' '] = CHAR_MAP_LENGTH + 1;
+	glyph_data_.push_back(Glyph());
+	glyph_textures_.push_back(0);
+
+	//glPixelStorei(GL_UNPACK_ALIGNMENT, alignment);
 }
 
 float Font::GetKerningDistance(char first, char second)
 {
 	return (float)TTF_GetFontKerningSizeGlyphs(font_, first, second);
+}
+
+float Font::GetFontLineSkip()
+{
+	return TTF_FontLineSkip(font_);
 }
 
 float Font::GetFontAscent()

@@ -101,11 +101,10 @@ Sint32 main(Sint32 argc, char * argv[])
 			auto * text_drawable = entity_manager.GetEntityComponent<entity::TextComponent>(text_entity->id);
 			if (text_drawable)
 			{
-				text_drawable->SetText("FPS: " + std::to_string(1.0 / frame_time));
+				text_drawable->SetText("FPS:\n" + std::to_string(1.0 / frame_time));
 			}
 		}
 		
-
 		entity_manager.Update((float)frame_time);
 
 		renderer.Invoke((float)frame_time);

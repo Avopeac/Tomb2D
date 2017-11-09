@@ -67,6 +67,8 @@ namespace graphics {
 
 		float GetKerningDistance(char first, char second);
 
+		float GetFontLineSkip();
+
 		float GetFontAscent();
 
 		Glyph * GetGlyph(char letter);

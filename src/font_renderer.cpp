@@ -20,13 +20,6 @@ FontRenderer::FontRenderer(const GraphicsBase & graphics_base) :
 	size_t vertex_size = sizeof(float) * 2;
 	size_t index_size = sizeof(Uint32);
 
-	/*proj_ = glm::ortho(
-		-(float)graphics_base_.GetBackbufferWidth() * 0.5f,
-		(float)graphics_base_.GetBackbufferWidth() * 0.5f,
-		-(float)graphics_base_.GetBackbufferHeight() * 0.5f, 
-		(float)graphics_base_.GetBackbufferHeight() * 0.5f,
-		-1.0f, 1.0f);*/
-
 	proj_ = glm::ortho(
 		0.0f,
 		(float)graphics_base_.GetBackbufferWidth(),
@@ -84,9 +77,30 @@ void FontRenderer::Draw(float delta_time)
 		int texture_index = 0; 
 		for (size_t i = 0; i < it->text_string.size(); ++i)
 		{
-			auto * texture = font->GetGlyphTexture(it->text_string[i]);
+			
+			if ((it->text_string[i] == '\n'))
+			{
+				position = it->position;
+				position.y -= font->GetFontLineSkip();
+				continue;
+			}
+
 			auto * glyph = font->GetGlyph(it->text_string[i]);
 			
+			if ((it->text_string[i] == ' ') && (i < it->text_string.size() - 1))
+			{
+				position.x += glyph->advance;
+
+				if (i < it->text_string.size() - 1)
+				{
+					position.x += font->GetKerningDistance(it->text_string[i], it->text_string[i + 1]);
+				}
+
+				continue;
+			}
+
+			auto * texture = font->GetGlyphTexture(it->text_string[i]);
+
 			if (!texture || !glyph)
 			{
 				continue;
@@ -115,7 +129,7 @@ void FontRenderer::Draw(float delta_time)
 
 			if (i < it->text_string.size() - 1)
 			{
-				offset.x += font->GetKerningDistance(it->text_string[i], it->text_string[i + 1]);
+				position.x += font->GetKerningDistance(it->text_string[i], it->text_string[i + 1]);
 			}
 		}
 
