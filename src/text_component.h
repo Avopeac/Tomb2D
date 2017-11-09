@@ -16,8 +16,7 @@ namespace entity
 		std::string font_path_;
 		glm::vec2 font_scale_;
 		glm::vec2 font_position_;
-		uint32_t font_width_;
-		uint32_t font_height_;
+		uint32_t font_pt_size_;
 
 		std::string text_;
 
@@ -37,8 +36,7 @@ namespace entity
 	public:
 
 		TextComponent(const std::string &font_path,
-			uint32_t width,
-			uint32_t height,
+			uint32_t font_pt_size,
 			const std::string &text,
 			const glm::vec2 &scale = glm::vec2(1.0f),
 			const glm::vec2 &position = glm::vec2(0.0f),
@@ -49,8 +47,7 @@ namespace entity
 			graphics::Wrapping s = graphics::Wrapping::ClampToEdge,
 			graphics::Wrapping t = graphics::Wrapping::ClampToEdge) :
 			font_path_(font_path),
-			font_width_(width),
-			font_height_(height),
+			font_pt_size_(font_pt_size),
 			font_scale_(scale),
 			font_position_(position),
 			text_(text),
@@ -125,15 +122,13 @@ namespace entity
 			font_path_ = path;
 		}
 
-		inline void SetFontSize(uint32_t width, uint32_t height)
+		inline void SetFontPointSize(uint32_t pt_size)
 		{
-			font_width_ = width;
-			font_height_ = height;
+			dirty_ = true;
+			font_pt_size_ = pt_size;
 		}
 
-		inline uint32_t GetFontWidth() const { return font_width_; }
-
-		inline uint32_t GetFontHeight() const { return font_height_; }
+		inline uint32_t GetFontPointSize() const { return font_pt_size_; }
 
 		inline const std::string &GetText() const { return text_; }
 

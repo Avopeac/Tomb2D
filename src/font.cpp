@@ -14,10 +14,10 @@ Font::~Font()
 {
 }
 
-void Font::Create(const std::string &path, uint32_t width, uint32_t height)
+void Font::Create(const std::string &path, uint32_t pt_size)
 {
 
-	font_ = TTF_OpenFont(path.c_str(), 36);
+	font_ = TTF_OpenFont(path.c_str(), pt_size);
 
 	if (!font_)
 	{
@@ -135,7 +135,7 @@ FontCache::~FontCache()
 	TTF_Quit();
 }
 
-Font * FontCache::GetFromFile(const std::string & path, uint32_t width, uint32_t height, size_t * hash)
+Font * FontCache::GetFromFile(const std::string & path, uint32_t pt_size, size_t * hash)
 {
 	size_t path_hash = std::hash<std::string>{}(path);
 
@@ -143,7 +143,7 @@ Font * FontCache::GetFromFile(const std::string & path, uint32_t width, uint32_t
 	{
 
 		auto font_ptr = std::make_unique<Font>();
-		font_ptr->Create(path, width, height);
+		font_ptr->Create(path, pt_size);
 		fonts_.insert({ path_hash, std::move(font_ptr) });
 	}
 

@@ -74,8 +74,7 @@ void TextRenderSystem::InitializeTextComponent(TextComponent* text_component)
 
 		blend_cache.GetFromParameters(text_component->GetSrcBlend(), text_component->GetDstBlend(), &blend_hash);
 
-		font_cache.GetFromFile(text_component->GetFontPath(), text_component->GetFontWidth(),
-			text_component->GetFontHeight(), &font_hash);
+		font_cache.GetFromFile(text_component->GetFontPath(), text_component->GetFontPointSize(), &font_hash);
 
 		sampler_cache.GetFromParameters(text_component->GetMagFilter(), text_component->GetMinFilter(),
 			text_component->GetWrappingS(), text_component->GetWrappingT(), &sampler_hash);

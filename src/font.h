@@ -63,7 +63,7 @@ namespace graphics {
 
 		~Font();
 
-		void Create(const std::string &path, uint32_t width, uint32_t height);
+		void Create(const std::string &path, uint32_t pt_size);
 
 		float GetKerningDistance(char first, char second);
 
@@ -91,7 +91,7 @@ namespace graphics {
 
 		~FontCache();
 
-		Font * GetFromFile(const std::string &path, uint32_t width, uint32_t height, size_t * hash = nullptr);
+		Font * GetFromFile(const std::string &path, uint32_t pt_size, size_t * hash = nullptr);
 
 		Font * GetFromHash(size_t hash);
 	};

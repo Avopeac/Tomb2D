@@ -45,7 +45,7 @@ Sint32 main(Sint32 argc, char * argv[])
 
 		auto * text_entity = entity_manager.CreateEntity("text");
 		auto * text_drawable = entity_manager.AddEntityComponent<TextComponent>(
-			text_entity->id, "assets/fonts/arial/arial.ttf", 48, 48, "abcdefghijklmnopqrstuvwxyz", 
+			text_entity->id, "assets/fonts/arial/arial.ttf", 36, "abcdefghijklmnopqrstuvwxyz", 
 			glm::vec2(24.0f), 
 			glm::vec2(128.0f, 128.0f));
 

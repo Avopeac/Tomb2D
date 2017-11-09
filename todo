@@ -1,0 +1,17 @@
+TODO: 
+
+Scene structure - put entity manager in each scene? Switch between scenes etc.
+
+Get new character sprite sheet for top down
+
+Implement bullets
+
+Implement collision component 
+
+Implement enemy
+
+Implement health component
+
+Implement messaging to different components? Already available?
+
+Implement "attraction AI" for enemy creatures
