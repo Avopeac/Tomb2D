@@ -18,8 +18,12 @@ vec3 gamma_correction(vec3 ldr)
 	return pow(ldr, 1.0 / vec3(2.2));
 }
 
+float vignette(float inner, float outer) {
+	return smoothstep(inner, outer, 1.0 - length(v_texcoord - vec2(0.5)));
+}
+
 void main()
 {
 	vec3 color = texture(u_texture0, v_texcoord).rgb;
-	o_color = vec4(color, 1); //vec4(gamma_correction(reinhardt_tonemap(color)), 1.0);
+	o_color = vec4(vignette(0.2, 1.0) * color, 1); //vec4(gamma_correction(reinhardt_tonemap(color)), 1.0);
 }

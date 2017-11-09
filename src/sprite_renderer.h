@@ -13,6 +13,8 @@ namespace graphics
 {
 	constexpr size_t MAX_SPRITE_INSTANCES{ 8192 };
 
+	constexpr size_t MAX_SPRITE_LAYERS{ 32 };
+
 	class SpriteRenderer
 	{
 		const glm::vec2 sharp_hexagon_vertices_[7] =
@@ -73,6 +75,7 @@ namespace graphics
 			size_t texture_hash;
 			size_t blend_hash;
 			size_t sampler_hash;
+			uint32_t layer;
 			std::vector<BatchElement> elements;
 		};
 
@@ -128,6 +131,6 @@ namespace graphics
 
 		void PushToBatchObject(std::vector<Batch> &batches, const SpriteData &data);
 
-		void DrawBatchObject(BatchObject &object, std::vector<Batch> &batches);
+		void DrawBatchObject(BatchObject &object, size_t start, size_t end, std::vector<Batch> &batches);
 	};
 }

@@ -55,17 +55,19 @@ Sint32 main(Sint32 argc, char * argv[])
 			"assets/textures/temp/sand.png", 
 			glm::vec4(1.0f), 
 			glm::scale(glm::vec3(1.0f)));
+		backdrop_sprite->SetLayer(graphics::MAX_SPRITE_LAYERS - 1);
 
 		auto * character_entity = entity_manager.CreateEntity("character");
 		auto * character_sprite = entity_manager.AddEntityComponent<SpriteComponent>(
-			character_entity->id, 
+			character_entity->id,  
 			"assets/textures/temp/smiley.png", 
 			glm::vec4(1.0f),
 			glm::scale(glm::vec3(0.1f, 0.1f * aspect, 1.0f)));
+		character_sprite->SetLayer(0);
 
 		auto * character_controller = entity_manager.AddEntityComponent<ControllerComponent>(
 			character_entity->id, 
-			glm::vec2(0, 0), 
+			glm::vec2(0, 0),  
 			glm::vec2(0, 0),
 			0.0f);
 
@@ -101,7 +103,7 @@ Sint32 main(Sint32 argc, char * argv[])
 			auto * text_drawable = entity_manager.GetEntityComponent<entity::TextComponent>(text_entity->id);
 			if (text_drawable)
 			{
-				text_drawable->SetText("FPS:\n" + std::to_string(1.0 / frame_time));
+				text_drawable->SetText("FPS: " + std::to_string(1.0 / frame_time));
 			}
 		}
 		
