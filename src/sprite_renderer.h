@@ -56,11 +56,19 @@ namespace graphics
 			glm::vec2(1.0f,  1.0f),
 		};
 
+		const glm::vec2 isometric_quad_vertices_[4]{
+			glm::vec2(-1.0f, 0.0f),
+			glm::vec2(0.0f, -0.5f),
+			glm::vec2(0.0f, 0.5f),
+			glm::vec2(1.0f, 0.0f),
+		};
+
 		const Uint32 quad_indices_[6] =
 		{
 			0, 1, 2,
 			2, 1, 3
 		};
+
 
 		struct BatchElement
 		{
@@ -94,9 +102,13 @@ namespace graphics
 
 		std::vector<Batch> quad_batches_;
 
+		std::vector<Batch> isometric_quad_batches_;
+
 		std::vector<Batch> flat_hex_batches_;
 
 		std::vector<Batch> sharp_hex_batches_;
+
+		BatchObject isometric_quad_batch_object_;
 
 		BatchObject quad_batch_object_;
 

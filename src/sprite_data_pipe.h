@@ -11,6 +11,7 @@ namespace graphics {
 		Quad = 0 << 0,
 		FlatHex = 1 << 0,
 		SharpHex = 1 << 1,
+		IsometricQuad = 1 << 2,
 	};
 
 	struct SpriteData

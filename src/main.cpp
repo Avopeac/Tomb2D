@@ -15,6 +15,8 @@
 #include "sprite_render_system.h"
 #include "controller_system.h"
 
+#include "map.h"
+
 Sint32 main(Sint32 argc, char * argv[])
 {
 	// Initialization
@@ -49,13 +51,27 @@ Sint32 main(Sint32 argc, char * argv[])
 			glm::vec2(24.0f), 
 			glm::vec2(128.0f, 128.0f));
 
-		auto * backdrop_entity = entity_manager.CreateEntity("backdrop");
+
+		game::Map m;
+		m.Create();
+
+		/*auto * backdrop_entity = entity_manager.CreateEntity("backdrop");
 		auto * backdrop_sprite = entity_manager.AddEntityComponent<SpriteComponent>(
 			backdrop_entity->id, 
 			"assets/textures/temp/sand.png", 
 			glm::vec4(1.0f), 
 			glm::scale(glm::vec3(1.0f)));
+		backdrop_sprite->SetShape(graphics::SpriteShape::IsometricQuad);
 		backdrop_sprite->SetLayer(graphics::MAX_SPRITE_LAYERS - 1);
+
+		auto * backdrop_entity1 = entity_manager.CreateEntity("backdrop1");
+		auto * backdrop_sprite1 = entity_manager.AddEntityComponent<SpriteComponent>(
+			backdrop_entity1->id,
+			"assets/textures/temp/sand.png",
+			glm::vec4(1.0f),
+			glm::translate(glm::vec3(1.0f, 0.5f, 0.0f)) * glm::scale(glm::vec3(1.0f)));
+		backdrop_sprite1->SetShape(graphics::SpriteShape::IsometricQuad);
+		backdrop_sprite1->SetLayer(graphics::MAX_SPRITE_LAYERS - 1);*/
 
 		auto * character_entity = entity_manager.CreateEntity("character");
 		auto * character_sprite = entity_manager.AddEntityComponent<SpriteComponent>(

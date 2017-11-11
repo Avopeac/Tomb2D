@@ -33,6 +33,11 @@ SpriteRenderer::SpriteRenderer(const GraphicsBase &graphics_base) :
 		quad_vertices_, sizeof(quad_vertices_) / sizeof(quad_vertices_[0]),
 		quad_indices_, sizeof(quad_indices_) / sizeof(quad_indices_[0])
 	);
+
+	CreateBatchObject(isometric_quad_batch_object_,
+		isometric_quad_vertices_, sizeof(isometric_quad_vertices_) / sizeof(isometric_quad_vertices_[0]),
+		quad_indices_, sizeof(quad_indices_) / sizeof(quad_indices_[0])
+	);
 }
 
 SpriteRenderer::~SpriteRenderer()
@@ -46,6 +51,7 @@ void SpriteRenderer::Draw(float delta_time)
 	flat_hex_batches_.clear();
 	sharp_hex_batches_.clear();
 	quad_batches_.clear();
+	isometric_quad_batches_.clear();
 
 	auto &data = DataPipeHub::Get().GetSpriteDataPipe().GetData();
 	for (auto it = data.begin(); it != data.end(); ++it)
@@ -55,6 +61,7 @@ void SpriteRenderer::Draw(float delta_time)
 			case SpriteShape::FlatHex: { PushToBatchObject(flat_hex_batches_, *it); } break;
 			case SpriteShape::SharpHex: { PushToBatchObject(sharp_hex_batches_, *it); } break;
 			case SpriteShape::Quad: { PushToBatchObject(quad_batches_, *it); } break;
+			case SpriteShape::IsometricQuad: { PushToBatchObject(isometric_quad_batches_, *it); } break;
 			default:
 			{
 				debug::Log(SDL_LOG_PRIORITY_CRITICAL,
@@ -83,10 +90,12 @@ void SpriteRenderer::Draw(float delta_time)
 	std::sort(sharp_hex_batches_.begin(), sharp_hex_batches_.end(), [](const Batch &a, const Batch &b) { return a.layer < b.layer; });
 	std::sort(flat_hex_batches_.begin(), flat_hex_batches_.end(), [](const Batch &a, const Batch &b) { return a.layer < b.layer; });
 	std::sort(quad_batches_.begin(), quad_batches_.end(), [](const Batch &a, const Batch &b) { return a.layer < b.layer; });
+	std::sort(isometric_quad_batches_.begin(), isometric_quad_batches_.end(), [](const Batch &a, const Batch &b) { return a.layer < b.layer; });
 
 	size_t sharp_hex_start = 0;
 	size_t flat_hex_start = 0;
 	size_t quad_start = 0;
+	size_t isometric_quad_start = 0;
 
 	for (size_t layer = 0; layer < MAX_SPRITE_LAYERS; ++layer)
 	{
@@ -117,6 +126,15 @@ void SpriteRenderer::Draw(float delta_time)
 			}
 		}
 
+		int isometric_quad_layer_count = 0;
+		for (int j = isometric_quad_start; j < isometric_quad_batches_.size(); ++j)
+		{
+			if (isometric_quad_batches_[j].layer == layer)
+			{
+				isometric_quad_layer_count++;
+			}
+		}
+
 		if (sharp_hex_layer_count != 0)
 		{
 			DrawBatchObject(sharp_hex_batch_object_, sharp_hex_start, sharp_hex_layer_count, sharp_hex_batches_);
@@ -133,6 +151,13 @@ void SpriteRenderer::Draw(float delta_time)
 		{
 			DrawBatchObject(quad_batch_object_, quad_start, quad_start + quad_layer_count, quad_batches_);
 			quad_start += quad_layer_count;
+		}
+
+		if (isometric_quad_layer_count != 0)
+		{
+			DrawBatchObject(isometric_quad_batch_object_, isometric_quad_start, 
+				isometric_quad_start + isometric_quad_layer_count, isometric_quad_batches_);
+			isometric_quad_start += isometric_quad_layer_count;
 		}
 	}
 

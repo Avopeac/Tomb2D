@@ -129,7 +129,6 @@
     <ClCompile Include="..\src\blend_mode.cpp" />
     <ClCompile Include="..\src\config.cpp" />
     <ClCompile Include="..\src\controller_system.cpp" />
-    <ClCompile Include="..\src\defend_map.cpp" />
     <ClCompile Include="..\src\entity_manager.cpp" />
     <ClCompile Include="..\src\file.cpp" />
     <ClCompile Include="..\src\font.cpp" />
@@ -138,6 +137,7 @@
     <ClCompile Include="..\src\graphics.cpp" />
     <ClCompile Include="..\src\keymap.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\map.cpp" />
     <ClCompile Include="..\src\orthographic_camera.cpp" />
     <ClCompile Include="..\src\post_effect.cpp" />
     <ClCompile Include="..\src\post_processing.cpp" />
@@ -151,7 +151,6 @@
     <ClCompile Include="..\src\text_render_system.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\abstract_map.h" />
     <ClInclude Include="..\src\blend_mode.h" />
     <ClInclude Include="..\src\abstract_camera.h" />
     <ClInclude Include="..\src\config.h" />
@@ -159,11 +158,11 @@
     <ClInclude Include="..\src\controller_system.h" />
     <ClInclude Include="..\src\data_pipe_hub.h" />
     <ClInclude Include="..\src\component.h" />
-    <ClInclude Include="..\src\defend_map.h" />
     <ClInclude Include="..\src\entity_manager.h" />
     <ClInclude Include="..\src\entity_types.h" />
     <ClInclude Include="..\src\font.h" />
     <ClInclude Include="..\src\font_renderer.h" />
+    <ClInclude Include="..\src\map.h" />
     <ClInclude Include="..\src\text_render_system.h" />
     <ClInclude Include="..\src\fullscreen_quad.h" />
     <ClInclude Include="..\src\disposable.h" />
