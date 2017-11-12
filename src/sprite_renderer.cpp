@@ -278,14 +278,17 @@ void SpriteRenderer::DeleteBatchObject(BatchObject & object)
 
 void SpriteRenderer::PushToBatchObject(std::vector<Batch> &batches, const SpriteData & data)
 {
+	// Reverse order of sprite layers
+	uint32_t data_sprite_layer = uint32_t((MAX_SPRITE_LAYERS - 1) - data.sprite_layer);
+
 	BatchElement element;
 	element.sprite_color = data.sprite_color;
 	element.sprite_transform = data.sprite_transform;
 	element.sprite_animation = data.sprite_animation;
-	element.sprite_layer = (MAX_SPRITE_LAYERS - 1) - data.sprite_layer;
+	element.sprite_layer = data_sprite_layer;
 
 	if (batches.empty() ||
-		data.sprite_layer != batches.back().layer || 
+		data_sprite_layer != batches.back().layer || 
 		data.texture_hash != batches.back().texture_hash ||
 		data.blend_hash != batches.back().blend_hash ||
 		data.sampler_hash != batches.back().sampler_hash)
@@ -295,7 +298,7 @@ void SpriteRenderer::PushToBatchObject(std::vector<Batch> &batches, const Sprite
 		batch.texture_hash = data.texture_hash;
 		batch.blend_hash = data.blend_hash;
 		batch.sampler_hash = data.sampler_hash;
-		batch.layer = (MAX_SPRITE_LAYERS - 1) - data.sprite_layer;
+		batch.layer = data_sprite_layer;
 		batch.elements.push_back(element);
 
 		batches.push_back(batch);
@@ -319,6 +322,10 @@ void SpriteRenderer::DrawBatchObject(BatchObject & object, size_t start, size_t 
 	for (size_t i = start; i < end; ++i)
 	{
 		
+		// Especially for isometric tiles we need to draw higher y-coordinates first
+		std::sort(batches[i].elements.begin(), batches[i].elements.end(),
+			[](BatchElement &a, BatchElement &b) { return a.sprite_transform[3][1] > b.sprite_transform[3][1]; });
+
 		// Set blend mode for batch
 		blend_cache.GetFromHash(batches[i].blend_hash)->Set();
 

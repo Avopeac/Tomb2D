@@ -1,4 +1,4 @@
-SetWindowWidth(512);
-SetWindowHeight(512);
+SetWindowWidth(1280);
+SetWindowHeight(720);
 SetWindowTitle("Tomb");
 SetVerticalSync(0);

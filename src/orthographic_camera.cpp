@@ -10,7 +10,7 @@
 
 using namespace graphics;
 
-OrthographicCamera::OrthographicCamera(const std::string & name, glm::vec3 volume, 
+OrthographicCamera::OrthographicCamera(const std::string & name, glm::vec3 volume,  
 	const glm::vec3 & eye, 
 	const glm::vec3 & forward, 
 	const glm::vec3 & up) :

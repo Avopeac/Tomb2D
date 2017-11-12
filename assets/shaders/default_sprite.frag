@@ -23,5 +23,5 @@ void main()
 	frame_texcoord.x = frame_texcoord.x / v_animation.x + current_frame.x / v_animation.x;
 	frame_texcoord.y = frame_texcoord.y / v_animation.y + current_frame.y / v_animation.y;
 
-	o_color = textureLod(u_texture, frame_texcoord, 0) * v_color;
+	o_color = texture(u_texture, frame_texcoord) * v_color;
 }
