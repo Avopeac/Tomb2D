@@ -1,5 +1,9 @@
 #include "map.h"
 
+#include <fstream>
+
+#include "json/json.hpp"
+
 #include "glm/glm.hpp"
 
 #include "glm/gtx/transform.hpp"
@@ -10,63 +14,46 @@
 
 using namespace game;
 
-Map::Map()
+MapParser::MapParser()
 {
 }
 
-Map::~Map()
+MapParser::~MapParser()
 {
 }
 
-void Map::Create()
+void MapParser::Load(const std::string &path)
 {
-
-	using namespace entity;
-	glm::vec2 size = 0.2f * glm::vec2(1.0f, 2.0f); 
-
-	for (int y = 0; y <= 20; ++y)
-	{ 
-		for (int x = 0; x <= 20; ++x)
-		{
-			glm::vec3 center;
-			center.x = 1.0f * size.x * (x - y);
-			center.y = 0.29296875f * size.y * (x + y); // = 0.5f * 150px / 256px, which was the tile size set by the assets
-			center.z = 0.0;
-
-			auto * e = EntityManager::Get().CreateEntity("tile0" + std::to_string(x) + "_" + std::to_string(y));
-			auto * s = EntityManager::Get().AddEntityComponent<SpriteComponent>(e->id, "assets/textures/temp/dirt_W.png",
-				glm::vec4(1.0f),
-				glm::translate(center) * glm::scale(glm::vec3(size, 1.0)));
-			s->SetMinFilter(graphics::MinificationFiltering::LinearMipmapLinear);
-			s->SetMagFilter(graphics::MagnificationFiltering::Linear);
-			s->SetShape(graphics::SpriteShape::Quad);
-			s->SetLayer(graphics::MAX_SPRITE_LAYERS - 1);
-		}
-	}
+	std::ifstream ifs(path);
 
 
-	for (int y = 0; y <= 20; ++y)
+	if (ifs.is_open())
 	{
-		for (int x = 0; x <= 20; ++x)
-		{
-			if (y == 0 || y == 20 || x == 0 || x == 20)
-			{
-				glm::vec3 center;
-				center.x = 1.0f * size.x * (x - y);
-				center.y = 0.29f * size.y * (x + y);
-				center.z = 0.0;
+		nlohmann::json json;
 
-				auto * e = EntityManager::Get().CreateEntity("tile1" + std::to_string(x) + "_" + std::to_string(y));
-				auto * s = EntityManager::Get().AddEntityComponent<SpriteComponent>(e->id, "assets/textures/temp/dirtTiles_W.png",
-					glm::vec4(1.0f),
-					glm::translate(center) * glm::scale(glm::vec3(size, 1.0)));
-				s->SetMinFilter(graphics::MinificationFiltering::LinearMipmapLinear);
-				s->SetMagFilter(graphics::MagnificationFiltering::Linear);
-				s->SetShape(graphics::SpriteShape::Quad);
-				s->SetLayer(graphics::MAX_SPRITE_LAYERS - 2);
-			}
-		}
+		ifs >> json;
+
+		Map m;
+		
+		m.json_version = json["version"].get<int>();
+		m.tiled_version = json["tiledversion"].get<std::string>();
+		m.width = json["width"].get<int>();
+		m.height = json["height"].get<int>();
+		m.tile_width = json["tile_width"].get<int>();
+		m.tile_height = json["tile_height"].get<int>();
+		m.orientation = json["orientation"].get<std::string>();
+		//m.layers = ?
+		//m.tilesets = ?
+		m.background_color = json["backgroundcolor"].get<std::string>();
+		m.render_order = json["renderorder"].get<std::string>();
+		//m.properties = ?
+		m.next_object_id = json["nextobjectid"].get<int>();
+
+		maps_[path] = m;
+
 	}
-
-
+	else
+	{
+		debug::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_INPUT, "Failed to load map.");
+	}
 }

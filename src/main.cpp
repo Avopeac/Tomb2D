@@ -52,8 +52,8 @@ Sint32 main(Sint32 argc, char * argv[])
 			glm::vec2(128.0f, 128.0f));
 
 
-		game::Map m;
-		m.Create();
+		game::MapParser m;
+		m.Load("assets/maps/tiled/inn_start.tmx");
 
 		/*auto * backdrop_entity = entity_manager.CreateEntity("backdrop");
 		auto * backdrop_sprite = entity_manager.AddEntityComponent<SpriteComponent>(
