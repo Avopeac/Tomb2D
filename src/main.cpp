@@ -53,7 +53,7 @@ Sint32 main(Sint32 argc, char * argv[])
 
 
 		game::MapParser m;
-		m.Load("assets/maps/tiled/inn_start.tmx");
+		m.Load("assets/maps/inn.json");
 
 		/*auto * backdrop_entity = entity_manager.CreateEntity("backdrop");
 		auto * backdrop_sprite = entity_manager.AddEntityComponent<SpriteComponent>(

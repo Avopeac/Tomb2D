@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="isometric" renderorder="right-down" width="10" height="10" tilewidth="256" tileheight="149" nextobjectid="1">
+ <tileset firstgid="1" name="InnTileset" tilewidth="256" tileheight="512" tilecount="3" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="256" height="512" source="../textures/temp/dirt_W.png"/>
+  </tile>
+  <tile id="1">
+   <image width="256" height="512" source="../textures/temp/dirtTiles_W.png"/>
+  </tile>
+  <tile id="2">
+   <image width="256" height="512" source="../textures/temp/planks_W.png"/>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="10" height="10">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,2,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,2,1,1,1,2,1,
+1,1,2,1,1,1,2,2,1,1,
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <layer name="Tile Layer 2" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,3,3,3,3,0,0,
+0,0,0,0,3,3,3,3,0,0,
+0,0,0,0,3,3,3,3,0,0,
+0,0,0,0,3,3,3,3,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

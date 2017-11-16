@@ -2,32 +2,9 @@
 
 #include "entity_manager.h"
 
+#include <map>
+
 namespace game {
-
-	struct Point
-	{
-		float x, y;
-	};
-
-	struct Object
-	{
-		int id;
-		int width;
-		int height;
-		std::string name;
-		std::string type;
-		std::unordered_map <std::string, std::string> properties;
-		bool visible;
-		int x;
-		int y;
-		float rotation;
-		int gid;
-		bool point;
-		bool ellipse;
-		std::vector<Point> polygon;
-		std::vector<Point> polyline;
-		std::unordered_map<std::string, std::string> text;
-	};
 
 	struct Layer
 	{
@@ -38,42 +15,36 @@ namespace game {
 		bool visible;
 		int x;
 		int y;
-		int data;
-		std::vector<Object> objects;
-		std::unordered_map<std::string, std::string> properties;
+		std::vector<int> data;
 		float opacity;
-		std::string draw_order;
 	};
 
-	struct Terrain
+	struct Tile
 	{
-		std::string name;
-		int tile;
+		std::string image;
+		int image_height;
+		int image_width;
 	};
 
-	struct Tiles
+	struct Grid
 	{
-		std::vector<int> terrain;
+		int height;
+		int width;
+		std::string orientation;
 	};
 
 	struct Tileset
 	{
-		int first_gid;
-		std::string image;
 		std::string name;
+		int first_gid;
 		int tile_width;
 		int tile_height;
-		int image_width;
-		int image_height;
-		std::unordered_map<std::string, std::string> properties;
-		std::unordered_map<std::string, std::string> property_types;
 		int margin;
 		int spacing;
-		std::unordered_map<std::string, std::string> tile_properties;
-		std::vector<Terrain> terrains;
 		int columns;
 		int tile_count;
-		std::unordered_map<int, Tiles> tiles;
+		Grid grid;
+		std::map<std::string, Tile> tiles;
 	};
 
 	struct Map
@@ -84,6 +55,7 @@ namespace game {
 		int height;
 		int tile_width;
 		int tile_height;
+		std::string type;
 		std::string orientation;
 		std::vector<Layer> layers;
 		std::vector<Tileset> tilesets;
