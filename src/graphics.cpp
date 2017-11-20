@@ -87,10 +87,10 @@ GraphicsBase::~GraphicsBase()
 glm::vec2 GraphicsBase::PixelsToScaleAspect(const glm::uvec2 &pixels) const
 {
 	return glm::vec2(float(pixels.x) / window_width_,
-		GetAspectRatio() * (pixels.y) / window_height_);
+		GetAspectRatio() * float(pixels.y) / window_height_);
 }
 
 glm::vec2 GraphicsBase::PixelsToScale(const glm::uvec2 &pixels) const
 {
-	return glm::vec2(float(pixels.x) / window_width_, (pixels.y) / window_height_);
+	return glm::vec2(float(pixels.x) / window_width_, float(pixels.y) / window_height_);
 }
