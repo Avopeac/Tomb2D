@@ -65,7 +65,10 @@
     <ClCompile Include="..\src\text_render_system.cpp">
       <Filter>Source\Entity.System</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\map.cpp">
+    <ClCompile Include="..\src\map_parser.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map_view.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -181,7 +184,13 @@
     <ClInclude Include="..\src\text_render_system.h">
       <Filter>Source\Entity.System</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\map.h">
+    <ClInclude Include="..\src\map_view.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map_parser.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map_data.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>

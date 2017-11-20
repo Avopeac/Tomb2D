@@ -137,7 +137,8 @@
     <ClCompile Include="..\src\graphics.cpp" />
     <ClCompile Include="..\src\keymap.cpp" />
     <ClCompile Include="..\src\main.cpp" />
-    <ClCompile Include="..\src\map.cpp" />
+    <ClCompile Include="..\src\map_parser.cpp" />
+    <ClCompile Include="..\src\map_view.cpp" />
     <ClCompile Include="..\src\orthographic_camera.cpp" />
     <ClCompile Include="..\src\post_effect.cpp" />
     <ClCompile Include="..\src\post_processing.cpp" />
@@ -162,7 +163,9 @@
     <ClInclude Include="..\src\entity_types.h" />
     <ClInclude Include="..\src\font.h" />
     <ClInclude Include="..\src\font_renderer.h" />
-    <ClInclude Include="..\src\map.h" />
+    <ClInclude Include="..\src\map_data.h" />
+    <ClInclude Include="..\src\map_parser.h" />
+    <ClInclude Include="..\src\map_view.h" />
     <ClInclude Include="..\src\text_render_system.h" />
     <ClInclude Include="..\src\fullscreen_quad.h" />
     <ClInclude Include="..\src\disposable.h" />

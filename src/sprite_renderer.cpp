@@ -100,7 +100,7 @@ void SpriteRenderer::Draw(float delta_time)
 	for (size_t layer = 0; layer < MAX_SPRITE_LAYERS; ++layer)
 	{
 		int sharp_hex_layer_count = 0;
-		for (int j = sharp_hex_start; j < sharp_hex_batches_.size(); ++j)
+		for (size_t j = sharp_hex_start; j < sharp_hex_batches_.size(); ++j)
 		{
 			if (sharp_hex_batches_[j].layer == layer)
 			{
@@ -109,7 +109,7 @@ void SpriteRenderer::Draw(float delta_time)
 		}
 
 		int flat_hex_layer_count = 0;
-		for (int j = flat_hex_start; j < flat_hex_batches_.size(); ++j)
+		for (size_t j = flat_hex_start; j < flat_hex_batches_.size(); ++j)
 		{
 			if (flat_hex_batches_[j].layer == layer)
 			{
@@ -118,7 +118,7 @@ void SpriteRenderer::Draw(float delta_time)
 		}
 
 		int quad_layer_count = 0;
-		for (int j = quad_start; j < quad_batches_.size(); ++j)
+		for (size_t j = quad_start; j < quad_batches_.size(); ++j)
 		{
 			if (quad_batches_[j].layer == layer)
 			{
@@ -127,7 +127,7 @@ void SpriteRenderer::Draw(float delta_time)
 		}
 
 		int isometric_quad_layer_count = 0;
-		for (int j = isometric_quad_start; j < isometric_quad_batches_.size(); ++j)
+		for (size_t j = isometric_quad_start; j < isometric_quad_batches_.size(); ++j)
 		{
 			if (isometric_quad_batches_[j].layer == layer)
 			{

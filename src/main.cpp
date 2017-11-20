@@ -15,7 +15,8 @@
 #include "sprite_render_system.h"
 #include "controller_system.h"
 
-#include "map.h"
+#include "map_parser.h"
+#include "map_view.h"
 
 Sint32 main(Sint32 argc, char * argv[])
 {
@@ -52,8 +53,10 @@ Sint32 main(Sint32 argc, char * argv[])
 			glm::vec2(128.0f, 128.0f));
 
 
-		game::MapParser m;
-		m.Load("assets/maps/inn.json");
+		game::MapParser map_parser;
+		game::MapData map = map_parser.GetMapData("assets/maps/inn.json");
+		game::MapView map_view(graphics_base, map);
+		map_view.Initialize();
 
 		/*auto * backdrop_entity = entity_manager.CreateEntity("backdrop");
 		auto * backdrop_sprite = entity_manager.AddEntityComponent<SpriteComponent>(

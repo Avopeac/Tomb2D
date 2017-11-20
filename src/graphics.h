@@ -59,5 +59,8 @@ namespace graphics
 
 		inline float GetAspectRatio() const { return float(window_width_) / window_height_; }
 
+		glm::vec2 PixelsToScaleAspect(const glm::uvec2 &pixels) const;
+
+		glm::vec2 PixelsToScale(const glm::uvec2 &pixels) const;
 	};
 }

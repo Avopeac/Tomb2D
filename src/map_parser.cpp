@@ -1,16 +1,10 @@
-#include "map.h"
+#include "map_parser.h"
 
 #include <fstream>
 
 #include "json/json.hpp"
 
-#include "glm/glm.hpp"
-
-#include "glm/gtx/transform.hpp"
-
-#include "sprite_component.h"
-
-#include "sprite_renderer.h"
+#include "logger.h"
 
 using namespace game;
 
@@ -22,10 +16,14 @@ MapParser::~MapParser()
 {
 }
 
-void MapParser::Load(const std::string &path)
+MapData &MapParser::GetMapData(const std::string &path)
 {
-	std::ifstream ifs(path);
+	if (maps_.find(path) != maps_.end())
+	{
+		return maps_[path];
+	}
 
+	std::ifstream ifs(path);
 
 	if (ifs.is_open())
 	{
@@ -33,24 +31,18 @@ void MapParser::Load(const std::string &path)
 
 		ifs >> json;
 
-		Map m;
-		
-		m.json_version = json["version"].get<int>();
-		m.tiled_version = json["tiledversion"].get<std::string>();
+		MapData m;
+		m.path = path;
 		m.width = json["width"].get<int>();
 		m.height = json["height"].get<int>();
 		m.tile_width = json["tilewidth"].get<int>();
 		m.tile_height = json["tileheight"].get<int>();
-		m.orientation = json["orientation"].get<std::string>();
-		m.render_order = json["renderorder"].get<std::string>();
-		m.next_object_id = json["nextobjectid"].get<int>();
-		m.type = json["type"].get<std::string>();
 
 		for (auto &layer_it = json["layers"].begin(); layer_it != json["layers"].end(); ++layer_it)
 		{
 			auto & json_layer = layer_it.value();
 
-			Layer layer{};
+			MapLayerData layer{};
 			layer.height = json_layer["height"].get<int>();
 			layer.name = json_layer["name"].get<std::string>();
 			layer.opacity = json_layer["opacity"].get<float>();
@@ -72,12 +64,9 @@ void MapParser::Load(const std::string &path)
 		{
 			auto & json_tilesets = tileset_it.value();
 
-			Tileset tileset{};
+			MapTilesetData tileset{};
 			tileset.columns = json_tilesets["columns"].get<int>();
 			tileset.first_gid = json_tilesets["firstgid"].get<int>();
-			tileset.grid.height = json_tilesets["grid"]["height"].get<int>();
-			tileset.grid.width = json_tilesets["grid"]["width"].get<int>();
-			tileset.grid.orientation = json_tilesets["grid"]["orientation"].get<std::string>();
 			tileset.margin = json_tilesets["margin"].get<int>();
 			tileset.name = json_tilesets["name"].get<std::string>();
 			tileset.spacing = json_tilesets["spacing"].get<int>();
@@ -88,12 +77,12 @@ void MapParser::Load(const std::string &path)
 			for (auto &tile_it = json_tilesets["tiles"].begin(); tile_it != json_tilesets["tiles"].end(); ++tile_it)
 			{
 				auto & json_tile = tile_it.value();
-				
-				Tile tile{};
+
+				MapTileData tile{};
 				tile.image = json_tile["image"].get<std::string>();
 				tile.image_width = json_tile["imagewidth"].get<int>();
 				tile.image_height = json_tile["imageheight"].get<int>();
-				tileset.tiles.insert({ tile_it.key(), tile});
+				tileset.tiles.insert({ std::atoi(tile_it.key().c_str()), tile});
 			}
 
 			m.tilesets.push_back(tileset);
@@ -106,4 +95,6 @@ void MapParser::Load(const std::string &path)
 	{
 		debug::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_INPUT, "Failed to load map.");
 	}
+
+	return maps_[path];
 }
