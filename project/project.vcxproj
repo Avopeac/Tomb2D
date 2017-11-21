@@ -135,6 +135,7 @@
     <ClCompile Include="..\src\font_renderer.cpp" />
     <ClCompile Include="..\src\frame_buffer.cpp" />
     <ClCompile Include="..\src\graphics.cpp" />
+    <ClCompile Include="..\src\gui_canvas.cpp" />
     <ClCompile Include="..\src\keymap.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\map_parser.cpp" />
@@ -161,8 +162,12 @@
     <ClInclude Include="..\src\component.h" />
     <ClInclude Include="..\src\entity_manager.h" />
     <ClInclude Include="..\src\entity_types.h" />
+    <ClInclude Include="..\src\event.h" />
+    <ClInclude Include="..\src\event_test.h" />
     <ClInclude Include="..\src\font.h" />
     <ClInclude Include="..\src\font_renderer.h" />
+    <ClInclude Include="..\src\abstract_gui_object.h" />
+    <ClInclude Include="..\src\gui_canvas.h" />
     <ClInclude Include="..\src\map_data.h" />
     <ClInclude Include="..\src\map_parser.h" />
     <ClInclude Include="..\src\map_view.h" />

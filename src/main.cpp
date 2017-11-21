@@ -9,6 +9,7 @@
 #include "logger.h"
 #include "timing.h"
 #include "renderer.h"
+#include "event.h"
 #include "entity_manager.h"
 
 #include "text_render_system.h"
@@ -18,13 +19,13 @@
 #include "map_parser.h"
 #include "map_view.h"
 
+#include "event_test.h"
+
 Sint32 main(Sint32 argc, char * argv[])
 {
 	// Initialization
 	SDL_Init(SDL_INIT_EVERYTHING);
 	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
-
-
 
 	// Load config
 	input::Config config;
@@ -52,29 +53,10 @@ Sint32 main(Sint32 argc, char * argv[])
 			glm::vec2(24.0f), 
 			glm::vec2(128.0f, 128.0f));
 
-
 		game::MapParser map_parser;
 		game::MapData map = map_parser.GetMapData("assets/maps/inn.json");
 		game::MapView map_view(graphics_base, map);
 		map_view.Initialize();
-
-		/*auto * backdrop_entity = entity_manager.CreateEntity("backdrop");
-		auto * backdrop_sprite = entity_manager.AddEntityComponent<SpriteComponent>(
-			backdrop_entity->id, 
-			"assets/textures/temp/sand.png", 
-			glm::vec4(1.0f), 
-			glm::scale(glm::vec3(1.0f)));
-		backdrop_sprite->SetShape(graphics::SpriteShape::IsometricQuad);
-		backdrop_sprite->SetLayer(graphics::MAX_SPRITE_LAYERS - 1);
-
-		auto * backdrop_entity1 = entity_manager.CreateEntity("backdrop1");
-		auto * backdrop_sprite1 = entity_manager.AddEntityComponent<SpriteComponent>(
-			backdrop_entity1->id,
-			"assets/textures/temp/sand.png",
-			glm::vec4(1.0f),
-			glm::translate(glm::vec3(1.0f, 0.5f, 0.0f)) * glm::scale(glm::vec3(1.0f)));
-		backdrop_sprite1->SetShape(graphics::SpriteShape::IsometricQuad);
-		backdrop_sprite1->SetLayer(graphics::MAX_SPRITE_LAYERS - 1);*/
 
 		auto * character_entity = entity_manager.CreateEntity("character");
 		auto * character_sprite = entity_manager.AddEntityComponent<SpriteComponent>(
@@ -95,7 +77,10 @@ Sint32 main(Sint32 argc, char * argv[])
 			"assets/textures/temp/player_topdown.png", 
 			24, 11, 4, 0, 6);
 	}
-	
+
+	util::EventTest test;
+	test.Run();
+
 	// Main loop 
 	bool running = true;
 	double previous_time = util::GetSeconds();

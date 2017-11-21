@@ -71,6 +71,9 @@
     <ClCompile Include="..\src\map_view.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\gui_canvas.cpp">
+      <Filter>Source\Graphics.Gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\graphics.h">
@@ -175,9 +178,6 @@
     <ClInclude Include="..\src\text_data_pipe.h">
       <Filter>Source\Graphics.Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\font_renderer.h">
-      <Filter>Source\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\text_component.h">
       <Filter>Source\Entity.Component</Filter>
     </ClInclude>
@@ -192,6 +192,21 @@
     </ClInclude>
     <ClInclude Include="..\src\map_data.h">
       <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\font_renderer.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\abstract_gui_object.h">
+      <Filter>Source\Graphics.Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gui_canvas.h">
+      <Filter>Source\Graphics.Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\event.h">
+      <Filter>Source\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\event_test.h">
+      <Filter>Source\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +257,9 @@
     </Filter>
     <Filter Include="Source\Game">
       <UniqueIdentifier>{f1157bd4-5711-4098-9f9f-66e0021a15f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Graphics.Gui">
+      <UniqueIdentifier>{6acb3dec-15d1-4a17-9ae4-9ffb78466e30}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,10 +1,12 @@
 #include "font_renderer.h"
 
+#include "glm/gtc/matrix_transform.hpp"
+
 #include "data_pipe_hub.h"
 
 #include "renderer.h"
 
-#include "glm/gtc/matrix_transform.hpp"
+#include "fullscreen_quad.h"
 
 using namespace graphics;
 
@@ -26,31 +28,10 @@ FontRenderer::FontRenderer(const GraphicsBase & graphics_base) :
 		0.0f,
 		(float)graphics_base_.GetBackbufferHeight(),
 		-1.0f, 1.0f);
-
-	glGenBuffers(1, &vbo_);
-	glGenBuffers(1, &ebo_);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_);
-	glBufferData(GL_ARRAY_BUFFER, 4 * vertex_size, &quad_vertices_[0], GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * index_size, &quad_indices_[0], GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glGenVertexArrays(1, &vao_);
-	glBindVertexArray(vao_);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, GLsizei(vertex_size), (void *)0);
-	glVertexAttribDivisor(0, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
 }
 
 FontRenderer::~FontRenderer()
 {
-	glDeleteVertexArrays(1, &vao_);
-	glDeleteBuffers(1, &vbo_);
-	glDeleteBuffers(1, &ebo_);
 }
 
 void FontRenderer::Draw(float delta_time)
@@ -60,8 +41,7 @@ void FontRenderer::Draw(float delta_time)
 
 	render_target->BindDraw(0, 0, 0, 0, 0);
 
-
-	glBindVertexArray(vao_);
+	FullscreenQuad::Get().Begin();
 
 	pipeline_.Bind();
 
@@ -123,7 +103,7 @@ void FontRenderer::Draw(float delta_time)
 				default_frag_program_->SetUniform("u_texture", &texture_index);
 			}
 
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			FullscreenQuad::Get().DrawElements();
 
 			position.x += glyph->advance;
 
@@ -140,5 +120,5 @@ void FontRenderer::Draw(float delta_time)
 
 	pipeline_.Unbind();
 
-	glBindVertexArray(0);
+	FullscreenQuad::Get().End();
 }
