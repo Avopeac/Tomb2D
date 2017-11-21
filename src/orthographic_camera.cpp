@@ -42,4 +42,38 @@ void OrthographicCamera::Update(float delta_time)
 	inv_proj_ = glm::inverse(proj_); 
 	inv_view_proj_ = glm::inverse(view_proj_);
 
+	auto &keymap = input::Keymap::Get();
+
+	glm::vec2 velocity{};
+	
+	if (keymap.KeyPressed(input::Key::KeyUp))
+	{
+		velocity.y += 1.0f;
+	}
+
+	if (keymap.KeyPressed(input::Key::KeyDown))
+	{
+		velocity.y -= 1.0f;
+	}
+
+	if (keymap.KeyPressed(input::Key::KeyLeft))
+	{
+		velocity.x -= 1.0f;
+	}
+
+	if (keymap.KeyPressed(input::Key::KeyRight))
+	{
+		velocity.x += 1.0f;
+	}
+
+	float len = glm::length(velocity);
+
+	const float speed = 5.0f;
+
+	if (len > glm::epsilon<float>())
+	{
+		glm::vec2 velocity_dir = velocity / len;
+		eye_.x += speed * velocity_dir.x * delta_time;
+		eye_.y += speed * velocity_dir.y * delta_time;
+	}
 }
