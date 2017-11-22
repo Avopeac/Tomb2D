@@ -135,7 +135,7 @@
     <ClCompile Include="..\src\font_renderer.cpp" />
     <ClCompile Include="..\src\frame_buffer.cpp" />
     <ClCompile Include="..\src\graphics.cpp" />
-    <ClCompile Include="..\src\gui_canvas.cpp" />
+    <ClCompile Include="..\src\gui_manager.cpp" />
     <ClCompile Include="..\src\keymap.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\map_parser.cpp" />
@@ -153,6 +153,7 @@
     <ClCompile Include="..\src\text_render_system.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\abstract_gui_element.h" />
     <ClInclude Include="..\src\blend_mode.h" />
     <ClInclude Include="..\src\abstract_camera.h" />
     <ClInclude Include="..\src\config.h" />
@@ -166,8 +167,7 @@
     <ClInclude Include="..\src\event_test.h" />
     <ClInclude Include="..\src\font.h" />
     <ClInclude Include="..\src\font_renderer.h" />
-    <ClInclude Include="..\src\abstract_gui_object.h" />
-    <ClInclude Include="..\src\gui_canvas.h" />
+    <ClInclude Include="..\src\gui_manager.h" />
     <ClInclude Include="..\src\map_data.h" />
     <ClInclude Include="..\src\map_parser.h" />
     <ClInclude Include="..\src\map_view.h" />

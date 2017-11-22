@@ -71,7 +71,7 @@
     <ClCompile Include="..\src\map_view.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\gui_canvas.cpp">
+    <ClCompile Include="..\src\gui_manager.cpp">
       <Filter>Source\Graphics.Gui</Filter>
     </ClCompile>
   </ItemGroup>
@@ -196,17 +196,17 @@
     <ClInclude Include="..\src\font_renderer.h">
       <Filter>Source\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\abstract_gui_object.h">
-      <Filter>Source\Graphics.Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\gui_canvas.h">
-      <Filter>Source\Graphics.Gui</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\event.h">
       <Filter>Source\Util</Filter>
     </ClInclude>
     <ClInclude Include="..\src\event_test.h">
       <Filter>Source\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\abstract_gui_element.h">
+      <Filter>Source\Graphics.Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gui_manager.h">
+      <Filter>Source\Graphics.Gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
