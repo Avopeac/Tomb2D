@@ -74,6 +74,12 @@
     <ClCompile Include="..\src\gui_manager.cpp">
       <Filter>Source\Graphics.Gui</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\audio.cpp">
+      <Filter>Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound.cpp">
+      <Filter>Source\Graphics.Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\graphics.h">
@@ -207,6 +213,12 @@
     </ClInclude>
     <ClInclude Include="..\src\gui_manager.h">
       <Filter>Source\Graphics.Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\audio.h">
+      <Filter>Source\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound.h">
+      <Filter>Source\Graphics.Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

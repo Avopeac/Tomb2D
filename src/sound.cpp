@@ -1,6 +1,6 @@
 #include "sound.h"
 
-#include "SDL_audio.h"
+#include "SDL_assert.h"
 
 using namespace graphics;
 
@@ -12,7 +12,10 @@ SoundCache::~SoundCache()
 {
 	for (auto it = sound_data_.begin(); it != sound_data_.end(); ++it)
 	{
-		it->second.Free();
+		if (it->second.buffer)
+		{
+			SDL_FreeWAV(it->second.buffer);
+		}
 	}
 
 	sound_data_.clear();
@@ -26,7 +29,7 @@ SoundCache::~SoundCache()
 	sounds_.clear();
 }
 
-Sound * SoundCache::GetBufferFromFile(const std::string & path, size_t * hash = nullptr)
+Sound * SoundCache::GetBufferFromFile(const std::string & path, size_t * hash)
 {
 
 	size_t path_hash = std::hash<std::string>{}(path);
@@ -38,12 +41,9 @@ Sound * SoundCache::GetBufferFromFile(const std::string & path, size_t * hash = 
 		sound = &sounds_[path_hash];
 	}
 
-	SDL_AudioSpec spec;
-	Uint8 * buffer;
-	Uint32 length;
-	SDL_LoadWAV(path.c_str(), &spec, &buffer, &length);
-
-	SoundData data(spec, buffer, length);
+	
+	SoundData data;
+	SDL_LoadWAV(path.c_str(), &data.spec, &data.buffer, &data.length);
 	sound_data_.insert({ path_hash, std::move(data) });
 
 	Sound new_sound;
@@ -69,23 +69,6 @@ Sound * SoundCache::GetBufferFromHash(size_t hash)
 	return nullptr;
 }
 
-SoundData::SoundData(const SDL_AudioSpec & spec, Uint8 * buffer, Uint32 length) :
-	spec_(spec), buffer_(buffer), length_(length)
-{
-}
-
-SoundData::~SoundData()
-{
-}
-
-void SoundData::Free()
-{
-	if (buffer_)
-	{
-		SDL_FreeWAV(buffer_);
-	}
-}
-
 Sound::Sound()
 {
 }
@@ -97,6 +80,24 @@ Sound::~Sound()
 void Sound::Create(const SoundData & sound_data)
 {
 	alGenBuffers(1, &id_);
+
+	ALenum format = 0;
+
+	if (SDL_AUDIO_BITSIZE(sound_data.spec.format) == 16)
+	{
+		format = sound_data.spec.channels == 1 ?
+			AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+	}
+	else if (SDL_AUDIO_BITSIZE(sound_data.spec.format) == 8)
+	{
+		format = sound_data.spec.channels == 1 ?
+			AL_FORMAT_MONO8 : AL_FORMAT_STEREO8;
+	}
+
+	SDL_assert(format != 0);
+
+	alBufferData(id_, format, sound_data.buffer,
+		sound_data.length, sound_data.spec.freq);
 }
 
 void Sound::Free()

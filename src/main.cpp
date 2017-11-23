@@ -6,6 +6,7 @@
 
 #include "keymap.h"
 #include "graphics.h"
+#include "audio.h"
 #include "logger.h"
 #include "timing.h"
 #include "renderer.h"
@@ -35,6 +36,9 @@ Sint32 main(Sint32 argc, char * argv[])
 	graphics::GraphicsBase graphics_base(config);
 	graphics::Renderer renderer(&graphics_base);
 
+	// Initialize audio device
+	audio::AudioBase audio_base(config);
+	
 	auto &entity_manager = entity::EntityManager::Get();
 
 	// Setup scene
@@ -80,6 +84,10 @@ Sint32 main(Sint32 argc, char * argv[])
 
 	util::EventTest test;
 	test.Run();
+
+	size_t sound_hash;
+	auto * sound = graphics::ResourceManager::Get().GetSoundCache().
+		GetBufferFromFile("assets/audio/temp/intro.wav", &sound_hash);
 
 	// Main loop 
 	bool running = true;

@@ -19,4 +19,5 @@ void ResourceManager::Initialize()
 	program_cache_ = std::make_unique<ProgramCache>();
 	texture_cache_ = std::make_unique<TextureCache>();
 	font_cache_ = std::make_unique<FontCache>();
+	sound_cache_ = std::make_unique<SoundCache>();
 }

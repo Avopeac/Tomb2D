@@ -8,6 +8,7 @@
 #include "shader.h"
 #include "texture.h"
 #include "font.h"
+#include "sound.h"
 
 namespace graphics
 {
@@ -23,6 +24,7 @@ namespace graphics
 		std::unique_ptr<ProgramCache> program_cache_;
 		std::unique_ptr<TextureCache> texture_cache_;
 		std::unique_ptr<FontCache> font_cache_;
+		std::unique_ptr<SoundCache> sound_cache_;
 
 	public:
 
@@ -53,6 +55,8 @@ namespace graphics
 		inline TextureCache &GetTextureCache() { return *texture_cache_.get(); }
 
 		inline FontCache &GetFontCache() { return *font_cache_.get(); }
+
+		inline SoundCache &GetSoundCache() { return *sound_cache_.get(); }
 
 	private:
 

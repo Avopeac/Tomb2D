@@ -4,31 +4,17 @@
 
 #include "AL/al.h"
 
+#include "SDL_audio.h"
+
 #include "disposable.h"
 
 namespace graphics {
 
-	class SoundData : public base::Disposable
+	struct SoundData
 	{
-		SDL_AudioSpec spec_;
-		Uint32 length_;
-		Uint8 * buffer_;
-
-	public:
-
-		SoundData(const SDL_AudioSpec &spec, 
-			Uint8 * buffer = nullptr,
-			Uint32 length = 0);
-
-		~SoundData();
-
-		inline const SDL_AudioSpec &GetSpec() const { return spec_; }
-
-		inline Uint32 GetLength() const { return length_; }
-
-		inline const Uint8 * const GetBuffer() const { return buffer_; }
-
-		void Free() override;
+		SDL_AudioSpec spec;
+		Uint32 length = 0;
+		Uint8 * buffer = nullptr;
 	};
 
 	class Sound : public base::Disposable
