@@ -4,13 +4,14 @@
 
 using namespace audio;
 
-AudioBase::AudioBase(const input::Config & config)
+AudioBase::AudioBase(const input::Config & config) :
+	position_(0), velocity_(0), forward_(0, 0, -1), up_(0, 1, 0)
 {
 	device_name_ = std::string(alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER));
 
 	if (device_ = alcOpenDevice(device_name_.c_str()))
 	{
-		
+
 		std::string message = "Loaded audio device with name ";
 		message.append(device_name_);
 		debug::Log(SDL_LOG_PRIORITY_INFO, SDL_LOG_CATEGORY_AUDIO, message.c_str());

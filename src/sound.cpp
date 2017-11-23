@@ -34,11 +34,14 @@ Sound * SoundCache::GetBufferFromFile(const std::string & path, size_t * hash)
 
 	size_t path_hash = std::hash<std::string>{}(path);
 
-	Sound * sound = nullptr;
-
 	if (sound_data_.find(path_hash) != sound_data_.end())
 	{
-		sound = &sounds_[path_hash];
+		if (hash)
+		{
+			*hash = path_hash;
+		}
+
+		return &sounds_[path_hash];
 	}
 
 	
@@ -48,7 +51,6 @@ Sound * SoundCache::GetBufferFromFile(const std::string & path, size_t * hash)
 
 	Sound new_sound;
 	new_sound.Create(sound_data_[path_hash]);
-	
 	sounds_.insert({ path_hash, std::move(new_sound) });
 
 	if (hash)
@@ -56,7 +58,7 @@ Sound * SoundCache::GetBufferFromFile(const std::string & path, size_t * hash)
 		*hash = path_hash;
 	}
 
-	return sound;
+	return &sounds_[path_hash];
 }
 
 Sound * SoundCache::GetBufferFromHash(size_t hash)

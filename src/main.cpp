@@ -21,6 +21,7 @@
 #include "map_view.h"
 
 #include "event_test.h"
+#include "audio_source.h"
 
 Sint32 main(Sint32 argc, char * argv[])
 {
@@ -58,7 +59,7 @@ Sint32 main(Sint32 argc, char * argv[])
 			glm::vec2(128.0f, 128.0f));
 
 		game::MapParser map_parser;
-		game::MapData map = map_parser.GetMapData("assets/maps/inn.json");
+		game::MapData map = map_parser.GetMapData("assets/maps/inn_2.json");
 		game::MapView map_view(graphics_base, map);
 		map_view.Initialize();
 
@@ -87,7 +88,11 @@ Sint32 main(Sint32 argc, char * argv[])
 
 	size_t sound_hash;
 	auto * sound = graphics::ResourceManager::Get().GetSoundCache().
-		GetBufferFromFile("assets/audio/temp/intro.wav", &sound_hash);
+		GetBufferFromFile("assets/audio/temp/fairywoods.wav", &sound_hash);
+
+	audio::AudioSource source(sound);
+	source.SetRepeating(true);
+	source.Play();
 
 	// Main loop 
 	bool running = true;

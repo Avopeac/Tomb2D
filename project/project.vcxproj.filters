@@ -80,6 +80,9 @@
     <ClCompile Include="..\src\sound.cpp">
       <Filter>Source\Graphics.Resources</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\audio_source.cpp">
+      <Filter>Source\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\graphics.h">
@@ -126,9 +129,6 @@
     </ClInclude>
     <ClInclude Include="..\src\abstract_camera.h">
       <Filter>Source\Graphics.Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\resource_manager.h">
-      <Filter>Source\Graphics.Resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\data_pipe_hub.h">
       <Filter>Source\Graphics.Data</Filter>
@@ -218,6 +218,12 @@
       <Filter>Source\Audio</Filter>
     </ClInclude>
     <ClInclude Include="..\src\sound.h">
+      <Filter>Source\Graphics.Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\audio_source.h">
+      <Filter>Source\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resource_manager.h">
       <Filter>Source\Graphics.Resources</Filter>
     </ClInclude>
   </ItemGroup>
