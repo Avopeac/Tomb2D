@@ -2,6 +2,10 @@
 
 #include <functional>
 
+#include <vector>
+
+#include <memory>
+
 #include "glm/glm.hpp"
 
 namespace graphics {
@@ -17,6 +21,14 @@ namespace graphics {
 
 		size_t uid_;
 
+		Interaction hit_event_;
+
+		Interaction hover_event_;
+
+		Interaction dehover_event_;
+
+	protected:
+
 		glm::ivec2 padding_;
 
 		glm::ivec2 margin_;
@@ -25,17 +37,13 @@ namespace graphics {
 
 		glm::ivec2 bounds_;
 
-		Interaction hit_event_;
-
-		Interaction hover_event_;
-
-		Interaction dehover_event_;
+		std::vector<std::weak_ptr<AbstractGuiElement>> children_;
 
 	public:
 
 		AbstractGuiElement();
 
-		~AbstractGuiElement();
+		~AbstractGuiElement() = default;
 
 		AbstractGuiElement(const AbstractGuiElement &) = delete;
 

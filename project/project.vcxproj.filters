@@ -71,9 +71,6 @@
     <ClCompile Include="..\src\map_view.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\gui_manager.cpp">
-      <Filter>Source\Graphics.Gui</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\audio.cpp">
       <Filter>Source\Audio</Filter>
     </ClCompile>
@@ -82,6 +79,15 @@
     </ClCompile>
     <ClCompile Include="..\src\audio_source.cpp">
       <Filter>Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gui_panel.cpp">
+      <Filter>Source\Graphics.Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\abstract_gui_element.cpp">
+      <Filter>Source\Graphics.Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gui_tree.cpp">
+      <Filter>Source\Graphics.Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,9 +217,6 @@
     <ClInclude Include="..\src\abstract_gui_element.h">
       <Filter>Source\Graphics.Gui</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\gui_manager.h">
-      <Filter>Source\Graphics.Gui</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\audio.h">
       <Filter>Source\Audio</Filter>
     </ClInclude>
@@ -225,6 +228,12 @@
     </ClInclude>
     <ClInclude Include="..\src\resource_manager.h">
       <Filter>Source\Graphics.Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gui_panel.h">
+      <Filter>Source\Graphics.Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gui_tree.h">
+      <Filter>Source\Graphics.Gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
