@@ -27,11 +27,11 @@ namespace graphics {
 
 	private:
 
-		Interaction GetHitInteraction();
+		PropagateInteraction GetHitInteraction(const glm::vec2 &mouse);
 
-		Interaction GetHoverInteraction();
+		PropagateInteraction GetHoverInteraction(const glm::vec2 &mouse);
 
-		Interaction GetDehoverInteraction();
+		PropagateInteraction GetDehoverInteraction(const glm::vec2 &mouse);
 
 	};
 }

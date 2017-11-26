@@ -126,12 +126,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\abstract_engine_system.cpp" />
     <ClCompile Include="..\src\abstract_gui_element.cpp" />
     <ClCompile Include="..\src\audio.cpp" />
     <ClCompile Include="..\src\audio_source.cpp" />
     <ClCompile Include="..\src\blend_mode.cpp" />
     <ClCompile Include="..\src\config.cpp" />
     <ClCompile Include="..\src\controller_system.cpp" />
+    <ClCompile Include="..\src\engine_message_bus.cpp" />
     <ClCompile Include="..\src\entity_manager.cpp" />
     <ClCompile Include="..\src\file.cpp" />
     <ClCompile Include="..\src\font.cpp" />
@@ -139,7 +141,7 @@
     <ClCompile Include="..\src\frame_buffer.cpp" />
     <ClCompile Include="..\src\graphics.cpp" />
     <ClCompile Include="..\src\gui_tree.cpp" />
-    <ClCompile Include="..\src\gui_panel.cpp" />
+    <ClCompile Include="..\src\gui_container.cpp" />
     <ClCompile Include="..\src\keymap.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\map_parser.cpp" />
@@ -158,6 +160,7 @@
     <ClCompile Include="..\src\text_render_system.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\abstract_engine_system.h" />
     <ClInclude Include="..\src\abstract_gui_element.h" />
     <ClInclude Include="..\src\audio.h" />
     <ClInclude Include="..\src\audio_source.h" />
@@ -168,6 +171,8 @@
     <ClInclude Include="..\src\controller_system.h" />
     <ClInclude Include="..\src\data_pipe_hub.h" />
     <ClInclude Include="..\src\component.h" />
+    <ClInclude Include="..\src\engine_message.h" />
+    <ClInclude Include="..\src\engine_message_bus.h" />
     <ClInclude Include="..\src\entity_manager.h" />
     <ClInclude Include="..\src\entity_types.h" />
     <ClInclude Include="..\src\event.h" />
@@ -175,7 +180,7 @@
     <ClInclude Include="..\src\font.h" />
     <ClInclude Include="..\src\font_renderer.h" />
     <ClInclude Include="..\src\gui_tree.h" />
-    <ClInclude Include="..\src\gui_panel.h" />
+    <ClInclude Include="..\src\gui_container.h" />
     <ClInclude Include="..\src\map_data.h" />
     <ClInclude Include="..\src\map_parser.h" />
     <ClInclude Include="..\src\map_view.h" />

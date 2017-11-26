@@ -1,6 +1,6 @@
 #include "gui_tree.h"
 
-#include "gui_panel.h"
+#include "gui_container.h"
 
 using namespace graphics;
 
@@ -10,7 +10,7 @@ GuiTree::GuiTree(const GraphicsBase &graphics_base) :
 	glm::vec2 canvas_size = { graphics_base_->GetBackbufferWidth(),
 		graphics_base_->GetBackbufferHeight() };
 
-	root_ = new GuiPanel(canvas_size, "");
+	root_ = new GuiContainer(canvas_size, "");
 }
 
 GuiTree::~GuiTree()
@@ -31,17 +31,17 @@ void GuiTree::Update(float delta_time)
 	// TODO: Propagate input events to all elements
 }
 
-Interaction GuiTree::GetHitInteraction()
+PropagateInteraction GuiTree::GetHitInteraction(const glm::vec2 & mouse)
 {
-	return Interaction();
+	return PropagateInteraction();
 }
 
-Interaction GuiTree::GetHoverInteraction()
+PropagateInteraction GuiTree::GetHoverInteraction(const glm::vec2 & mouse)
 {
-	return Interaction();
+	return PropagateInteraction();
 }
 
-Interaction GuiTree::GetDehoverInteraction()
+PropagateInteraction GuiTree::GetDehoverInteraction(const glm::vec2 & mouse)
 {
-	return Interaction();
+	return PropagateInteraction();
 }

@@ -94,7 +94,7 @@ float Font::GetKerningDistance(char first, char second)
 
 float Font::GetFontLineSkip()
 {
-	return TTF_FontLineSkip(font_);
+	return float(TTF_FontLineSkip(font_));
 }
 
 float Font::GetFontAscent()
