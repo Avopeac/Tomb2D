@@ -9,7 +9,7 @@
 
 #include "disposable.h"
 
-namespace graphics
+namespace core
 {
 
 	class Texture : base::Disposable

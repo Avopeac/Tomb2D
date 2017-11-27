@@ -2,7 +2,7 @@
 
 using namespace audio;
 
-AudioSource::AudioSource(const graphics::Sound * sound) :
+AudioSource::AudioSource(const core::Sound * sound) :
 	position_(0), velocity_(0), direction_(0)
 {
 	alGenSources(1, &source_id_);

@@ -11,7 +11,7 @@
 
 #include "disposable.h"
 
-namespace graphics {
+namespace core {
 
 	constexpr size_t CHAR_MAP_LENGTH{ 88 };
 

@@ -2,7 +2,7 @@
 
 #include "logger.h"
 
-using namespace graphics;
+using namespace core;
 
 Sampler::Sampler() :
 	unit_(0), id_(0)
@@ -83,7 +83,7 @@ Sampler * SamplerCache::GetFromParameters(MagnificationFiltering mag,
 	return &samplers_[parameter_hash];
 }
 
-Sampler * graphics::SamplerCache::GetFromHash(size_t hash)
+Sampler * SamplerCache::GetFromHash(size_t hash)
 {
 	SDL_assert(samplers_.find(hash) != samplers_.end());
 	if (samplers_.find(hash) != samplers_.end())

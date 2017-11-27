@@ -4,7 +4,7 @@
 
 #include "SDL.h"
 
-namespace input
+namespace core
 {
 	class Config
 	{

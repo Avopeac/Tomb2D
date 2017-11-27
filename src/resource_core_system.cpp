@@ -1,17 +1,17 @@
-#include "resource_manager.h"
+#include "resource_core_system.h"
 
-using namespace graphics;
+using namespace core;
 
-ResourceManager::ResourceManager()
+ResourceCoreSystem::ResourceCoreSystem()
 {
 
 }
 
-ResourceManager::~ResourceManager()
+ResourceCoreSystem::~ResourceCoreSystem()
 {
 }
 
-void ResourceManager::Initialize()
+void ResourceCoreSystem::StartUp()
 {
 	blend_cache_ = std::make_unique<BlendCache>();
 	frame_buffer_cache_ = std::make_unique<FrameBufferCache>();
@@ -20,4 +20,9 @@ void ResourceManager::Initialize()
 	texture_cache_ = std::make_unique<TextureCache>();
 	font_cache_ = std::make_unique<FontCache>();
 	sound_cache_ = std::make_unique<SoundCache>();
+}
+
+void ResourceCoreSystem::CleanUp()
+{
+	
 }

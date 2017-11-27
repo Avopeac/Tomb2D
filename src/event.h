@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 
-namespace util {
+namespace core {
 
 	template <typename EventData> class EventSubscriber
 	{

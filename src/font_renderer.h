@@ -6,7 +6,7 @@
 
 #include "graphics.h"
 
-#include "resource_manager.h"
+#include "core.h"
 
 namespace graphics 
 {
@@ -14,11 +14,11 @@ namespace graphics
 	{
 		const GraphicsBase &graphics_base_;
 
-		ProgramPipeline pipeline_;
+		core::ProgramPipeline pipeline_;
 
-		Program * default_vert_program_;
+		core::Program * default_vert_program_;
 
-		Program * default_frag_program_;
+		core::Program * default_frag_program_;
 
 		glm::mat4 proj_;
 

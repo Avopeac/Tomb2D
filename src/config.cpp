@@ -2,7 +2,7 @@
 
 #include "chaiscript/chaiscript.hpp"
 
-using namespace input;
+using namespace core;
 
 Config::Config()
 {

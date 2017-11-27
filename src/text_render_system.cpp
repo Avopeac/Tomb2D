@@ -1,7 +1,7 @@
 #include "text_render_system.h"
 
 #include "entity_manager.h"
-#include "resource_manager.h"
+#include "core.h"
 #include "data_pipe_hub.h"
 
 using namespace entity;
@@ -66,9 +66,9 @@ void TextRenderSystem::InitializeTextComponent(TextComponent* text_component)
 {
 	if (text_component)
 	{
-		auto &blend_cache = graphics::ResourceManager::Get().GetBlendCache();
-		auto &sampler_cache = graphics::ResourceManager::Get().GetSamplerCache();
-		auto &font_cache = graphics::ResourceManager::Get().GetFontCache();
+		auto &blend_cache = core::Core::GetResourceSystem()->GetBlendCache();
+		auto &sampler_cache = core::Core::GetResourceSystem()->GetSamplerCache();
+		auto &font_cache = core::Core::GetResourceSystem()->GetFontCache();
 
 		size_t blend_hash, sampler_hash, font_hash;
 

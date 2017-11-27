@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include "abstract_core_system.h"
+
 #include "blend_mode.h"
 #include "frame_buffer.h"
 #include "sampler.h"
@@ -10,14 +12,11 @@
 #include "font.h"
 #include "sound.h"
 
-namespace graphics
+namespace core
 {
 
-	class ResourceManager
+	class ResourceCoreSystem : public AbstractCoreSystem
 	{
-
-		ResourceManager * this_ptr = nullptr;
-
 		std::unique_ptr<BlendCache> blend_cache_;
 		std::unique_ptr<FrameBufferCache> frame_buffer_cache_;
 		std::unique_ptr<SamplerCache> sampler_cache_;
@@ -28,21 +27,13 @@ namespace graphics
 
 	public:
 
-		static ResourceManager &Get()
-		{
-			static ResourceManager instance;
+		ResourceCoreSystem();
 
-			// NOTE: Not thread safe
-			if (instance.this_ptr == nullptr)
-			{
-				instance.Initialize();
-				instance.this_ptr = &instance;
-			}
+		~ResourceCoreSystem();
 
-			return instance;
-		}
+		void StartUp() override;
 
-		~ResourceManager();
+		void CleanUp() override;
 
 		inline BlendCache &GetBlendCache() { return *blend_cache_.get(); }
 
@@ -57,12 +48,6 @@ namespace graphics
 		inline FontCache &GetFontCache() { return *font_cache_.get(); }
 
 		inline SoundCache &GetSoundCache() { return *sound_cache_.get(); }
-
-	private:
-
-		ResourceManager();
-
-		void Initialize();
 
 	};
 }

@@ -19,8 +19,8 @@ PostEffect::~PostEffect()
 void PostEffect::Init()
 {
 
-	auto &program_cache = ResourceManager::Get().GetProgramCache();
-	auto &frame_buffer_cache = ResourceManager::Get().GetFrameBufferCache();
+	auto &program_cache = core::Core::GetResourceSystem()->GetProgramCache();
+	auto &frame_buffer_cache = core::Core::GetResourceSystem()->GetFrameBufferCache();
 
 	vertex_shader_ = program_cache.GetFromFile(v_name_, GL_VERTEX_SHADER, v_path_);
 	fragment_shader_ = program_cache.GetFromFile(f_name_, GL_FRAGMENT_SHADER, f_path_);
@@ -50,14 +50,14 @@ void PostEffect::Apply()
 		fbo0_->BindColorAttachment(i, i); 
 	}
 
-	auto &fbo_resource = ResourceManager::Get().GetFrameBufferCache();
+	auto &fbo_resource = core::Core::GetResourceSystem()->GetFrameBufferCache();
 
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);   
 	glDrawBuffer(GL_BACK); 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);  
 	 
-	float time = (float)util::GetSeconds();
+	float time = (float)core::GetSeconds();
 	 
 	glm::vec2 texel_size{ graphics_base_->GetBackbufferWidth(), graphics_base_->GetBackbufferHeight() };
 	texel_size = 1.0f / texel_size;

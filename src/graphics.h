@@ -37,7 +37,7 @@ namespace graphics
 
 	public:
 
-		GraphicsBase(const input::Config &config);
+		GraphicsBase(const core::Config &config);
 
 		~GraphicsBase();
 

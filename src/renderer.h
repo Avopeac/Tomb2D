@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "graphics.h"
-#include "resource_manager.h"
+#include "core.h"
 #include "post_processing.h"
 #include "sprite_renderer.h"
 #include "font_renderer.h"
@@ -14,7 +14,7 @@ namespace graphics
 	{
 
 		GraphicsBase *graphics_base_;
-		FrameBuffer *render_target_;
+		core::FrameBuffer *render_target_;
 
 		std::unique_ptr<SpriteRenderer> sprite_renderer_;
 		std::unique_ptr<FontRenderer> font_renderer_;
@@ -38,7 +38,7 @@ namespace graphics
 
 	private:
 
-		FrameBuffer* CreateRenderTarget();
+		core::FrameBuffer* CreateRenderTarget();
 
 	};
 }

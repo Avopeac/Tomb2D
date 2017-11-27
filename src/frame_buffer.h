@@ -9,7 +9,7 @@
 #include "disposable.h"
 #include "texture.h"
 
-namespace graphics
+namespace core
 {
 	struct FrameBufferAttachmentDescriptor
 	{

@@ -4,7 +4,7 @@
 
 #include "logger.h"
 
-using namespace graphics;
+using namespace core;
 
 Blend::Blend(BlendMode src_blend, BlendMode dst_blend)
 	: src_color_blend_(src_blend), dst_color_blend_(dst_blend),
@@ -12,7 +12,7 @@ Blend::Blend(BlendMode src_blend, BlendMode dst_blend)
 {
 }
 
-graphics::Blend::Blend()
+Blend::Blend()
 	: src_color_blend_(BlendMode::One), dst_color_blend_(BlendMode::One),
 	src_alpha_blend_(BlendMode::One), dst_alpha_blend_(BlendMode::One)
 {

@@ -4,7 +4,7 @@
 
 #include "GL/glew.h"
 
-namespace graphics
+namespace core
 {
 	enum class BlendMode
 	{

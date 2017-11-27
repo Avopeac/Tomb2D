@@ -8,7 +8,7 @@
 
 #include "logger.h"
 
-namespace graphics
+namespace core
 {
 	struct ProgramUniformData
 	{

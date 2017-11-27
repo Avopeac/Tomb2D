@@ -5,7 +5,7 @@
 #include <string>
 
 #include "component.h"
-#include "resource_manager.h"
+#include "core.h"
 #include "sprite_data_pipe.h"
 
 namespace entity
@@ -17,12 +17,12 @@ namespace entity
 
 		std::string texture_path_;
 
-		graphics::BlendMode src_blend_;
-		graphics::BlendMode dst_blend_;
-		graphics::MagnificationFiltering mag_filter_;
-		graphics::MinificationFiltering min_filter_;
-		graphics::Wrapping s_wrapping_;
-		graphics::Wrapping t_wrapping_;
+		core::BlendMode src_blend_;
+		core::BlendMode dst_blend_;
+		core::MagnificationFiltering mag_filter_;
+		core::MinificationFiltering min_filter_;
+		core::Wrapping s_wrapping_;
+		core::Wrapping t_wrapping_;
 
 		size_t layer_;
 		glm::vec4 color_;
@@ -40,12 +40,12 @@ namespace entity
 			const glm::mat4 &transform = glm::mat4(1.0f),
 			size_t layer = 0,
 			graphics::SpriteShape shape = graphics::SpriteShape::Quad,
-			graphics::BlendMode src_blend = graphics::BlendMode::SrcAlpha, 
-			graphics::BlendMode dst_blend = graphics::BlendMode::OneMinusSrcAlpha,
-			graphics::MagnificationFiltering magnification = graphics::MagnificationFiltering::Linear,
-			graphics::MinificationFiltering minification = graphics::MinificationFiltering::Linear, 
-			graphics::Wrapping s = graphics::Wrapping::ClampToEdge,
-			graphics::Wrapping t = graphics::Wrapping::ClampToEdge) :
+			core::BlendMode src_blend = core::BlendMode::SrcAlpha,
+			core::BlendMode dst_blend = core::BlendMode::OneMinusSrcAlpha,
+			core::MagnificationFiltering magnification = core::MagnificationFiltering::Linear,
+			core::MinificationFiltering minification = core::MinificationFiltering::Linear,
+			core::Wrapping s = core::Wrapping::ClampToEdge,
+			core::Wrapping t = core::Wrapping::ClampToEdge) :
 			texture_path_(texture_path),
 			src_blend_(src_blend),
 			dst_blend_(dst_blend),
@@ -66,49 +66,49 @@ namespace entity
 
 		void LowerDirty() { dirty_ = false; }
 		
-		inline graphics::BlendMode GetSrcBlend() const { return src_blend_; }
+		inline core::BlendMode GetSrcBlend() const { return src_blend_; }
 
-		inline void SetSrcBlend(graphics::BlendMode blend_mode)
+		inline void SetSrcBlend(core::BlendMode blend_mode)
 		{
 			dirty_ = true;
 			dst_blend_ = blend_mode;
 		}
 
-		inline graphics::BlendMode GetDstBlend() const { return dst_blend_; }
+		inline core::BlendMode GetDstBlend() const { return dst_blend_; }
 
-		inline void SetDstBlend(graphics::BlendMode blend_mode)
+		inline void SetDstBlend(core::BlendMode blend_mode)
 		{
 			dirty_ = true;
 			dst_blend_ = blend_mode;
 		}
 
-		inline graphics::MinificationFiltering GetMinFilter() const { return min_filter_; }
+		inline core::MinificationFiltering GetMinFilter() const { return min_filter_; }
 
-		inline void SetMinFilter(graphics::MinificationFiltering filter)
+		inline void SetMinFilter(core::MinificationFiltering filter)
 		{
 			dirty_ = true;
 			min_filter_ = filter;
 		}
 
-		inline graphics::MagnificationFiltering GetMagFilter() const { return mag_filter_; }
+		inline core::MagnificationFiltering GetMagFilter() const { return mag_filter_; }
 
-		inline void SetMagFilter(graphics::MagnificationFiltering filter)
+		inline void SetMagFilter(core::MagnificationFiltering filter)
 		{
 			dirty_ = true;
 			mag_filter_ = filter;
 		}
 
-		inline graphics::Wrapping GetWrappingS() const { return s_wrapping_; }
+		inline core::Wrapping GetWrappingS() const { return s_wrapping_; }
 
-		inline void SetWrappingS(graphics::Wrapping wrap_mode)
+		inline void SetWrappingS(core::Wrapping wrap_mode)
 		{
 			dirty_ = true;
 			s_wrapping_ = wrap_mode;
 		}
 
-		inline graphics::Wrapping GetWrappingT() const { return t_wrapping_; }
+		inline core::Wrapping GetWrappingT() const { return t_wrapping_; }
 
-		inline void SetWrappingT(graphics::Wrapping wrap_mode)
+		inline void SetWrappingT(core::Wrapping wrap_mode)
 		{
 			dirty_ = true;
 			t_wrapping_ = wrap_mode;

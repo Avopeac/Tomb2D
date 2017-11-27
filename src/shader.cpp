@@ -5,7 +5,7 @@
 #include "file.h"
 #include "logger.h"
 
-using namespace graphics;
+using namespace core;
 
 ProgramCache::ProgramCache()
 {

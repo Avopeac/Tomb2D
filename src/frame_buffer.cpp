@@ -3,7 +3,7 @@
 #include "texture.h"
 #include "logger.h"
 
-using namespace graphics;
+using namespace core;
 
 FrameBuffer::FrameBuffer(Uint32 width, Uint32 height, Uint32 num_samples,
 	const std::vector<FrameBufferAttachmentDescriptor> &descriptors,

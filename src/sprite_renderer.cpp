@@ -11,8 +11,8 @@ using namespace graphics;
 SpriteRenderer::SpriteRenderer(const GraphicsBase &graphics_base) :
 	graphics_base_(graphics_base)
 {
-	default_vert_program_ = ResourceManager::Get().GetProgramCache().GetFromFile("default_sprite.vert", GL_VERTEX_SHADER, "assets/shaders/default_sprite.vert");
-	default_frag_program_ = ResourceManager::Get().GetProgramCache().GetFromFile("default_sprite.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_sprite.frag");
+	default_vert_program_ = core::Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_sprite.vert", GL_VERTEX_SHADER, "assets/shaders/default_sprite.vert");
+	default_frag_program_ = core::Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_sprite.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_sprite.frag");
 
 	pipeline_.SetStages(*default_vert_program_);
 	pipeline_.SetStages(*default_frag_program_);
@@ -73,8 +73,8 @@ void SpriteRenderer::Draw(float delta_time)
 
 	DataPipeHub::Get().GetSpriteDataPipe().Flush();
 
-	FrameBuffer * render_target = 
-		ResourceManager::Get().GetFrameBufferCache().GetFromName(Renderer::render_target_name);
+	core::FrameBuffer * render_target = 
+		core::Core::GetResourceSystem()->GetFrameBufferCache().GetFromName(Renderer::render_target_name);
 
 	render_target->BindDraw(GL_COLOR_BUFFER_BIT, 0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -313,9 +313,9 @@ void SpriteRenderer::PushToBatchObject(std::vector<Batch> &batches, const Sprite
 void SpriteRenderer::DrawBatchObject(BatchObject & object, size_t start, size_t end, std::vector<Batch> &batches)
 {
 
-	auto & blend_cache = ResourceManager::Get().GetBlendCache();
-	auto & sampler_cache = ResourceManager::Get().GetSamplerCache();
-	auto & texture_cache = ResourceManager::Get().GetTextureCache();
+	auto & blend_cache = core::Core::GetResourceSystem()->GetBlendCache();
+	auto & sampler_cache = core::Core::GetResourceSystem()->GetSamplerCache();
+	auto & texture_cache = core::Core::GetResourceSystem()->GetTextureCache();
 
 	glBindVertexArray(object.vertex_array);
 

@@ -8,7 +8,7 @@
 
 using namespace graphics;
 
-GraphicsBase::GraphicsBase(const input::Config & config)
+GraphicsBase::GraphicsBase(const core::Config & config)
 {
 	// Create window with these attributes
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);

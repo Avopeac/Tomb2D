@@ -20,18 +20,18 @@
 #include "map_parser.h"
 #include "map_view.h"
 
-#include "event_test.h"
 #include "audio_source.h"
+
+#include "core.h"
+#include "config.h"
 
 Sint32 main(Sint32 argc, char * argv[])
 {
-	// Initialization
-	SDL_Init(SDL_INIT_EVERYTHING);
-	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 
-	// Load config
-	input::Config config;
+	// Initialize
+	core::Config config;
 	config.Load("assets/scripts/config.chai");
+	core::Core::GetInstance().StartUp(config);
 
 	// Create window and initialize graphics
 	graphics::GraphicsBase graphics_base(config);
@@ -83,11 +83,8 @@ Sint32 main(Sint32 argc, char * argv[])
 			24, 11, 4, 0, 6);
 	}
 
-	util::EventTest test;
-	test.Run();
-
 	size_t sound_hash;
-	auto * sound = graphics::ResourceManager::Get().GetSoundCache().
+	auto * sound = core::Core::GetResourceSystem()->GetSoundCache().
 		GetBufferFromFile("assets/audio/temp/fairywoods.wav", &sound_hash);
 
 	audio::AudioSource source(sound);
@@ -96,10 +93,10 @@ Sint32 main(Sint32 argc, char * argv[])
 
 	// Main loop 
 	bool running = true;
-	double previous_time = util::GetSeconds();
+	double previous_time = core::GetSeconds();
 	while(running)
 	{
-		double current_time = util::GetSeconds();
+		double current_time = core::GetSeconds();
 		double frame_time = current_time - previous_time;
 		previous_time = current_time;
 
@@ -133,8 +130,7 @@ Sint32 main(Sint32 argc, char * argv[])
 		input::Keymap::Get().CarryCurrentInput();
 	}
 
-	IMG_Quit();
-	SDL_Quit();
-	
+	core::Core::GetInstance().CleanUp();
+
 	return 0;
 }

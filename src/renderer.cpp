@@ -1,5 +1,5 @@
 #include "renderer.h"
-#include "resource_manager.h"
+#include "core.h"
 
 #include "post_effect.h"
 
@@ -40,18 +40,18 @@ void Renderer::Invoke(float frame_time)
 	post_processing_->Process();
 }
 
-FrameBuffer * Renderer::CreateRenderTarget()
+core::FrameBuffer * Renderer::CreateRenderTarget()
 {
-	std::vector<FrameBufferAttachmentDescriptor> descriptors;
+	std::vector<core::FrameBufferAttachmentDescriptor> descriptors;
 
-	FrameBufferAttachmentDescriptor composition;
+	core::FrameBufferAttachmentDescriptor composition;
 	composition.format = GL_RGBA;
 	composition.internal_format = GL_RGBA16F;
 	composition.type = GL_FLOAT;
 
 	descriptors.push_back(composition); 
 
-	auto &frame_buffer_cache = ResourceManager::Get().GetFrameBufferCache();
+	auto &frame_buffer_cache = core::Core::GetResourceSystem()->GetFrameBufferCache();
 	return frame_buffer_cache.GetFromParameters(render_target_name,
 		graphics_base_->GetBackbufferWidth(), graphics_base_->GetBackbufferHeight(),
 		0, descriptors, nullptr);

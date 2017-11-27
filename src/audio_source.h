@@ -18,7 +18,7 @@ namespace audio {
 
 	public:
 		
-		AudioSource(const graphics::Sound * sound);
+		AudioSource(const core::Sound * sound);
 		
 		~AudioSource();
 

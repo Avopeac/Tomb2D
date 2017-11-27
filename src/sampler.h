@@ -8,7 +8,7 @@
 
 #include "disposable.h"
 
-namespace graphics
+namespace core
 {
 	enum class MinificationFiltering : Uint32
 	{

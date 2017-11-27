@@ -8,7 +8,7 @@
 
 #include "disposable.h"
 
-namespace graphics {
+namespace core {
 
 	struct SoundData
 	{

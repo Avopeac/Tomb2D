@@ -7,7 +7,7 @@
 #include <GL/glew.h>
 
 #include "graphics.h"
-#include "resource_manager.h"
+#include "core.h"
 
 namespace graphics
 {

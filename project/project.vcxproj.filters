@@ -5,38 +5,17 @@
     <ClCompile Include="..\src\graphics.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\config.cpp">
-      <Filter>Source\Input</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\file.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
     <ClCompile Include="..\src\post_processing.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\texture.cpp">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\sampler.cpp">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\frame_buffer.cpp">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\blend_mode.cpp">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\shader.cpp">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\renderer.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\keymap.cpp">
       <Filter>Source\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\resource_manager.cpp">
-      <Filter>Source\Graphics.Resources</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entity_manager.cpp">
       <Filter>Source\Entity</Filter>
@@ -56,9 +35,6 @@
     <ClCompile Include="..\src\controller_system.cpp">
       <Filter>Source\Entity.System</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\font.cpp">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\font_renderer.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
@@ -74,9 +50,6 @@
     <ClCompile Include="..\src\audio.cpp">
       <Filter>Source\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\sound.cpp">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\audio_source.cpp">
       <Filter>Source\Audio</Filter>
     </ClCompile>
@@ -89,11 +62,50 @@
     <ClCompile Include="..\src\gui_container.cpp">
       <Filter>Source\Graphics.Gui</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\engine_message_bus.cpp">
-      <Filter>Source\Engine</Filter>
+    <ClCompile Include="..\src\blend_mode.cpp">
+      <Filter>Source\Core.Resource</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\abstract_engine_system.cpp">
-      <Filter>Source\Engine</Filter>
+    <ClCompile Include="..\src\font.cpp">
+      <Filter>Source\Core.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\frame_buffer.cpp">
+      <Filter>Source\Core.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sampler.cpp">
+      <Filter>Source\Core.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shader.cpp">
+      <Filter>Source\Core.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound.cpp">
+      <Filter>Source\Core.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\texture.cpp">
+      <Filter>Source\Core.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\audio_core_system.cpp">
+      <Filter>Source\Core.System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics_core_system.cpp">
+      <Filter>Source\Core.System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\input_core_system.cpp">
+      <Filter>Source\Core.System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entity_core_system.cpp">
+      <Filter>Source\Core.System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gui_core_system.cpp">
+      <Filter>Source\Core.System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resource_core_system.cpp">
+      <Filter>Source\Core.System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\config.cpp">
+      <Filter>Source\Core.Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,14 +115,8 @@
     <ClInclude Include="..\src\logger.h">
       <Filter>Source\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\timing.h">
-      <Filter>Source\Util</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\disposable.h">
       <Filter>Source\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\config.h">
-      <Filter>Source\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\src\file.h">
       <Filter>Source\Input</Filter>
@@ -118,23 +124,8 @@
     <ClInclude Include="..\src\post_processing.h">
       <Filter>Source\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\texture.h">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\sampler.h">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\frame_buffer.h">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\shader.h">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\renderer.h">
       <Filter>Source\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\blend_mode.h">
-      <Filter>Source\Graphics.Resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\keymap.h">
       <Filter>Source\Input</Filter>
@@ -190,9 +181,6 @@
     <ClInclude Include="..\src\sprite_animation_component.h">
       <Filter>Source\Entity.Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\font.h">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\text_data_pipe.h">
       <Filter>Source\Graphics.Data</Filter>
     </ClInclude>
@@ -214,26 +202,14 @@
     <ClInclude Include="..\src\font_renderer.h">
       <Filter>Source\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\event.h">
-      <Filter>Source\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\event_test.h">
-      <Filter>Source\Util</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\abstract_gui_element.h">
       <Filter>Source\Graphics.Gui</Filter>
     </ClInclude>
     <ClInclude Include="..\src\audio.h">
       <Filter>Source\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\sound.h">
-      <Filter>Source\Graphics.Resources</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\audio_source.h">
       <Filter>Source\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\resource_manager.h">
-      <Filter>Source\Graphics.Resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gui_tree.h">
       <Filter>Source\Graphics.Gui</Filter>
@@ -241,14 +217,59 @@
     <ClInclude Include="..\src\gui_container.h">
       <Filter>Source\Graphics.Gui</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\abstract_engine_system.h">
-      <Filter>Source\Engine</Filter>
+    <ClInclude Include="..\src\event.h">
+      <Filter>Source\Core.Util</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\engine_message_bus.h">
-      <Filter>Source\Engine</Filter>
+    <ClInclude Include="..\src\timing.h">
+      <Filter>Source\Core.Util</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\engine_message.h">
-      <Filter>Source\Engine</Filter>
+    <ClInclude Include="..\src\texture.h">
+      <Filter>Source\Core.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\blend_mode.h">
+      <Filter>Source\Core.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\font.h">
+      <Filter>Source\Core.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\frame_buffer.h">
+      <Filter>Source\Core.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sampler.h">
+      <Filter>Source\Core.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shader.h">
+      <Filter>Source\Core.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound.h">
+      <Filter>Source\Core.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\abstract_core_system.h">
+      <Filter>Source\Core.System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\audio_core_system.h">
+      <Filter>Source\Core.System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics_core_system.h">
+      <Filter>Source\Core.System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\input_core_system.h">
+      <Filter>Source\Core.System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entity_core_system.h">
+      <Filter>Source\Core.System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gui_core_system.h">
+      <Filter>Source\Core.System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resource_core_system.h">
+      <Filter>Source\Core.System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\config.h">
+      <Filter>Source\Core.Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -261,17 +282,11 @@
     <Filter Include="Source\Debug">
       <UniqueIdentifier>{f8eb5e70-9dee-40d7-abb4-06a676a546b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Util">
-      <UniqueIdentifier>{1f25a6cb-0f35-4a9e-94c1-bba352bdc86d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Base">
       <UniqueIdentifier>{4d25895c-3069-4c3e-bf0a-ad2a52ff45d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Input">
       <UniqueIdentifier>{b385a5bc-9f10-4f1c-919b-04931e0fc178}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Graphics.Resources">
-      <UniqueIdentifier>{48c1fa58-7e47-491f-9e9f-c121c5fb1096}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Graphics.Camera">
       <UniqueIdentifier>{9efc4032-0f25-43b0-ab35-812b272626f4}</UniqueIdentifier>
@@ -288,9 +303,6 @@
     <Filter Include="Source\Entity.System">
       <UniqueIdentifier>{bedb95dd-53c1-4c3c-a410-aea4ff0aca6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Script">
-      <UniqueIdentifier>{07cf40cc-acd5-496d-98c4-6a5bdff6eba4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Graphics.Effects">
       <UniqueIdentifier>{d110f301-960a-4b07-81bf-a20c6ea1971e}</UniqueIdentifier>
     </Filter>
@@ -303,8 +315,17 @@
     <Filter Include="Source\Graphics.Gui">
       <UniqueIdentifier>{6acb3dec-15d1-4a17-9ae4-9ffb78466e30}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Engine">
-      <UniqueIdentifier>{b04f2e35-1b81-47e4-9366-9788e77935d2}</UniqueIdentifier>
+    <Filter Include="Source\Core">
+      <UniqueIdentifier>{3fd5afd0-8995-43a1-bcfe-002aa4e2b24a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Util">
+      <UniqueIdentifier>{668eb432-f864-4d6d-85d6-40e5e70615fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Resource">
+      <UniqueIdentifier>{d93edc3e-9dd7-45bf-83e9-7ffcddf35559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.System">
+      <UniqueIdentifier>{7c1a0a79-7c10-450f-bc4b-8c0e3405c7fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

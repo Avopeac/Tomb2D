@@ -2,7 +2,7 @@
 
 #include "SDL_assert.h"
 
-using namespace graphics;
+using namespace core;
 
 SoundCache::SoundCache()
 {

@@ -13,8 +13,8 @@ using namespace graphics;
 FontRenderer::FontRenderer(const GraphicsBase & graphics_base) : 
 	graphics_base_(graphics_base)
 {
-	default_vert_program_ = ResourceManager::Get().GetProgramCache().GetFromFile("default_font.vert", GL_VERTEX_SHADER, "assets/shaders/default_font.vert");
-	default_frag_program_ = ResourceManager::Get().GetProgramCache().GetFromFile("default_font.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_font.frag");
+	default_vert_program_ = core::Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_font.vert", GL_VERTEX_SHADER, "assets/shaders/default_font.vert");
+	default_frag_program_ = core::Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_font.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_font.frag");
 
 	pipeline_.SetStages(*default_vert_program_);
 	pipeline_.SetStages(*default_frag_program_);
@@ -36,8 +36,8 @@ FontRenderer::~FontRenderer()
 
 void FontRenderer::Draw(float delta_time)
 {
-	FrameBuffer * render_target =
-		ResourceManager::Get().GetFrameBufferCache().GetFromName(Renderer::render_target_name);
+	core::FrameBuffer * render_target =
+		core::Core::GetResourceSystem()->GetFrameBufferCache().GetFromName(Renderer::render_target_name);
 
 	render_target->BindDraw(0, 0, 0, 0, 0);
 
@@ -48,9 +48,9 @@ void FontRenderer::Draw(float delta_time)
 	auto &data = DataPipeHub::Get().GetTextDataPipe().GetData();
 	for (auto it = data.begin(); it != data.end(); ++it)
 	{
-		auto * blend_mode = ResourceManager::Get().GetBlendCache().GetFromHash(it->blend_hash);
-		auto * font = ResourceManager::Get().GetFontCache().GetFromHash(it->font_hash);
-		auto * sampler = ResourceManager::Get().GetSamplerCache().GetFromHash(it->sampler_hash);
+		auto * blend_mode = core::Core::GetResourceSystem()->GetBlendCache().GetFromHash(it->blend_hash);
+		auto * font = core::Core::GetResourceSystem()->GetFontCache().GetFromHash(it->font_hash);
+		auto * sampler = core::Core::GetResourceSystem()->GetSamplerCache().GetFromHash(it->sampler_hash);
 
 		glm::vec2 position = it->position;
 		 

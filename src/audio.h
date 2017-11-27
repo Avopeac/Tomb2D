@@ -28,7 +28,7 @@ namespace audio {
 
 	public:
 
-		AudioBase(const input::Config &config);
+		AudioBase(const core::Config &config);
 
 		~AudioBase();
 

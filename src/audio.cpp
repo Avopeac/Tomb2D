@@ -4,7 +4,7 @@
 
 using namespace audio;
 
-AudioBase::AudioBase(const input::Config & config) :
+AudioBase::AudioBase(const core::Config & config) :
 	position_(0), velocity_(0), forward_(0, 0, -1), up_(0, 1, 0)
 {
 	device_name_ = std::string(alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER));

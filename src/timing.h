@@ -2,7 +2,7 @@
 
 #include "SDL.h"
 
-namespace util
+namespace core
 {
 	static double GetSeconds()
 	{

@@ -1,7 +1,7 @@
 #include "sprite_render_system.h"
 
 #include "entity_manager.h"
-#include "resource_manager.h"
+#include "core.h"
 #include "data_pipe_hub.h"
 
 using namespace entity;
@@ -129,9 +129,9 @@ void SpriteRenderSystem::InitializeSpriteComponent(SpriteComponent * sprite_comp
 {
 	if (sprite_component)
 	{
-		auto &blend_cache = graphics::ResourceManager::Get().GetBlendCache();
-		auto &texture_cache = graphics::ResourceManager::Get().GetTextureCache();
-		auto &sampler_cache = graphics::ResourceManager::Get().GetSamplerCache();
+		auto &blend_cache = core::Core::GetResourceSystem()->GetBlendCache();
+		auto &texture_cache = core::Core::GetResourceSystem()->GetTextureCache();
+		auto &sampler_cache = core::Core::GetResourceSystem()->GetSamplerCache();
 
 		size_t blend_hash, texture_hash, sampler_hash;
 
@@ -152,7 +152,7 @@ void SpriteRenderSystem::InitializeSpriteAnimationComponent(SpriteAnimationCompo
 {
 	if (sprite_animation_component)
 	{
-		auto &texture_cache = graphics::ResourceManager::Get().GetTextureCache();
+		auto &texture_cache = core::Core::GetResourceSystem()->GetTextureCache();
 
 		size_t texture_hash;
 

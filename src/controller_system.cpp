@@ -3,7 +3,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "entity_manager.h"
-#include "resource_manager.h"
+#include "core.h"
 #include "data_pipe_hub.h"
 #include "keymap.h"
 #include "timing.h"

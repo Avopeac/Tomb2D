@@ -6,7 +6,7 @@
 
 #include "logger.h"
 
-using namespace graphics;
+using namespace core;
 
 Texture::Texture()
 {
