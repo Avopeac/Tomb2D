@@ -4,7 +4,8 @@
 
 #include "sound.h"
 
-namespace audio {
+namespace core {
+
 	class AudioSource
 	{
 
@@ -35,5 +36,7 @@ namespace audio {
 		void SetVelocity(const glm::vec3 &velocity);
 
 		void SetDirection(const glm::vec3 &direction);
+
+		void SetGain(float gain);
 	};
 }

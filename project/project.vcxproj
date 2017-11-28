@@ -127,7 +127,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\abstract_gui_element.cpp" />
-    <ClCompile Include="..\src\audio.cpp" />
     <ClCompile Include="..\src\audio_core_system.cpp" />
     <ClCompile Include="..\src\audio_source.cpp" />
     <ClCompile Include="..\src\blend_mode.cpp" />
@@ -165,7 +164,6 @@
   <ItemGroup>
     <ClInclude Include="..\src\abstract_core_system.h" />
     <ClInclude Include="..\src\abstract_gui_element.h" />
-    <ClInclude Include="..\src\audio.h" />
     <ClInclude Include="..\src\audio_core_system.h" />
     <ClInclude Include="..\src\audio_source.h" />
     <ClInclude Include="..\src\blend_mode.h" />

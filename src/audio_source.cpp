@@ -1,6 +1,6 @@
 #include "audio_source.h"
 
-using namespace audio;
+using namespace core;
 
 AudioSource::AudioSource(const core::Sound * sound) :
 	position_(0), velocity_(0), direction_(0)
@@ -53,4 +53,9 @@ void AudioSource::SetDirection(const glm::vec3 & direction)
 	direction_ = direction;
 
 	alSource3f(source_id_, AL_DIRECTION, direction_.x, direction_.y, direction_.z);
+}
+
+void AudioSource::SetGain(float gain)
+{
+	alSourcef(source_id_, AL_GAIN, gain);
 }

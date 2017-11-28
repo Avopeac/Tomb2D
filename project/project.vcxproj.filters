@@ -41,11 +41,8 @@
     <ClCompile Include="..\src\map_view.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\audio.cpp">
-      <Filter>Source\Audio</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\audio_source.cpp">
-      <Filter>Source\Audio</Filter>
+      <Filter>Source\Core.Audio</Filter>
     </ClCompile>
     <ClCompile Include="..\src\abstract_gui_element.cpp">
       <Filter>Source\Graphics.Gui</Filter>
@@ -190,11 +187,8 @@
     <ClInclude Include="..\src\abstract_gui_element.h">
       <Filter>Source\Graphics.Gui</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\audio.h">
-      <Filter>Source\Audio</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\audio_source.h">
-      <Filter>Source\Audio</Filter>
+      <Filter>Source\Core.Audio</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gui_tree.h">
       <Filter>Source\Graphics.Gui</Filter>
@@ -291,9 +285,6 @@
     <Filter Include="Source\Graphics.Effects">
       <UniqueIdentifier>{d110f301-960a-4b07-81bf-a20c6ea1971e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Audio">
-      <UniqueIdentifier>{f4eedc32-c649-47a2-864a-153d1c4cab00}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Game">
       <UniqueIdentifier>{f1157bd4-5711-4098-9f9f-66e0021a15f9}</UniqueIdentifier>
     </Filter>
@@ -314,6 +305,9 @@
     </Filter>
     <Filter Include="Source\Core.Debug">
       <UniqueIdentifier>{933adc10-b439-460f-88c1-c6d8ff8d9b56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Audio">
+      <UniqueIdentifier>{f4eedc32-c649-47a2-864a-153d1c4cab00}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

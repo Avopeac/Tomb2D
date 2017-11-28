@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "abstract_core_system.h"
 
 #include "AL/al.h"

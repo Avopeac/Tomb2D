@@ -5,7 +5,6 @@
 #include "glm/gtx/transform.hpp"
 
 #include "graphics.h"
-#include "audio.h"
 #include "logger.h"
 #include "timing.h"
 #include "renderer.h"
@@ -37,7 +36,7 @@ Sint32 main(Sint32 argc, char * argv[])
 	graphics::Renderer renderer(&graphics_base);
 
 	// Initialize audio device
-	audio::AudioBase audio_base(config);
+	//audio::AudioBase audio_base(config);
 	
 	auto &entity_manager = entity::EntityManager::Get();
 
@@ -86,9 +85,10 @@ Sint32 main(Sint32 argc, char * argv[])
 	auto * sound = core::Core::GetResourceSystem()->GetSoundCache().
 		GetBufferFromFile("assets/audio/temp/fairywoods.wav", &sound_hash);
 
-	//audio::AudioSource source(sound);
-	//source.SetRepeating(true);
-	//source.Play();
+	core::AudioSource source(sound);
+	source.SetRepeating(true);
+	source.SetGain(0.1f);
+	source.Play();
 
 	// Main loop 
 	bool running = true;
