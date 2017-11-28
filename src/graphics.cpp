@@ -29,7 +29,7 @@ GraphicsBase::GraphicsBase(const core::Config & config)
 
 	if (!window_)
 	{
-		debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_VIDEO, SDL_GetError());
+		core::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_VIDEO, SDL_GetError());
 	}
 
 	// Create GL context
@@ -40,7 +40,7 @@ GraphicsBase::GraphicsBase(const core::Config & config)
 	{
 		SDL_DestroyWindow(window_);
 
-		debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_VIDEO, SDL_GetError());
+		core::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_VIDEO, SDL_GetError());
 	}
 
 	// Make the GL context current to load extensions
@@ -50,7 +50,7 @@ GraphicsBase::GraphicsBase(const core::Config & config)
 		SDL_GL_DeleteContext(context_);
 		SDL_DestroyWindow(window_);
 
-		debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_VIDEO, SDL_GetError());
+		core::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_VIDEO, SDL_GetError());
 	}
 
 	// Get rid of "no context set as current" error
@@ -65,7 +65,7 @@ GraphicsBase::GraphicsBase(const core::Config & config)
 		SDL_GL_DeleteContext(context_);
 		SDL_DestroyWindow(window_);
 
-		debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_VIDEO, "Could not load GL extensions.");
+		core::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_VIDEO, "Could not load GL extensions.");
 	}
 
 	window_width_ = config.GetWindowWidth();

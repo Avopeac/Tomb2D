@@ -205,7 +205,7 @@ Texture * TextureCache::GetFromHash(size_t hash)
 		return &textures_[hash];
 	}
 	
-	debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Requested texture was null.");
+	Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Requested texture was null.");
 	return nullptr;
 }
 

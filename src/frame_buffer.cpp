@@ -68,14 +68,14 @@ FrameBuffer::FrameBuffer(Uint32 width, Uint32 height, Uint32 num_samples,
 
 	switch (status)
 	{
-		case GL_FRAMEBUFFER_UNDEFINED: { debug::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer undefined."); } break;
-		case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: { debug::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer incomplete attachment."); } break;
-		case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: { debug::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer missing attachment."); } break;
-		case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: { debug::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Frambuffer incomplete draw buffer."); } break;
-		case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: { debug::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer incomplete read buffer."); } break;
-		case GL_FRAMEBUFFER_UNSUPPORTED: { debug::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer unsupported."); } break;
-		case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: { debug::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer incomplete multisample."); } break;
-		case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS: { debug::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer incomplete layer targets."); } break;
+		case GL_FRAMEBUFFER_UNDEFINED: { Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer undefined."); } break;
+		case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: { Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer incomplete attachment."); } break;
+		case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: { Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer missing attachment."); } break;
+		case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: { Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Frambuffer incomplete draw buffer."); } break;
+		case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: { Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer incomplete read buffer."); } break;
+		case GL_FRAMEBUFFER_UNSUPPORTED: { Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer unsupported."); } break;
+		case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: { Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer incomplete multisample."); } break;
+		case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS: { Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_RENDER, "Framebuffer incomplete layer targets."); } break;
 		default: break;
 	}
 }
@@ -234,7 +234,7 @@ FrameBuffer * FrameBufferCache::GetFromName(const std::string & name)
 		return buffers_[hash].get();
 	}
 
-	debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Framebuffer is null.");
+	Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Framebuffer is null.");
 	return nullptr;
 }
 
@@ -245,6 +245,6 @@ FrameBuffer * FrameBufferCache::GetFromHash(size_t hash)
 		return buffers_[hash].get();
 	}
 	
-	debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Framebuffer is null.");
+	Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Framebuffer is null.");
 	return nullptr;
 }

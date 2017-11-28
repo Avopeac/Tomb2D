@@ -2,7 +2,8 @@
 
 #include <functional>
 
-#include "file.h"
+#include "core.h"
+
 #include "logger.h"
 
 using namespace core;
@@ -33,9 +34,8 @@ Program * ProgramCache::GetFromFile(const std::string & name, GLenum program_typ
 		return &programs_[name_hash];
 	}
 
-	input::FileReader reader; 
-	std::string source = reader.ReadTextFile(path);
-	const char * source_ptr = source.c_str();
+	auto * str = core::Core::GetResourceSystem()->GetTextCache().GetTextFromFile(path);
+	const char * source_ptr = str->c_str();
 
 	GLuint program_id = 0;
 	GLuint shader_id = glCreateShader(program_type);
@@ -72,7 +72,7 @@ Program * ProgramCache::GetFromFile(const std::string & name, GLenum program_typ
 						std::to_string(num_attached) 
 					};
 
-					debug::Log(SDL_LOG_PRIORITY_VERBOSE, SDL_LOG_CATEGORY_RENDER, log.c_str());
+					Log(SDL_LOG_PRIORITY_VERBOSE, SDL_LOG_CATEGORY_RENDER, log.c_str());
 				}
 				else
 				{
@@ -81,7 +81,7 @@ Program * ProgramCache::GetFromFile(const std::string & name, GLenum program_typ
 					if (log_len)
 					{
 						glGetProgramInfoLog(shader_id, log_len, 0, log);
-						debug::Log(SDL_LOG_PRIORITY_WARN, SDL_LOG_CATEGORY_RENDER, (const char *)log);
+						Log(SDL_LOG_PRIORITY_WARN, SDL_LOG_CATEGORY_RENDER, (const char *)log);
 					}
 				}
 
@@ -94,7 +94,7 @@ Program * ProgramCache::GetFromFile(const std::string & name, GLenum program_typ
 				if (log_len)
 				{
 					glGetShaderInfoLog(shader_id, log_len, 0, log);
-					debug::Log(SDL_LOG_PRIORITY_WARN, SDL_LOG_CATEGORY_RENDER, (const char *)log);
+					Log(SDL_LOG_PRIORITY_WARN, SDL_LOG_CATEGORY_RENDER, (const char *)log);
 				}
 			}
 		}
@@ -120,7 +120,7 @@ Program * ProgramCache::GetFromName(const std::string & name)
 		return &programs_[hash];
 	}
 	
-	debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Shader was null.");
+	Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Shader was null.");
 	return nullptr;
 }
 
@@ -131,7 +131,7 @@ Program * ProgramCache::GetFromHash(size_t hash)
 		return &programs_[hash];
 	}
 
-	debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Shader was null.");
+	Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Shader was null.");
 	return nullptr;
 }
 

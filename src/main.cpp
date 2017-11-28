@@ -4,7 +4,6 @@
 #include "glm/glm.hpp"
 #include "glm/gtx/transform.hpp"
 
-#include "keymap.h"
 #include "graphics.h"
 #include "audio.h"
 #include "logger.h"
@@ -87,9 +86,9 @@ Sint32 main(Sint32 argc, char * argv[])
 	auto * sound = core::Core::GetResourceSystem()->GetSoundCache().
 		GetBufferFromFile("assets/audio/temp/fairywoods.wav", &sound_hash);
 
-	audio::AudioSource source(sound);
-	source.SetRepeating(true);
-	source.Play();
+	//audio::AudioSource source(sound);
+	//source.SetRepeating(true);
+	//source.Play();
 
 	// Main loop 
 	bool running = true;
@@ -108,7 +107,7 @@ Sint32 main(Sint32 argc, char * argv[])
 				running = false;
 			}
 
-			input::Keymap::Get().UpdateCurrentInput(event);
+			core::Core::GetInputSystem()->UpdateCurrentInput(event);
 		}
 
 		auto * text_entity = entity_manager.GetEntityByName("text");
@@ -127,7 +126,7 @@ Sint32 main(Sint32 argc, char * argv[])
 
 		SDL_GL_SwapWindow(graphics_base.GetWindow());
 
-		input::Keymap::Get().CarryCurrentInput();
+		core::Core::GetInputSystem()->CarryCurrentInput();
 	}
 
 	core::Core::GetInstance().CleanUp();

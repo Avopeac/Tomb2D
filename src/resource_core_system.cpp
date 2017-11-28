@@ -20,6 +20,7 @@ void ResourceCoreSystem::StartUp()
 	texture_cache_ = std::make_unique<TextureCache>();
 	font_cache_ = std::make_unique<FontCache>();
 	sound_cache_ = std::make_unique<SoundCache>();
+	text_cache_ = std::make_unique<TextCache>();
 }
 
 void ResourceCoreSystem::CleanUp()

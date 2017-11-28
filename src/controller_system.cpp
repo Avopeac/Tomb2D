@@ -5,7 +5,6 @@
 #include "entity_manager.h"
 #include "core.h"
 #include "data_pipe_hub.h"
-#include "keymap.h"
 #include "timing.h"
 
 using namespace entity;
@@ -30,15 +29,15 @@ void ControllerSystem::Update(Entity * entity, float delta_time)
 
 	if (controller_component)
 	{
-		auto &keymap = input::Keymap::Get();
+		auto * input = core::Core::GetInputSystem();
 
 		glm::vec2 velocity(0.0f);
 		float rotation = 0.0f;
 		
-		if (keymap.KeyPressed(input::Key::KeyA)) { velocity.x -= 1.0f; }
-		if (keymap.KeyPressed(input::Key::KeyD)) { velocity.x += 1.0f; }
-		if (keymap.KeyPressed(input::Key::KeyW)) { velocity.y += 1.0f; }
-		if (keymap.KeyPressed(input::Key::KeyS)) { velocity.y -= 1.0f; }
+		if (input->KeyPressed(core::Key::KeyA)) { velocity.x -= 1.0f; }
+		if (input->KeyPressed(core::Key::KeyD)) { velocity.x += 1.0f; }
+		if (input->KeyPressed(core::Key::KeyW)) { velocity.y += 1.0f; }
+		if (input->KeyPressed(core::Key::KeyS)) { velocity.y -= 1.0f; }
 
 		float length = glm::length(velocity);
 		if (length > 0.0f)
@@ -50,8 +49,8 @@ void ControllerSystem::Update(Entity * entity, float delta_time)
 			controller_component->SetVelocity(glm::vec2(0.0f));
 		}
 
-		if (keymap.KeyPressed(input::Key::KeyQ)) { rotation -= 1.0f; }
-		if (keymap.KeyPressed(input::Key::KeyE)) { rotation += 1.0f; }
+		if (input->KeyPressed(core::Key::KeyQ)) { rotation -= 1.0f; }
+		if (input->KeyPressed(core::Key::KeyE)) { rotation += 1.0f; }
 
 		controller_component->SetRotation(rotation);
 

@@ -93,7 +93,7 @@ MapData &MapParser::GetMapData(const std::string &path)
 	}
 	else
 	{
-		debug::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_INPUT, "Failed to load map.");
+		core::Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_INPUT, "Failed to load map.");
 	}
 
 	return maps_[path];

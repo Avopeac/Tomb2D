@@ -5,7 +5,7 @@
 
 #include "SDL.h"
 
-namespace debug
+namespace core
 {
 
 	static void Log(SDL_LogPriority priority, Sint32 category, const char * message)

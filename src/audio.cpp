@@ -14,7 +14,7 @@ AudioBase::AudioBase(const core::Config & config) :
 
 		std::string message = "Loaded audio device with name ";
 		message.append(device_name_);
-		debug::Log(SDL_LOG_PRIORITY_INFO, SDL_LOG_CATEGORY_AUDIO, message.c_str());
+		core::Log(SDL_LOG_PRIORITY_INFO, SDL_LOG_CATEGORY_AUDIO, message.c_str());
 
 
 		context_ = alcCreateContext(device_, nullptr);
@@ -24,7 +24,7 @@ AudioBase::AudioBase(const core::Config & config) :
 	{
 		std::string message = "Failed to load audio device with name";
 		message.append(device_name_);
-		debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_AUDIO, message.c_str());
+		core::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_AUDIO, message.c_str());
 	}
 
 	// Clear error messages

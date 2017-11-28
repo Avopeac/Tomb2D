@@ -64,7 +64,7 @@ void SpriteRenderer::Draw(float delta_time)
 			case SpriteShape::IsometricQuad: { PushToBatchObject(isometric_quad_batches_, *it); } break;
 			default:
 			{
-				debug::Log(SDL_LOG_PRIORITY_CRITICAL,
+				core::Log(SDL_LOG_PRIORITY_CRITICAL,
 					SDL_LOG_CATEGORY_RENDER, "Trying to render unknown sprite shape."); 
 				assert(false);
 			}

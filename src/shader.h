@@ -93,8 +93,7 @@ namespace core
 
 			if (err != GL_NO_ERROR)
 			{
-				debug::Log(SDL_LOG_PRIORITY_DEBUG, 
-					SDL_LOG_CATEGORY_RENDER, 
+				Log(SDL_LOG_PRIORITY_DEBUG, SDL_LOG_CATEGORY_RENDER, 
 					(const char *)glewGetErrorString(err));
 			}
 

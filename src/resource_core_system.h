@@ -10,6 +10,7 @@
 #include "shader.h"
 #include "texture.h"
 #include "font.h"
+#include "text.h"
 #include "sound.h"
 
 namespace core
@@ -24,6 +25,7 @@ namespace core
 		std::unique_ptr<TextureCache> texture_cache_;
 		std::unique_ptr<FontCache> font_cache_;
 		std::unique_ptr<SoundCache> sound_cache_;
+		std::unique_ptr<TextCache> text_cache_;
 
 	public:
 
@@ -49,5 +51,6 @@ namespace core
 
 		inline SoundCache &GetSoundCache() { return *sound_cache_.get(); }
 
+		inline TextCache &GetTextCache() { return *text_cache_.get(); }
 	};
 }

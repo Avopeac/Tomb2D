@@ -5,17 +5,11 @@
     <ClCompile Include="..\src\graphics.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\file.cpp">
-      <Filter>Source\Input</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\post_processing.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\renderer.cpp">
       <Filter>Source\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\keymap.cpp">
-      <Filter>Source\Input</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entity_manager.cpp">
       <Filter>Source\Entity</Filter>
@@ -107,28 +101,19 @@
     <ClCompile Include="..\src\config.cpp">
       <Filter>Source\Core.Util</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\text.cpp">
+      <Filter>Source\Core.Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\graphics.h">
       <Filter>Source\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\logger.h">
-      <Filter>Source\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\disposable.h">
-      <Filter>Source\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\file.h">
-      <Filter>Source\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\src\post_processing.h">
       <Filter>Source\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\renderer.h">
       <Filter>Source\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\keymap.h">
-      <Filter>Source\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\src\abstract_camera.h">
       <Filter>Source\Graphics.Camera</Filter>
@@ -271,6 +256,15 @@
     <ClInclude Include="..\src\config.h">
       <Filter>Source\Core.Util</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\disposable.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\logger.h">
+      <Filter>Source\Core.Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\text.h">
+      <Filter>Source\Core.Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -278,15 +272,6 @@
     </Filter>
     <Filter Include="Source\Graphics">
       <UniqueIdentifier>{b02f3524-5cd6-4c4e-a37d-5e89feb964a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Debug">
-      <UniqueIdentifier>{f8eb5e70-9dee-40d7-abb4-06a676a546b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Base">
-      <UniqueIdentifier>{4d25895c-3069-4c3e-bf0a-ad2a52ff45d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Input">
-      <UniqueIdentifier>{b385a5bc-9f10-4f1c-919b-04931e0fc178}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Graphics.Camera">
       <UniqueIdentifier>{9efc4032-0f25-43b0-ab35-812b272626f4}</UniqueIdentifier>
@@ -326,6 +311,9 @@
     </Filter>
     <Filter Include="Source\Core.System">
       <UniqueIdentifier>{7c1a0a79-7c10-450f-bc4b-8c0e3405c7fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Debug">
+      <UniqueIdentifier>{933adc10-b439-460f-88c1-c6d8ff8d9b56}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

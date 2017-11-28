@@ -6,7 +6,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "config.h"
-#include "keymap.h"
+#include "core.h"
 
 using namespace graphics;
 
@@ -42,26 +42,26 @@ void OrthographicCamera::Update(float delta_time)
 	inv_proj_ = glm::inverse(proj_); 
 	inv_view_proj_ = glm::inverse(view_proj_);
 
-	auto &keymap = input::Keymap::Get();
+	auto * input = core::Core::GetInputSystem();
 
 	glm::vec2 velocity{};
 	
-	if (keymap.KeyPressed(input::Key::KeyUp))
+	if (input->KeyPressed(core::Key::KeyUp))
 	{
 		velocity.y += 1.0f;
 	}
 
-	if (keymap.KeyPressed(input::Key::KeyDown))
+	if (input->KeyPressed(core::Key::KeyDown))
 	{
 		velocity.y -= 1.0f;
 	}
 
-	if (keymap.KeyPressed(input::Key::KeyLeft))
+	if (input->KeyPressed(core::Key::KeyLeft))
 	{
 		velocity.x -= 1.0f;
 	}
 
-	if (keymap.KeyPressed(input::Key::KeyRight))
+	if (input->KeyPressed(core::Key::KeyRight))
 	{
 		velocity.x += 1.0f;
 	}

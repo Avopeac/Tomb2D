@@ -136,7 +136,7 @@
     <ClCompile Include="..\src\core.cpp" />
     <ClCompile Include="..\src\entity_core_system.cpp" />
     <ClCompile Include="..\src\entity_manager.cpp" />
-    <ClCompile Include="..\src\file.cpp" />
+    <ClCompile Include="..\src\text.cpp" />
     <ClCompile Include="..\src\font.cpp" />
     <ClCompile Include="..\src\font_renderer.cpp" />
     <ClCompile Include="..\src\frame_buffer.cpp" />
@@ -146,7 +146,6 @@
     <ClCompile Include="..\src\gui_tree.cpp" />
     <ClCompile Include="..\src\gui_container.cpp" />
     <ClCompile Include="..\src\input_core_system.cpp" />
-    <ClCompile Include="..\src\keymap.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\map_parser.cpp" />
     <ClCompile Include="..\src\map_view.cpp" />
@@ -198,9 +197,8 @@
     <ClInclude Include="..\src\disposable.h" />
     <ClInclude Include="..\src\frame_buffer.h" />
     <ClInclude Include="..\src\graphics.h" />
-    <ClInclude Include="..\src\keymap.h" />
     <ClInclude Include="..\src\logger.h" />
-    <ClInclude Include="..\src\file.h" />
+    <ClInclude Include="..\src\text.h" />
     <ClInclude Include="..\src\orthographic_camera.h" />
     <ClInclude Include="..\src\post_effect.h" />
     <ClInclude Include="..\src\post_processing.h" />

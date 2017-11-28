@@ -21,7 +21,7 @@ void Font::Create(const std::string &path, uint32_t pt_size)
 
 	if (!font_)
 	{
-		debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_INPUT,
+		core::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_INPUT,
 			"Could not load the requested font.");
 	}
 
@@ -41,7 +41,7 @@ void Font::Create(const std::string &path, uint32_t pt_size)
 		SDL_Surface * surface = TTF_RenderGlyph_Shaded(font_, CHAR_MAP[i], fg_color, bg_color);
 		if (!surface)
 		{
-			debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_INPUT,
+			core::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_INPUT,
 				"Could not load the requested glyph from font.");
 			continue;
 		}
@@ -125,7 +125,7 @@ FontCache::FontCache()
 {
 	if (TTF_Init() < 0)
 	{
-		debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER,
+		Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER,
 			"Could not initialize SDL TTF library.");
 	}
 }

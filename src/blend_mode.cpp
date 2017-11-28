@@ -88,6 +88,6 @@ Blend * BlendCache::GetFromHash(size_t hash)
 		return &blends_[hash];
 	}
 
-	debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Blend state is null.");
+	Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Blend state is null.");
 	return nullptr;
 }

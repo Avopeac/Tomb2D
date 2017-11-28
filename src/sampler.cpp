@@ -91,6 +91,6 @@ Sampler * SamplerCache::GetFromHash(size_t hash)
 		return &samplers_[hash];
 	}
 
-	debug::Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Sampler was null.");
+	Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER, "Sampler was null.");
 	return nullptr;
 }
