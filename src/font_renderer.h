@@ -4,27 +4,23 @@
 
 #include "SDL.h"
 
-#include "graphics.h"
-
 #include "core.h"
 
-namespace graphics 
+namespace core
 {
 	class FontRenderer
 	{
-		const GraphicsBase &graphics_base_;
+		ProgramPipeline pipeline_;
 
-		core::ProgramPipeline pipeline_;
+		Program * default_vert_program_;
 
-		core::Program * default_vert_program_;
-
-		core::Program * default_frag_program_;
+		Program * default_frag_program_;
 
 		glm::mat4 proj_;
 
 	public:
 
-		FontRenderer(const GraphicsBase &graphics_base);
+		FontRenderer();
 
 		~FontRenderer();
 

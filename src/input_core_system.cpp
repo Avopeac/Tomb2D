@@ -10,7 +10,7 @@ InputCoreSystem::~InputCoreSystem()
 {
 }
 
-void InputCoreSystem::StartUp()
+void InputCoreSystem::StartUp(const Config &config)
 {
 }
 

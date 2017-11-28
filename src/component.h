@@ -1,6 +1,6 @@
 #pragma once
 
-namespace entity {
+namespace core {
 
 	class Component
 	{

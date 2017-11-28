@@ -2,7 +2,7 @@
 
 #include "post_processing.h"
 
-namespace graphics
+namespace core
 {
 	class PostEffect : public PostProcessEffect
 	{
@@ -11,12 +11,12 @@ namespace graphics
 		const std::string v_path_ = "assets/shaders/postfx.vert";
 		const std::string f_path_ = "assets/shaders/postfx.frag";
 
-		core::Program * vertex_shader_;
-		core::Program * fragment_shader_;
+		Program * vertex_shader_;
+		Program * fragment_shader_;
 
-		core::ProgramPipeline pipeline_;
+		ProgramPipeline pipeline_;
 
-		core::FrameBuffer * fbo0_;
+		FrameBuffer * fbo0_;
 
 	public:
 

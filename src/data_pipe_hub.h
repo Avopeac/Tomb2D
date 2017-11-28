@@ -3,7 +3,7 @@
 #include "sprite_data_pipe.h"
 #include "text_data_pipe.h"
 
-namespace graphics
+namespace core
 {
 	class DataPipeHub
 	{

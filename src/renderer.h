@@ -2,19 +2,17 @@
 
 #include <memory>
 
-#include "graphics.h"
 #include "core.h"
 #include "post_processing.h"
 #include "sprite_renderer.h"
 #include "font_renderer.h"
 
-namespace graphics
+namespace core
 {
 	class Renderer
 	{
 
-		GraphicsBase *graphics_base_;
-		core::FrameBuffer *render_target_;
+		FrameBuffer *render_target_;
 
 		std::unique_ptr<SpriteRenderer> sprite_renderer_;
 		std::unique_ptr<FontRenderer> font_renderer_;
@@ -24,7 +22,7 @@ namespace graphics
 
 		static const std::string render_target_name;
 
-		Renderer(GraphicsBase *graphics_base);
+		Renderer();
 
 		~Renderer();
 

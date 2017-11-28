@@ -4,7 +4,7 @@
 
 #include "text_component.h"
 
-namespace entity
+namespace core
 {
 
 	class TextRenderSystem : public System<TextRenderSystem, TextComponent>

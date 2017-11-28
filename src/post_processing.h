@@ -6,10 +6,9 @@
 #include <iostream>
 #include <GL/glew.h>
 
-#include "graphics.h"
 #include "core.h"
 
-namespace graphics
+namespace core
 {
 	class PostProcessEffect
 	{
@@ -24,25 +23,17 @@ namespace graphics
 
 		virtual void Apply() = 0;
 
-		static void Init(const GraphicsBase &graphics_base);
-
-		static void Render();
-
-	protected:
-
-		static const GraphicsBase * graphics_base_;
-
+		void Render();
 	};
 
 	class PostProcessing
 	{		
-		GraphicsBase &graphics_base_;
 
 		std::vector<std::unique_ptr<PostProcessEffect>> effects_;
 
 	public:
 		
-		PostProcessing(GraphicsBase &graphics_base);
+		PostProcessing();
 
 		~PostProcessing();
 

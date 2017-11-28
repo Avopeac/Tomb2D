@@ -10,7 +10,7 @@ EntityCoreSystem::~EntityCoreSystem()
 {
 }
 
-void EntityCoreSystem::StartUp()
+void EntityCoreSystem::StartUp(const Config &config)
 {
 }
 

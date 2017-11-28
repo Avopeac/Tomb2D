@@ -7,7 +7,7 @@
 #include "sprite_component.h"
 #include "sprite_animation_component.h"
 
-namespace entity
+namespace core
 {
 
 	class SpriteRenderSystem : public System<SpriteRenderSystem, SpriteComponent>

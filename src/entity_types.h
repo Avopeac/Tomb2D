@@ -8,7 +8,7 @@
 #include <queue>
 #include <unordered_map>
 
-namespace entity 
+namespace core 
 {
 
 	struct Entity;

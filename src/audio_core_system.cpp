@@ -15,7 +15,7 @@ AudioCoreSystem::~AudioCoreSystem()
 {
 }
 
-void AudioCoreSystem::StartUp()
+void AudioCoreSystem::StartUp(const Config &config)
 {
 	device_name_ = std::string(alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER));
 

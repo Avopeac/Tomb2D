@@ -6,13 +6,12 @@
 
 #include <algorithm>
 
-using namespace graphics;
+using namespace core;
 
-SpriteRenderer::SpriteRenderer(const GraphicsBase &graphics_base) :
-	graphics_base_(graphics_base)
+SpriteRenderer::SpriteRenderer()
 {
-	default_vert_program_ = core::Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_sprite.vert", GL_VERTEX_SHADER, "assets/shaders/default_sprite.vert");
-	default_frag_program_ = core::Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_sprite.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_sprite.frag");
+	default_vert_program_ = Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_sprite.vert", GL_VERTEX_SHADER, "assets/shaders/default_sprite.vert");
+	default_frag_program_ = Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_sprite.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_sprite.frag");
 
 	pipeline_.SetStages(*default_vert_program_);
 	pipeline_.SetStages(*default_frag_program_);
@@ -82,7 +81,7 @@ void SpriteRenderer::Draw(float delta_time)
 
 	int texture_index = 0;
 	default_vert_program_->SetUniform("u_viewproj", 
-		(void*)glm::value_ptr(graphics_base_.GetOrthographicCamera()->GetViewProj()));
+		(void*)glm::value_ptr(Core::GetGraphicsSystem()->GetOrthographicCamera()->GetViewProj()));
 	default_frag_program_->SetUniform("u_texture",
 		(void*)&texture_index); 
 	

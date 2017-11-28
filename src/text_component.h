@@ -8,7 +8,7 @@
 #include "core.h"
 #include "text_data_pipe.h"
 
-namespace entity
+namespace core
 {
 	class TextComponent : public Component
 	{

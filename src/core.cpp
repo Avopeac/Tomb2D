@@ -35,17 +35,17 @@ void Core::StartUp(const Config &config)
 
 	entity_system_ = std::make_unique<EntityCoreSystem>();
 
-	resource_system_->StartUp();
+	resource_system_->StartUp(config_);
 
-	input_system_->StartUp();
+	input_system_->StartUp(config_);
 
-	audio_system_->StartUp();
+	audio_system_->StartUp(config_);
 
-	graphics_system_->StartUp();
+	graphics_system_->StartUp(config_);
 
-	gui_system_->StartUp();
+	gui_system_->StartUp(config_);
 
-	entity_system_->StartUp();
+	entity_system_->StartUp(config_);
 }
 
 void Core::CleanUp()

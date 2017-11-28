@@ -5,11 +5,10 @@
 
 #include "GL/glew.h"
 
-#include "graphics.h"
 #include "data_pipe_hub.h"
 #include "core.h"
 
-namespace graphics 
+namespace core 
 {
 	constexpr size_t MAX_SPRITE_INSTANCES{ 8192 };
 
@@ -98,8 +97,6 @@ namespace graphics
 
 		GLuint instance_buffer_ = 0;
 
-		const GraphicsBase &graphics_base_;
-
 		std::vector<Batch> quad_batches_;
 
 		std::vector<Batch> isometric_quad_batches_;
@@ -124,7 +121,7 @@ namespace graphics
 		
 	public:
 
-		SpriteRenderer(const GraphicsBase &graphics_base);
+		SpriteRenderer();
 
 		~SpriteRenderer();
 

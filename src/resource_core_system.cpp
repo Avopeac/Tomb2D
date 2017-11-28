@@ -11,7 +11,7 @@ ResourceCoreSystem::~ResourceCoreSystem()
 {
 }
 
-void ResourceCoreSystem::StartUp()
+void ResourceCoreSystem::StartUp(const Config &config)
 {
 	blend_cache_ = std::make_unique<BlendCache>();
 	frame_buffer_cache_ = std::make_unique<FrameBufferCache>();

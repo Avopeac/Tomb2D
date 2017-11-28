@@ -8,7 +8,7 @@
 
 #include "system.h"
 
-namespace entity {
+namespace core {
 
 	class EntityManager
 	{

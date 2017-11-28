@@ -2,38 +2,35 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
-    <ClCompile Include="..\src\graphics.cpp">
-      <Filter>Source\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\post_processing.cpp">
-      <Filter>Source\Graphics</Filter>
+      <Filter>Source\Core.Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\renderer.cpp">
-      <Filter>Source\Graphics</Filter>
+      <Filter>Source\Core.Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entity_manager.cpp">
-      <Filter>Source\Entity</Filter>
+      <Filter>Source\Core.Entity</Filter>
     </ClCompile>
     <ClCompile Include="..\src\sprite_renderer.cpp">
-      <Filter>Source\Graphics</Filter>
+      <Filter>Source\Core.Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\post_effect.cpp">
-      <Filter>Source\Graphics.Effects</Filter>
+      <Filter>Source\Core.Graphics.Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\sprite_render_system.cpp">
-      <Filter>Source\Entity.System</Filter>
+      <Filter>Source\Core.Entity.System</Filter>
     </ClCompile>
     <ClCompile Include="..\src\orthographic_camera.cpp">
-      <Filter>Source\Graphics.Camera</Filter>
+      <Filter>Source\Core.Graphics.Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\src\controller_system.cpp">
-      <Filter>Source\Entity.System</Filter>
+      <Filter>Source\Core.Entity.System</Filter>
     </ClCompile>
     <ClCompile Include="..\src\font_renderer.cpp">
-      <Filter>Source\Graphics</Filter>
+      <Filter>Source\Core.Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\text_render_system.cpp">
-      <Filter>Source\Entity.System</Filter>
+      <Filter>Source\Core.Entity.System</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map_parser.cpp">
       <Filter>Source\Game</Filter>
@@ -45,13 +42,13 @@
       <Filter>Source\Core.Audio</Filter>
     </ClCompile>
     <ClCompile Include="..\src\abstract_gui_element.cpp">
-      <Filter>Source\Graphics.Gui</Filter>
+      <Filter>Source\Core.Graphics.Gui</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gui_tree.cpp">
-      <Filter>Source\Graphics.Gui</Filter>
+      <Filter>Source\Core.Graphics.Gui</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gui_container.cpp">
-      <Filter>Source\Graphics.Gui</Filter>
+      <Filter>Source\Core.Graphics.Gui</Filter>
     </ClCompile>
     <ClCompile Include="..\src\blend_mode.cpp">
       <Filter>Source\Core.Resource</Filter>
@@ -103,74 +100,68 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\graphics.h">
-      <Filter>Source\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\post_processing.h">
-      <Filter>Source\Graphics</Filter>
+      <Filter>Source\Core.Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\renderer.h">
-      <Filter>Source\Graphics</Filter>
+      <Filter>Source\Core.Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\abstract_camera.h">
-      <Filter>Source\Graphics.Camera</Filter>
+      <Filter>Source\Core.Graphics.Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\src\data_pipe_hub.h">
-      <Filter>Source\Graphics.Data</Filter>
+      <Filter>Source\Core.Graphics.Data</Filter>
     </ClInclude>
     <ClInclude Include="..\src\component.h">
-      <Filter>Source\Entity</Filter>
+      <Filter>Source\Core.Entity</Filter>
     </ClInclude>
     <ClInclude Include="..\src\abstract_system.h">
-      <Filter>Source\Entity</Filter>
+      <Filter>Source\Core.Entity</Filter>
     </ClInclude>
     <ClInclude Include="..\src\system.h">
-      <Filter>Source\Entity</Filter>
+      <Filter>Source\Core.Entity</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entity_manager.h">
-      <Filter>Source\Entity</Filter>
+      <Filter>Source\Core.Entity</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entity_types.h">
-      <Filter>Source\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\fullscreen_quad.h">
-      <Filter>Source\Graphics</Filter>
+      <Filter>Source\Core.Entity</Filter>
     </ClInclude>
     <ClInclude Include="..\src\sprite_renderer.h">
-      <Filter>Source\Graphics</Filter>
+      <Filter>Source\Core.Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\sprite_data_pipe.h">
-      <Filter>Source\Graphics.Data</Filter>
+      <Filter>Source\Core.Graphics.Data</Filter>
     </ClInclude>
     <ClInclude Include="..\src\post_effect.h">
-      <Filter>Source\Graphics.Effects</Filter>
+      <Filter>Source\Core.Graphics.Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\sprite_render_system.h">
-      <Filter>Source\Entity.System</Filter>
+      <Filter>Source\Core.Entity.System</Filter>
     </ClInclude>
     <ClInclude Include="..\src\sprite_component.h">
-      <Filter>Source\Entity.Component</Filter>
+      <Filter>Source\Core.Entity.Component</Filter>
     </ClInclude>
     <ClInclude Include="..\src\orthographic_camera.h">
-      <Filter>Source\Graphics.Camera</Filter>
+      <Filter>Source\Core.Graphics.Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\src\controller_component.h">
-      <Filter>Source\Entity.Component</Filter>
+      <Filter>Source\Core.Entity.Component</Filter>
     </ClInclude>
     <ClInclude Include="..\src\controller_system.h">
-      <Filter>Source\Entity.System</Filter>
+      <Filter>Source\Core.Entity.System</Filter>
     </ClInclude>
     <ClInclude Include="..\src\sprite_animation_component.h">
-      <Filter>Source\Entity.Component</Filter>
+      <Filter>Source\Core.Entity.Component</Filter>
     </ClInclude>
     <ClInclude Include="..\src\text_data_pipe.h">
-      <Filter>Source\Graphics.Data</Filter>
+      <Filter>Source\Core.Graphics.Data</Filter>
     </ClInclude>
     <ClInclude Include="..\src\text_component.h">
-      <Filter>Source\Entity.Component</Filter>
+      <Filter>Source\Core.Entity.Component</Filter>
     </ClInclude>
     <ClInclude Include="..\src\text_render_system.h">
-      <Filter>Source\Entity.System</Filter>
+      <Filter>Source\Core.Entity.System</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map_view.h">
       <Filter>Source\Game</Filter>
@@ -182,19 +173,19 @@
       <Filter>Source\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\src\font_renderer.h">
-      <Filter>Source\Graphics</Filter>
+      <Filter>Source\Core.Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\abstract_gui_element.h">
-      <Filter>Source\Graphics.Gui</Filter>
+      <Filter>Source\Core.Graphics.Gui</Filter>
     </ClInclude>
     <ClInclude Include="..\src\audio_source.h">
       <Filter>Source\Core.Audio</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gui_tree.h">
-      <Filter>Source\Graphics.Gui</Filter>
+      <Filter>Source\Core.Graphics.Gui</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gui_container.h">
-      <Filter>Source\Graphics.Gui</Filter>
+      <Filter>Source\Core.Graphics.Gui</Filter>
     </ClInclude>
     <ClInclude Include="..\src\event.h">
       <Filter>Source\Core.Util</Filter>
@@ -259,37 +250,16 @@
     <ClInclude Include="..\src\text.h">
       <Filter>Source\Core.Resource</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\quad.h">
+      <Filter>Source\Core.Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
       <UniqueIdentifier>{4c5b273e-b907-4e3a-ae00-b2b4fbdf1ce5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Graphics">
-      <UniqueIdentifier>{b02f3524-5cd6-4c4e-a37d-5e89feb964a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Graphics.Camera">
-      <UniqueIdentifier>{9efc4032-0f25-43b0-ab35-812b272626f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Graphics.Data">
-      <UniqueIdentifier>{4ac3510e-e37d-452c-951e-68f0f53de0c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Entity">
-      <UniqueIdentifier>{991ef1e4-7430-4347-bf50-2d66d6200838}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Entity.Component">
-      <UniqueIdentifier>{f5f254f5-96e6-4ac8-8c90-052eb166d5a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Entity.System">
-      <UniqueIdentifier>{bedb95dd-53c1-4c3c-a410-aea4ff0aca6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Graphics.Effects">
-      <UniqueIdentifier>{d110f301-960a-4b07-81bf-a20c6ea1971e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Game">
       <UniqueIdentifier>{f1157bd4-5711-4098-9f9f-66e0021a15f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Graphics.Gui">
-      <UniqueIdentifier>{6acb3dec-15d1-4a17-9ae4-9ffb78466e30}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Core">
       <UniqueIdentifier>{3fd5afd0-8995-43a1-bcfe-002aa4e2b24a}</UniqueIdentifier>
@@ -308,6 +278,30 @@
     </Filter>
     <Filter Include="Source\Core.Audio">
       <UniqueIdentifier>{f4eedc32-c649-47a2-864a-153d1c4cab00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Entity">
+      <UniqueIdentifier>{991ef1e4-7430-4347-bf50-2d66d6200838}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Entity.Component">
+      <UniqueIdentifier>{f5f254f5-96e6-4ac8-8c90-052eb166d5a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Entity.System">
+      <UniqueIdentifier>{bedb95dd-53c1-4c3c-a410-aea4ff0aca6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Graphics">
+      <UniqueIdentifier>{b02f3524-5cd6-4c4e-a37d-5e89feb964a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Graphics.Camera">
+      <UniqueIdentifier>{9efc4032-0f25-43b0-ab35-812b272626f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Graphics.Data">
+      <UniqueIdentifier>{4ac3510e-e37d-452c-951e-68f0f53de0c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Graphics.Effects">
+      <UniqueIdentifier>{d110f301-960a-4b07-81bf-a20c6ea1971e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core.Graphics.Gui">
+      <UniqueIdentifier>{6acb3dec-15d1-4a17-9ae4-9ffb78466e30}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

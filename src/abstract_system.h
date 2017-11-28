@@ -2,7 +2,7 @@
 
 #include "entity_types.h"
 
-namespace entity 
+namespace core 
 {
 
 	class AbstractSystem

@@ -4,7 +4,7 @@
 #include "core.h"
 #include "data_pipe_hub.h"
 
-using namespace entity;
+using namespace core;
 
 void TextRenderSystem::Initialize(Entity * entity)
 {
@@ -43,9 +43,9 @@ void TextRenderSystem::Update(Entity * entity, float delta_time)
 			text_component->LowerDirty();
 		}
 
-		auto &text_data_pipe = graphics::DataPipeHub::Get().GetTextDataPipe();
+		auto &text_data_pipe = DataPipeHub::Get().GetTextDataPipe();
 
-		graphics::TextData text_data;
+		TextData text_data;
 		text_data.font_hash = text_component->GetFontHash();
 		text_data.blend_hash = text_component->GetBlendHash();
 		text_data.sampler_hash = text_component->GetSamplerHash();

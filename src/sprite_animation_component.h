@@ -6,7 +6,7 @@
 
 #include "component.h"
 
-namespace entity
+namespace core
 {
 	class SpriteAnimationComponent : public Component
 	{

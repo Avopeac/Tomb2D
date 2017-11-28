@@ -6,7 +6,7 @@
 
 #include "timing.h"
 
-using namespace graphics;
+using namespace core;
 
 PostEffect::PostEffect()
 {
@@ -59,7 +59,8 @@ void PostEffect::Apply()
 	 
 	float time = (float)core::GetSeconds();
 	 
-	glm::vec2 texel_size{ graphics_base_->GetBackbufferWidth(), graphics_base_->GetBackbufferHeight() };
+	glm::vec2 texel_size{ Core::GetGraphicsSystem()->GetBackbufferWidth(),
+		Core::GetGraphicsSystem()->GetBackbufferHeight() };
 	texel_size = 1.0f / texel_size;
 
 	fragment_shader_->SetUniform("u_texel_size", (void *)&texel_size);

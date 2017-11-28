@@ -4,7 +4,7 @@
 
 #include "glm/glm.hpp"
 
-namespace graphics {
+namespace core {
 
 	enum SpriteShape : uint8_t
 	{

@@ -8,7 +8,7 @@
 #include "config.h"
 #include "core.h"
 
-using namespace graphics;
+using namespace core;
 
 OrthographicCamera::OrthographicCamera(const std::string & name, glm::vec3 volume,  
 	const glm::vec3 & eye, 

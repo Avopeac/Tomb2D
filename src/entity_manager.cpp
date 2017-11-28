@@ -1,6 +1,6 @@
 #include "entity_manager.h"
 
-using namespace entity;
+using namespace core;
 
 EntityManager::EntityManager() : entity_unique_id_counter_(0), systems_counter_(0) {}
 

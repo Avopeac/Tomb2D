@@ -4,7 +4,6 @@
 #include "glm/glm.hpp"
 #include "glm/gtx/transform.hpp"
 
-#include "graphics.h"
 #include "logger.h"
 #include "timing.h"
 #include "renderer.h"
@@ -32,19 +31,15 @@ Sint32 main(Sint32 argc, char * argv[])
 	core::Core::GetInstance().StartUp(config);
 
 	// Create window and initialize graphics
-	graphics::GraphicsBase graphics_base(config);
-	graphics::Renderer renderer(&graphics_base);
+	core::Renderer renderer;
 
-	// Initialize audio device
-	//audio::AudioBase audio_base(config);
-	
-	auto &entity_manager = entity::EntityManager::Get();
+	auto &entity_manager = core::EntityManager::Get();
 
 	// Setup scene
 	{
-		using namespace entity;
+		using namespace core;
 
-		float aspect = graphics_base.GetAspectRatio();
+		float aspect = Core::GetGraphicsSystem()->GetAspectRatio();
 		
 		entity_manager.AddSystem(new SpriteRenderSystem());
 		entity_manager.AddSystem(new ControllerSystem());
@@ -58,7 +53,7 @@ Sint32 main(Sint32 argc, char * argv[])
 
 		game::MapParser map_parser;
 		game::MapData map = map_parser.GetMapData("assets/maps/inn_2.json");
-		game::MapView map_view(graphics_base, map);
+		game::MapView map_view(map);
 		map_view.Initialize();
 
 		auto * character_entity = entity_manager.CreateEntity("character");
@@ -87,7 +82,7 @@ Sint32 main(Sint32 argc, char * argv[])
 
 	core::AudioSource source(sound);
 	source.SetRepeating(true);
-	source.SetGain(0.1f);
+	source.SetGain(0.5f);
 	source.Play();
 
 	// Main loop 
@@ -113,7 +108,7 @@ Sint32 main(Sint32 argc, char * argv[])
 		auto * text_entity = entity_manager.GetEntityByName("text");
 		if (text_entity)
 		{
-			auto * text_drawable = entity_manager.GetEntityComponent<entity::TextComponent>(text_entity->id);
+			auto * text_drawable = entity_manager.GetEntityComponent<core::TextComponent>(text_entity->id);
 			if (text_drawable)
 			{
 				text_drawable->SetText("FPS: " + std::to_string(1.0 / frame_time));
@@ -124,7 +119,7 @@ Sint32 main(Sint32 argc, char * argv[])
 
 		renderer.Invoke((float)frame_time);
 
-		SDL_GL_SwapWindow(graphics_base.GetWindow());
+		SDL_GL_SwapWindow(core::Core::GetGraphicsSystem()->GetWindow());
 
 		core::Core::GetInputSystem()->CarryCurrentInput();
 	}

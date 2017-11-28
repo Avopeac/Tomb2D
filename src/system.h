@@ -2,7 +2,7 @@
 
 #include "abstract_system.h"
 
-namespace entity
+namespace core
 {
 	template <typename T, typename... Components> class System : public AbstractSystem
 	{

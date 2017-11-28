@@ -35,7 +35,7 @@ namespace core {
 
 		~InputCoreSystem();
 
-		void StartUp() override;
+		void StartUp(const Config &config) override;
 
 		void CleanUp() override;
 

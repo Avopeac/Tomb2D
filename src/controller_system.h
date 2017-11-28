@@ -5,7 +5,7 @@
 #include "sprite_component.h"
 #include "controller_component.h"
 
-namespace entity
+namespace core
 {
 
 	class ControllerSystem : public System<ControllerSystem, ControllerComponent, SpriteComponent>

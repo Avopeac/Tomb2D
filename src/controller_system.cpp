@@ -7,7 +7,7 @@
 #include "data_pipe_hub.h"
 #include "timing.h"
 
-using namespace entity;
+using namespace core;
 
 void ControllerSystem::Initialize(Entity * entity)
 {

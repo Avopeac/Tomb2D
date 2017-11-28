@@ -4,7 +4,7 @@
 #include "core.h"
 #include "data_pipe_hub.h"
 
-using namespace entity;
+using namespace core;
 
 void SpriteRenderSystem::Initialize(Entity * entity)
 {
@@ -60,9 +60,9 @@ void SpriteRenderSystem::Update(Entity * entity, float delta_time)
 			sprite_component->LowerDirty();
 		}
 	
-		auto &sprite_data_pipe = graphics::DataPipeHub::Get().GetSpriteDataPipe();
+		auto &sprite_data_pipe = DataPipeHub::Get().GetSpriteDataPipe();
 
-		graphics::SpriteData sprite_data;
+		SpriteData sprite_data;
 		sprite_data.blend_hash = sprite_component->GetBlendHash();
 		sprite_data.sampler_hash = sprite_component->GetSamplerHash();
 

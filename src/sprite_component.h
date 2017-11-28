@@ -8,7 +8,7 @@
 #include "core.h"
 #include "sprite_data_pipe.h"
 
-namespace entity
+namespace core
 {
 	class SpriteComponent : public Component
 	{
@@ -17,17 +17,17 @@ namespace entity
 
 		std::string texture_path_;
 
-		core::BlendMode src_blend_;
-		core::BlendMode dst_blend_;
-		core::MagnificationFiltering mag_filter_;
-		core::MinificationFiltering min_filter_;
-		core::Wrapping s_wrapping_;
-		core::Wrapping t_wrapping_;
+		BlendMode src_blend_;
+		BlendMode dst_blend_;
+		MagnificationFiltering mag_filter_;
+		MinificationFiltering min_filter_;
+		Wrapping s_wrapping_;
+		Wrapping t_wrapping_;
 
 		size_t layer_;
 		glm::vec4 color_;
 		glm::mat4 transform_;
-		graphics::SpriteShape shape_;
+		SpriteShape shape_;
 
 		size_t texture_hash_ = 0;
 		size_t blend_hash_ = 0;
@@ -39,13 +39,13 @@ namespace entity
 			const glm::vec4 &color = glm::vec4(1.0f),
 			const glm::mat4 &transform = glm::mat4(1.0f),
 			size_t layer = 0,
-			graphics::SpriteShape shape = graphics::SpriteShape::Quad,
-			core::BlendMode src_blend = core::BlendMode::SrcAlpha,
-			core::BlendMode dst_blend = core::BlendMode::OneMinusSrcAlpha,
-			core::MagnificationFiltering magnification = core::MagnificationFiltering::Linear,
-			core::MinificationFiltering minification = core::MinificationFiltering::Linear,
-			core::Wrapping s = core::Wrapping::ClampToEdge,
-			core::Wrapping t = core::Wrapping::ClampToEdge) :
+			SpriteShape shape = SpriteShape::Quad,
+			BlendMode src_blend = BlendMode::SrcAlpha,
+			BlendMode dst_blend = BlendMode::OneMinusSrcAlpha,
+			MagnificationFiltering magnification = core::MagnificationFiltering::Linear,
+			MinificationFiltering minification = core::MinificationFiltering::Linear,
+			Wrapping s = Wrapping::ClampToEdge,
+			Wrapping t = Wrapping::ClampToEdge) :
 			texture_path_(texture_path),
 			src_blend_(src_blend),
 			dst_blend_(dst_blend),
@@ -134,9 +134,9 @@ namespace entity
 
 		inline void SetLayer(size_t layer) { layer_ = layer; }
 
-		inline graphics::SpriteShape GetShape() const { return shape_; }
+		inline SpriteShape GetShape() const { return shape_; }
 
-		inline void SetShape(graphics::SpriteShape shape) {	shape_ = shape;	}
+		inline void SetShape(SpriteShape shape) {	shape_ = shape;	}
 
 		inline size_t GetTextureHash() const { return texture_hash_; }
 

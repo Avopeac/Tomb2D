@@ -1,5 +1,7 @@
 #pragma once
 
+#include "config.h"
+
 namespace core {
 
 	class AbstractCoreSystem
@@ -10,7 +12,7 @@ namespace core {
 
 		~AbstractCoreSystem() = default;
 
-		virtual void StartUp() = 0; 
+		virtual void StartUp(const Config &config) = 0; 
 
 		virtual void CleanUp() = 0;
 	};

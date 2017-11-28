@@ -6,9 +6,9 @@
 
 #include "GL/glew.h"
 
-namespace graphics
+namespace core
 {
-	class FullscreenQuad
+	class Quad
 	{
 		const glm::vec2 quad_vertices_[4] =
 		{
@@ -28,13 +28,13 @@ namespace graphics
 
 	public:
 
-		static FullscreenQuad &Get()
+		static Quad &Get()
 		{
-			static FullscreenQuad quad;
+			static Quad quad;
 			return quad;
 		}
 
-		~FullscreenQuad() = default;
+		~Quad() = default;
 
 		inline Uint32 GetNumQuadVertices() const { return sizeof(quad_vertices_) / sizeof(quad_vertices_[0]); }
 
@@ -52,7 +52,7 @@ namespace graphics
 
 	private:
 
-		FullscreenQuad()
+		Quad()
 		{
 			size_t num_vertices = GetNumQuadVertices();
 			size_t num_indices = GetNumQuadIndices();

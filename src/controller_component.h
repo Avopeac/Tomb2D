@@ -4,7 +4,7 @@
 
 #include "component.h"
 
-namespace entity
+namespace core
 {
 	class ControllerComponent : public Component
 	{

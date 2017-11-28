@@ -10,7 +10,7 @@ GuiCoreSystem::~GuiCoreSystem()
 {
 }
 
-void GuiCoreSystem::StartUp()
+void GuiCoreSystem::StartUp(const Config &config)
 {
 }
 

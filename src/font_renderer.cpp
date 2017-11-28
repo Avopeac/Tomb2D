@@ -6,12 +6,11 @@
 
 #include "renderer.h"
 
-#include "fullscreen_quad.h"
+#include "quad.h"
 
-using namespace graphics;
+using namespace core;
 
-FontRenderer::FontRenderer(const GraphicsBase & graphics_base) : 
-	graphics_base_(graphics_base)
+FontRenderer::FontRenderer() 
 {
 	default_vert_program_ = core::Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_font.vert", GL_VERTEX_SHADER, "assets/shaders/default_font.vert");
 	default_frag_program_ = core::Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_font.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_font.frag");
@@ -24,9 +23,9 @@ FontRenderer::FontRenderer(const GraphicsBase & graphics_base) :
 
 	proj_ = glm::ortho(
 		0.0f,
-		(float)graphics_base_.GetBackbufferWidth(),
+		(float)Core::GetGraphicsSystem()->GetBackbufferWidth(),
 		0.0f,
-		(float)graphics_base_.GetBackbufferHeight(),
+		(float)Core::GetGraphicsSystem()->GetBackbufferHeight(),
 		-1.0f, 1.0f);
 }
 
@@ -41,7 +40,7 @@ void FontRenderer::Draw(float delta_time)
 
 	render_target->BindDraw(0, 0, 0, 0, 0);
 
-	FullscreenQuad::Get().Begin();
+	Quad::Get().Begin();
 
 	pipeline_.Bind();
 
@@ -103,7 +102,7 @@ void FontRenderer::Draw(float delta_time)
 				default_frag_program_->SetUniform("u_texture", &texture_index);
 			}
 
-			FullscreenQuad::Get().DrawElements();
+			Quad::Get().DrawElements();
 
 			position.x += glyph->advance;
 
@@ -120,5 +119,5 @@ void FontRenderer::Draw(float delta_time)
 
 	pipeline_.Unbind();
 
-	FullscreenQuad::Get().End();
+	Quad::Get().End();
 }

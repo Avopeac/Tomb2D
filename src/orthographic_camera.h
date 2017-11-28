@@ -2,7 +2,7 @@
 
 #include "abstract_camera.h"
 
-namespace graphics
+namespace core
 {
 	class OrthographicCamera : public AbstractCamera
 	{

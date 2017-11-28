@@ -2,16 +2,12 @@
 
 #include "renderer.h"
 
-#include "fullscreen_quad.h"
+#include "quad.h"
 
-using namespace graphics;
+using namespace core;
 
-const GraphicsBase * PostProcessEffect::graphics_base_ = nullptr;
-
-PostProcessing::PostProcessing(GraphicsBase &graphics_base)
-	: graphics_base_(graphics_base)
+PostProcessing::PostProcessing()
 {
-	PostProcessEffect::Init(graphics_base_);
 } 
 
 PostProcessing::~PostProcessing()
@@ -32,14 +28,9 @@ void PostProcessing::Process()
 	}
 }
 
-void PostProcessEffect::Init(const GraphicsBase &graphics_base)
-{
-	graphics_base_ = &graphics_base;
-}
-
 void PostProcessEffect::Render()
 {	
-	FullscreenQuad::Get().Begin();
-	FullscreenQuad::Get().DrawElements();
-	FullscreenQuad::Get().End();
+	Quad::Get().Begin();
+	Quad::Get().DrawElements();
+	Quad::Get().End();
 }
