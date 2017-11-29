@@ -2,6 +2,8 @@
 
 #include "post_processing.h"
 
+#include "resource_core_system.h"
+
 namespace core
 {
 	class PostEffect : public PostProcessEffect
@@ -13,9 +15,7 @@ namespace core
 
 		Program * vertex_shader_;
 		Program * fragment_shader_;
-
 		ProgramPipeline pipeline_;
-
 		FrameBuffer * fbo0_;
 
 	public:
@@ -25,9 +25,10 @@ namespace core
 		~PostEffect();
 
 		// Inherited via PostProcessEffect
-		virtual void Init() override;
+		virtual void Init(ResourceCoreSystem &resource_core) override;
 
-		virtual void Apply() override;
+		virtual void Apply(RenderQuad &quad, ResourceCoreSystem &resource_core, 
+			GraphicsCoreSystem &graphics_core) override;
 
 	};
 }

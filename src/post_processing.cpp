@@ -1,12 +1,10 @@
 #include "post_processing.h"
-
 #include "renderer.h"
-
-#include "quad.h"
 
 using namespace core;
 
-PostProcessing::PostProcessing()
+PostProcessing::PostProcessing(RenderQuad &quad, ResourceCoreSystem &resource_core, GraphicsCoreSystem &graphics_core) :
+	quad_(quad), resource_core_(resource_core), graphics_core_(graphics_core)
 {
 } 
 
@@ -17,20 +15,13 @@ PostProcessing::~PostProcessing()
 void PostProcessing::Add(std::unique_ptr<PostProcessEffect> effect)
 {
 	effects_.push_back(std::move(effect));
-	effects_.back()->Init();
+	effects_.back()->Init(resource_core_);
 }
 
 void PostProcessing::Process()
 {
 	for (auto &effect : effects_)
 	{
-		effect->Apply();
+		effect->Apply(quad_, resource_core_, graphics_core_);
 	}
-}
-
-void PostProcessEffect::Render()
-{	
-	Quad::Get().Begin();
-	Quad::Get().DrawElements();
-	Quad::Get().End();
 }

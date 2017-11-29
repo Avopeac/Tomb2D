@@ -1,19 +1,16 @@
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "font_renderer.h"
-
-#include "glm/gtc/matrix_transform.hpp"
-
 #include "data_pipe_hub.h"
-
 #include "renderer.h"
-
-#include "quad.h"
 
 using namespace core;
 
-FontRenderer::FontRenderer() 
+FontRenderer::FontRenderer(RenderQuad &quad, ResourceCoreSystem &resource_core, GraphicsCoreSystem &graphics_core) :
+	quad_(quad), resource_core_(resource_core), graphics_core_(graphics_core)
 {
-	default_vert_program_ = core::Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_font.vert", GL_VERTEX_SHADER, "assets/shaders/default_font.vert");
-	default_frag_program_ = core::Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_font.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_font.frag");
+	default_vert_program_ = resource_core_.GetProgramCache().GetFromFile("default_font.vert", GL_VERTEX_SHADER, "assets/shaders/default_font.vert");
+	default_frag_program_ = resource_core_.GetProgramCache().GetFromFile("default_font.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_font.frag");
 
 	pipeline_.SetStages(*default_vert_program_);
 	pipeline_.SetStages(*default_frag_program_);
@@ -21,11 +18,8 @@ FontRenderer::FontRenderer()
 	size_t vertex_size = sizeof(float) * 2;
 	size_t index_size = sizeof(Uint32);
 
-	proj_ = glm::ortho(
-		0.0f,
-		(float)Core::GetGraphicsSystem()->GetBackbufferWidth(),
-		0.0f,
-		(float)Core::GetGraphicsSystem()->GetBackbufferHeight(),
+	proj_ = glm::ortho(0.0f, float(graphics_core_.GetBackbufferWidth()),
+		0.0f, float(graphics_core_.GetBackbufferHeight()),
 		-1.0f, 1.0f);
 }
 
@@ -35,28 +29,24 @@ FontRenderer::~FontRenderer()
 
 void FontRenderer::Draw(float delta_time)
 {
-	core::FrameBuffer * render_target =
-		core::Core::GetResourceSystem()->GetFrameBufferCache().GetFromName(Renderer::render_target_name);
-
+	FrameBuffer * render_target = resource_core_.GetFrameBufferCache().GetFromName(Renderer::render_target_name);
 	render_target->BindDraw(0, 0, 0, 0, 0);
 
-	Quad::Get().Begin();
-
+	quad_.Begin();
 	pipeline_.Bind();
 
 	auto &data = DataPipeHub::Get().GetTextDataPipe().GetData();
 	for (auto it = data.begin(); it != data.end(); ++it)
 	{
-		auto * blend_mode = core::Core::GetResourceSystem()->GetBlendCache().GetFromHash(it->blend_hash);
-		auto * font = core::Core::GetResourceSystem()->GetFontCache().GetFromHash(it->font_hash);
-		auto * sampler = core::Core::GetResourceSystem()->GetSamplerCache().GetFromHash(it->sampler_hash);
+		auto * blend_mode = resource_core_.GetBlendCache().GetFromHash(it->blend_hash);
+		auto * font = resource_core_.GetFontCache().GetFromHash(it->font_hash);
+		auto * sampler = resource_core_.GetSamplerCache().GetFromHash(it->sampler_hash);
 
 		glm::vec2 position = it->position;
 		 
 		int texture_index = 0; 
 		for (size_t i = 0; i < it->text_string.size(); ++i)
 		{
-			
 			if ((it->text_string[i] == '\n'))
 			{
 				position = it->position;
@@ -102,8 +92,8 @@ void FontRenderer::Draw(float delta_time)
 				default_frag_program_->SetUniform("u_texture", &texture_index);
 			}
 
-			Quad::Get().DrawElements();
-
+			quad_.DrawElements();
+			
 			position.x += glyph->advance;
 
 			if (i < it->text_string.size() - 1)
@@ -119,5 +109,5 @@ void FontRenderer::Draw(float delta_time)
 
 	pipeline_.Unbind();
 
-	Quad::Get().End();
+	quad_.End();
 }

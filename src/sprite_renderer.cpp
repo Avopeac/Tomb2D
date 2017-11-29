@@ -1,17 +1,15 @@
-#include "sprite_renderer.h"
-
-#include "renderer.h"
-
 #include "glm/gtc/type_ptr.hpp"
-
 #include <algorithm>
+#include "sprite_renderer.h"
+#include "renderer.h"
 
 using namespace core;
 
-SpriteRenderer::SpriteRenderer()
+SpriteRenderer::SpriteRenderer(ResourceCoreSystem &resource_core, GraphicsCoreSystem &graphics_core) : 
+	resource_core_(resource_core), graphics_core_(graphics_core)
 {
-	default_vert_program_ = Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_sprite.vert", GL_VERTEX_SHADER, "assets/shaders/default_sprite.vert");
-	default_frag_program_ = Core::GetResourceSystem()->GetProgramCache().GetFromFile("default_sprite.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_sprite.frag");
+	default_vert_program_ = resource_core.GetProgramCache().GetFromFile("default_sprite.vert", GL_VERTEX_SHADER, "assets/shaders/default_sprite.vert");
+	default_frag_program_ = resource_core.GetProgramCache().GetFromFile("default_sprite.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_sprite.frag");
 
 	pipeline_.SetStages(*default_vert_program_);
 	pipeline_.SetStages(*default_frag_program_);
@@ -20,23 +18,19 @@ SpriteRenderer::SpriteRenderer()
 
 	CreateBatchObject(flat_hex_batch_object_,
 		flat_hexagon_vertices_, sizeof(flat_hexagon_vertices_) / sizeof(flat_hexagon_vertices_[0]),
-		hexagon_indices_, sizeof(hexagon_indices_) / sizeof(hexagon_indices_[0])
-	);
+		hexagon_indices_, sizeof(hexagon_indices_) / sizeof(hexagon_indices_[0]));
 
 	CreateBatchObject(sharp_hex_batch_object_,
 		sharp_hexagon_vertices_, sizeof(sharp_hexagon_vertices_) / sizeof(sharp_hexagon_vertices_[0]),
-		hexagon_indices_, sizeof(hexagon_indices_) / sizeof(hexagon_indices_[0])
-	);
+		hexagon_indices_, sizeof(hexagon_indices_) / sizeof(hexagon_indices_[0]));
 
 	CreateBatchObject(quad_batch_object_,
 		quad_vertices_, sizeof(quad_vertices_) / sizeof(quad_vertices_[0]),
-		quad_indices_, sizeof(quad_indices_) / sizeof(quad_indices_[0])
-	);
+		quad_indices_, sizeof(quad_indices_) / sizeof(quad_indices_[0]));
 
 	CreateBatchObject(isometric_quad_batch_object_,
 		isometric_quad_vertices_, sizeof(isometric_quad_vertices_) / sizeof(isometric_quad_vertices_[0]),
-		quad_indices_, sizeof(quad_indices_) / sizeof(quad_indices_[0])
-	);
+		quad_indices_, sizeof(quad_indices_) / sizeof(quad_indices_[0]));
 }
 
 SpriteRenderer::~SpriteRenderer()
@@ -72,18 +66,13 @@ void SpriteRenderer::Draw(float delta_time)
 
 	DataPipeHub::Get().GetSpriteDataPipe().Flush();
 
-	core::FrameBuffer * render_target = 
-		core::Core::GetResourceSystem()->GetFrameBufferCache().GetFromName(Renderer::render_target_name);
-
+	FrameBuffer * render_target = resource_core_.GetFrameBufferCache().GetFromName(Renderer::render_target_name);
 	render_target->BindDraw(GL_COLOR_BUFFER_BIT, 0.0f, 0.0f, 0.0f, 0.0f);
-
 	pipeline_.Bind();
 
 	int texture_index = 0;
-	default_vert_program_->SetUniform("u_viewproj", 
-		(void*)glm::value_ptr(Core::GetGraphicsSystem()->GetOrthographicCamera()->GetViewProj()));
-	default_frag_program_->SetUniform("u_texture",
-		(void*)&texture_index); 
+	default_vert_program_->SetUniform("u_viewproj", (void*)glm::value_ptr(graphics_core_.GetOrthographicCamera()->GetViewProj()));
+	default_frag_program_->SetUniform("u_texture",	(void*)&texture_index); 
 	
 	// Sort by layer
 	std::sort(sharp_hex_batches_.begin(), sharp_hex_batches_.end(), [](const Batch &a, const Batch &b) { return a.layer < b.layer; });
@@ -169,8 +158,6 @@ void SpriteRenderer::CreateInstanceBuffer()
 	glBindBuffer(GL_ARRAY_BUFFER, instance_buffer_);
 	glBufferData(GL_ARRAY_BUFFER, MAX_SPRITE_INSTANCES * sizeof(BatchElement), nullptr, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-
 }
 
 void SpriteRenderer::DeleteInstanceBuffer()
@@ -312,10 +299,6 @@ void SpriteRenderer::PushToBatchObject(std::vector<Batch> &batches, const Sprite
 void SpriteRenderer::DrawBatchObject(BatchObject & object, size_t start, size_t end, std::vector<Batch> &batches)
 {
 
-	auto & blend_cache = core::Core::GetResourceSystem()->GetBlendCache();
-	auto & sampler_cache = core::Core::GetResourceSystem()->GetSamplerCache();
-	auto & texture_cache = core::Core::GetResourceSystem()->GetTextureCache();
-
 	glBindVertexArray(object.vertex_array);
 
 	for (size_t i = start; i < end; ++i)
@@ -326,13 +309,13 @@ void SpriteRenderer::DrawBatchObject(BatchObject & object, size_t start, size_t 
 			[](BatchElement &a, BatchElement &b) { return a.sprite_transform[3][1] > b.sprite_transform[3][1]; });
 
 		// Set blend mode for batch
-		blend_cache.GetFromHash(batches[i].blend_hash)->Set();
+		resource_core_.GetBlendCache().GetFromHash(batches[i].blend_hash)->Set();
 
 		// Set sampler and texture if present
 		if (batches[i].sampler_hash && batches[i].texture_hash)
 		{
-			sampler_cache.GetFromHash(batches[i].sampler_hash)->Bind(0);
-			texture_cache.GetFromHash(batches[i].texture_hash)->Bind(0);
+			resource_core_.GetSamplerCache().GetFromHash(batches[i].sampler_hash)->Bind(0);
+			resource_core_.GetTextureCache().GetFromHash(batches[i].texture_hash)->Bind(0);
 		}
 
 		// Re-upload subdata for instance buffer

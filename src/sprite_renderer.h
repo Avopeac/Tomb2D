@@ -2,11 +2,10 @@
 
 #include <vector>
 #include <unordered_map>
-
-#include "GL/glew.h"
-
+#include <GL/glew.h>
 #include "data_pipe_hub.h"
-#include "core.h"
+#include "resource_core_system.h"
+#include "graphics_core_system.h"
 
 namespace core 
 {
@@ -68,7 +67,6 @@ namespace core
 			2, 1, 3
 		};
 
-
 		struct BatchElement
 		{
 			glm::mat4 sprite_transform;
@@ -98,30 +96,25 @@ namespace core
 		GLuint instance_buffer_ = 0;
 
 		std::vector<Batch> quad_batches_;
-
 		std::vector<Batch> isometric_quad_batches_;
-
 		std::vector<Batch> flat_hex_batches_;
-
 		std::vector<Batch> sharp_hex_batches_;
 
 		BatchObject isometric_quad_batch_object_;
-
 		BatchObject quad_batch_object_;
-
 		BatchObject flat_hex_batch_object_;
-
 		BatchObject sharp_hex_batch_object_;
 
-		core::ProgramPipeline pipeline_;
+		ProgramPipeline pipeline_;
+		Program * default_vert_program_;
+		Program * default_frag_program_;
 
-		core::Program * default_vert_program_;
-
-		core::Program * default_frag_program_;
+		ResourceCoreSystem &resource_core_;
+		GraphicsCoreSystem &graphics_core_;
 		
 	public:
 
-		SpriteRenderer();
+		SpriteRenderer(ResourceCoreSystem &resource_core, GraphicsCoreSystem &graphics_core);
 
 		~SpriteRenderer();
 

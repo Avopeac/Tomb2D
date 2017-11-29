@@ -1,5 +1,4 @@
 #include "renderer.h"
-#include "core.h"
 
 #include "post_effect.h"
 
@@ -7,12 +6,13 @@ using namespace core;
 
 const std::string Renderer::render_target_name = "main_render_target";
 
-Renderer::Renderer()
+Renderer::Renderer(ResourceCoreSystem &resource_core, GraphicsCoreSystem &graphics_core) :
+	resource_core_(resource_core), graphics_core_(graphics_core)
 {
 	render_target_ = CreateRenderTarget();
-	sprite_renderer_ = std::make_unique<SpriteRenderer>();
-	font_renderer_ = std::make_unique<FontRenderer>();
-	post_processing_ = std::make_unique<PostProcessing>();
+	sprite_renderer_ = std::make_unique<SpriteRenderer>(resource_core_, graphics_core_);
+	font_renderer_ = std::make_unique<FontRenderer>(quad_, resource_core_, graphics_core_);
+	post_processing_ = std::make_unique<PostProcessing>(quad_, resource_core_, graphics_core_);
 	post_processing_->Add(std::move(std::make_unique<PostEffect>()));  
 
 	glEnable(GL_CULL_FACE);
@@ -29,13 +29,13 @@ void Renderer::Invoke(float frame_time)
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 
-	auto * orthographic_camera = Core::GetGraphicsSystem()->GetOrthographicCamera();
-	orthographic_camera->Update(frame_time);
+	graphics_core_.GetOrthographicCamera()->Update(frame_time);
 
 	sprite_renderer_->Draw(frame_time);
 	font_renderer_->Draw(frame_time);
 
 	glDisable(GL_BLEND);
+
 	post_processing_->Process();
 }
 
@@ -50,9 +50,9 @@ core::FrameBuffer * Renderer::CreateRenderTarget()
 
 	descriptors.push_back(composition); 
 
-	auto &frame_buffer_cache = core::Core::GetResourceSystem()->GetFrameBufferCache();
+	auto &frame_buffer_cache = resource_core_.GetFrameBufferCache();
 	return frame_buffer_cache.GetFromParameters(render_target_name,
-		Core::GetGraphicsSystem()->GetBackbufferWidth(), Core::GetGraphicsSystem()->GetBackbufferHeight(),
+		graphics_core_.GetBackbufferWidth(), graphics_core_.GetBackbufferHeight(),
 		0, descriptors, nullptr);
 
 }

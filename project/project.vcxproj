@@ -132,9 +132,9 @@
     <ClCompile Include="..\src\blend_mode.cpp" />
     <ClCompile Include="..\src\config.cpp" />
     <ClCompile Include="..\src\controller_system.cpp" />
-    <ClCompile Include="..\src\core.cpp" />
     <ClCompile Include="..\src\entity_core_system.cpp" />
     <ClCompile Include="..\src\entity_manager.cpp" />
+    <ClCompile Include="..\src\render_quad.cpp" />
     <ClCompile Include="..\src\text.cpp" />
     <ClCompile Include="..\src\font.cpp" />
     <ClCompile Include="..\src\font_renderer.cpp" />
@@ -170,7 +170,6 @@
     <ClInclude Include="..\src\config.h" />
     <ClInclude Include="..\src\controller_component.h" />
     <ClInclude Include="..\src\controller_system.h" />
-    <ClInclude Include="..\src\core.h" />
     <ClInclude Include="..\src\data_pipe_hub.h" />
     <ClInclude Include="..\src\component.h" />
     <ClInclude Include="..\src\entity_core_system.h" />
@@ -190,7 +189,7 @@
     <ClInclude Include="..\src\resource_core_system.h" />
     <ClInclude Include="..\src\sound.h" />
     <ClInclude Include="..\src\text_render_system.h" />
-    <ClInclude Include="..\src\quad.h" />
+    <ClInclude Include="..\src\render_quad.h" />
     <ClInclude Include="..\src\disposable.h" />
     <ClInclude Include="..\src\frame_buffer.h" />
     <ClInclude Include="..\src\logger.h" />

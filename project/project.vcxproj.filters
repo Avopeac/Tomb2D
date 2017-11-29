@@ -77,9 +77,6 @@
     <ClCompile Include="..\src\graphics_core_system.cpp">
       <Filter>Source\Core.System</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\core.cpp">
-      <Filter>Source\Core</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\input_core_system.cpp">
       <Filter>Source\Core.System</Filter>
     </ClCompile>
@@ -97,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="..\src\text.cpp">
       <Filter>Source\Core.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\render_quad.cpp">
+      <Filter>Source\Core.Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,9 +223,6 @@
     <ClInclude Include="..\src\graphics_core_system.h">
       <Filter>Source\Core.System</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\core.h">
-      <Filter>Source\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\input_core_system.h">
       <Filter>Source\Core.System</Filter>
     </ClInclude>
@@ -250,7 +247,7 @@
     <ClInclude Include="..\src\text.h">
       <Filter>Source\Core.Resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\quad.h">
+    <ClInclude Include="..\src\render_quad.h">
       <Filter>Source\Core.Graphics</Filter>
     </ClInclude>
   </ItemGroup>

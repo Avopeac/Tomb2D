@@ -6,7 +6,9 @@
 #include <iostream>
 #include <GL/glew.h>
 
-#include "core.h"
+#include "render_quad.h"
+#include "resource_core_system.h"
+#include "graphics_core_system.h"
 
 namespace core
 {
@@ -19,11 +21,11 @@ namespace core
 
 		virtual ~PostProcessEffect() {};
 
-		virtual void Init() = 0;
+		virtual void Init(ResourceCoreSystem &resource_core) = 0;
 
-		virtual void Apply() = 0;
+		virtual void Apply(RenderQuad &quad, ResourceCoreSystem &resource_core, 
+			GraphicsCoreSystem &graphics_core) = 0;
 
-		void Render();
 	};
 
 	class PostProcessing
@@ -31,9 +33,16 @@ namespace core
 
 		std::vector<std::unique_ptr<PostProcessEffect>> effects_;
 
+		ResourceCoreSystem &resource_core_;
+
+		GraphicsCoreSystem &graphics_core_;
+		
+		RenderQuad &quad_;
+
 	public:
 		
-		PostProcessing();
+		PostProcessing(RenderQuad &quad, ResourceCoreSystem &resource_core,
+			GraphicsCoreSystem &graphics_core);
 
 		~PostProcessing();
 

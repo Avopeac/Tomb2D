@@ -1,9 +1,15 @@
-#include "SDL.h"
-#include "SDL_image.h"
-
 #include "glm/glm.hpp"
 #include "glm/gtx/transform.hpp"
 
+#include "audio_core_system.h"
+#include "graphics_core_system.h"
+#include "input_core_system.h"
+#include "entity_core_system.h"
+#include "gui_core_system.h"
+#include "resource_core_system.h"
+
+#include "audio_source.h"
+#include "config.h"
 #include "logger.h"
 #include "timing.h"
 #include "renderer.h"
@@ -17,21 +23,20 @@
 #include "map_parser.h"
 #include "map_view.h"
 
-#include "audio_source.h"
-
-#include "core.h"
-#include "config.h"
-
 Sint32 main(Sint32 argc, char * argv[])
 {
-
 	// Initialize
 	core::Config config;
 	config.Load("assets/scripts/config.chai");
-	core::Core::GetInstance().StartUp(config);
+
+	core::ResourceCoreSystem resource_core;
+	core::GraphicsCoreSystem graphics_core;
+
+	resource_core.StartUp(config);
+	graphics_core.StartUp(config);
 
 	// Create window and initialize graphics
-	core::Renderer renderer;
+	core::Renderer renderer(resource_core, graphics_core);
 
 	auto &entity_manager = core::EntityManager::Get();
 
@@ -124,7 +129,8 @@ Sint32 main(Sint32 argc, char * argv[])
 		core::Core::GetInputSystem()->CarryCurrentInput();
 	}
 
-	core::Core::GetInstance().CleanUp();
+	resource_core.CleanUp();
+	graphics_core.CleanUp();
 
 	return 0;
 }
