@@ -5,12 +5,12 @@
 #include <string>
 
 #include "component.h"
-#include "core.h"
 #include "text_data_pipe.h"
+#include "resource_core_system.h"
 
-namespace core
+namespace game
 {
-	class TextComponent : public Component
+	class TextComponent : public core::Component
 	{
 
 		std::string font_path_;

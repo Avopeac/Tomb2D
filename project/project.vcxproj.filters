@@ -8,9 +8,6 @@
     <ClCompile Include="..\src\renderer.cpp">
       <Filter>Source\Core.Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\entity_manager.cpp">
-      <Filter>Source\Core.Entity</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\sprite_renderer.cpp">
       <Filter>Source\Core.Graphics</Filter>
     </ClCompile>
@@ -18,19 +15,19 @@
       <Filter>Source\Core.Graphics.Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\sprite_render_system.cpp">
-      <Filter>Source\Core.Entity.System</Filter>
+      <Filter>Source\Game.Entity.System</Filter>
     </ClCompile>
     <ClCompile Include="..\src\orthographic_camera.cpp">
       <Filter>Source\Core.Graphics.Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\src\controller_system.cpp">
-      <Filter>Source\Core.Entity.System</Filter>
+      <Filter>Source\Game.Entity.System</Filter>
     </ClCompile>
     <ClCompile Include="..\src\font_renderer.cpp">
       <Filter>Source\Core.Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\text_render_system.cpp">
-      <Filter>Source\Core.Entity.System</Filter>
+      <Filter>Source\Game.Entity.System</Filter>
     </ClCompile>
     <ClCompile Include="..\src\map_parser.cpp">
       <Filter>Source\Game</Filter>
@@ -80,9 +77,6 @@
     <ClCompile Include="..\src\input_core_system.cpp">
       <Filter>Source\Core.System</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\entity_core_system.cpp">
-      <Filter>Source\Core.System</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\gui_core_system.cpp">
       <Filter>Source\Core.System</Filter>
     </ClCompile>
@@ -97,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="..\src\render_quad.cpp">
       <Filter>Source\Core.Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entity_core_system.cpp">
+      <Filter>Source\Core.System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,9 +118,6 @@
     <ClInclude Include="..\src\system.h">
       <Filter>Source\Core.Entity</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\entity_manager.h">
-      <Filter>Source\Core.Entity</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\entity_types.h">
       <Filter>Source\Core.Entity</Filter>
     </ClInclude>
@@ -137,31 +131,31 @@
       <Filter>Source\Core.Graphics.Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\src\sprite_render_system.h">
-      <Filter>Source\Core.Entity.System</Filter>
+      <Filter>Source\Game.Entity.System</Filter>
     </ClInclude>
     <ClInclude Include="..\src\sprite_component.h">
-      <Filter>Source\Core.Entity.Component</Filter>
+      <Filter>Source\Game.Entity.Component</Filter>
     </ClInclude>
     <ClInclude Include="..\src\orthographic_camera.h">
       <Filter>Source\Core.Graphics.Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\src\controller_component.h">
-      <Filter>Source\Core.Entity.Component</Filter>
+      <Filter>Source\Game.Entity.Component</Filter>
     </ClInclude>
     <ClInclude Include="..\src\controller_system.h">
-      <Filter>Source\Core.Entity.System</Filter>
+      <Filter>Source\Game.Entity.System</Filter>
     </ClInclude>
     <ClInclude Include="..\src\sprite_animation_component.h">
-      <Filter>Source\Core.Entity.Component</Filter>
+      <Filter>Source\Game.Entity.Component</Filter>
     </ClInclude>
     <ClInclude Include="..\src\text_data_pipe.h">
       <Filter>Source\Core.Graphics.Data</Filter>
     </ClInclude>
     <ClInclude Include="..\src\text_component.h">
-      <Filter>Source\Core.Entity.Component</Filter>
+      <Filter>Source\Game.Entity.Component</Filter>
     </ClInclude>
     <ClInclude Include="..\src\text_render_system.h">
-      <Filter>Source\Core.Entity.System</Filter>
+      <Filter>Source\Game.Entity.System</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map_view.h">
       <Filter>Source\Game</Filter>
@@ -226,9 +220,6 @@
     <ClInclude Include="..\src\input_core_system.h">
       <Filter>Source\Core.System</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\entity_core_system.h">
-      <Filter>Source\Core.System</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\gui_core_system.h">
       <Filter>Source\Core.System</Filter>
     </ClInclude>
@@ -249,6 +240,9 @@
     </ClInclude>
     <ClInclude Include="..\src\render_quad.h">
       <Filter>Source\Core.Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entity_core_system.h">
+      <Filter>Source\Core.System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -279,12 +273,6 @@
     <Filter Include="Source\Core.Entity">
       <UniqueIdentifier>{991ef1e4-7430-4347-bf50-2d66d6200838}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Core.Entity.Component">
-      <UniqueIdentifier>{f5f254f5-96e6-4ac8-8c90-052eb166d5a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Core.Entity.System">
-      <UniqueIdentifier>{bedb95dd-53c1-4c3c-a410-aea4ff0aca6c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Core.Graphics">
       <UniqueIdentifier>{b02f3524-5cd6-4c4e-a37d-5e89feb964a8}</UniqueIdentifier>
     </Filter>
@@ -299,6 +287,12 @@
     </Filter>
     <Filter Include="Source\Core.Graphics.Gui">
       <UniqueIdentifier>{6acb3dec-15d1-4a17-9ae4-9ffb78466e30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Game.Entity.System">
+      <UniqueIdentifier>{bedb95dd-53c1-4c3c-a410-aea4ff0aca6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Game.Entity.Component">
+      <UniqueIdentifier>{f5f254f5-96e6-4ac8-8c90-052eb166d5a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

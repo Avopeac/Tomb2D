@@ -14,7 +14,6 @@
 #include "timing.h"
 #include "renderer.h"
 #include "event.h"
-#include "entity_manager.h"
 
 #include "text_render_system.h"
 #include "sprite_render_system.h"
@@ -32,13 +31,17 @@ Sint32 main(Sint32 argc, char * argv[])
 	auto resource_core = std::make_unique<core::ResourceCoreSystem>();
 	auto graphics_core = std::make_unique<core::GraphicsCoreSystem>();
 	auto input_core = std::make_unique<core::InputCoreSystem>();
+	auto entity_core = std::make_unique<core::EntityCoreSystem>();
+	auto audio_core = std::make_unique<core::AudioCoreSystem>();
 
 	resource_core->StartUp(*config);
 	graphics_core->StartUp(*config);
 	input_core->StartUp(*config);
+	audio_core->StartUp(*config);
+	entity_core->StartUp(*config);
 
 	auto renderer = std::make_unique<core::Renderer>(*resource_core, *graphics_core);
-	auto entity_manager = std::make_unique<core::EntityManager>();
+	
 
 	// Setup scene
 	{
@@ -46,36 +49,36 @@ Sint32 main(Sint32 argc, char * argv[])
 
 		float aspect = graphics_core->GetAspectRatio();
 		
-		entity_manager->AddSystem(new SpriteRenderSystem(*resource_core));
-		entity_manager->AddSystem(new ControllerSystem(*input_core));
-		entity_manager->AddSystem(new TextRenderSystem(*resource_core));
+		entity_core->AddSystem(new game::SpriteRenderSystem(*resource_core));
+		entity_core->AddSystem(new game::ControllerSystem(*input_core));
+		entity_core->AddSystem(new game::TextRenderSystem(*resource_core));
 
-		auto * text_entity = entity_manager->CreateEntity("text");
-		auto * text_drawable = entity_manager->AddEntityComponent<TextComponent>(
+		auto * text_entity = entity_core->CreateEntity("text");
+		auto * text_drawable = entity_core->AddEntityComponent<game::TextComponent>(
 			text_entity->id, "assets/fonts/arial/arial.ttf", 36, "abcdefghijklmnopqrstuvwxyz", 
 			glm::vec2(24.0f), 
 			glm::vec2(128.0f, 128.0f));
 
 		game::MapParser map_parser;
 		game::MapData map = map_parser.GetMapData("assets/maps/inn_2.json");
-		game::MapView map_view(map, *graphics_core, *entity_manager);
+		game::MapView map_view(map, *graphics_core, *entity_core);
 		map_view.Initialize();
 
-		auto * character_entity = entity_manager->CreateEntity("character");
-		auto * character_sprite = entity_manager->AddEntityComponent<SpriteComponent>(
+		auto * character_entity = entity_core->CreateEntity("character");
+		auto * character_sprite = entity_core->AddEntityComponent<game::SpriteComponent>(
 			character_entity->id,  
 			"assets/textures/temp/smiley.png", 
 			glm::vec4(1.0f),
 			glm::scale(glm::vec3(0.1f, 0.1f * aspect, 1.0f)));
 		character_sprite->SetLayer(0);
 
-		auto * character_controller = entity_manager->AddEntityComponent<ControllerComponent>(
+		auto * character_controller = entity_core->AddEntityComponent<game::ControllerComponent>(
 			character_entity->id, 
 			glm::vec2(0, 0),  
 			glm::vec2(0, 0),
 			0.0f);
 
-		auto * character_animation = entity_manager->AddEntityComponent<SpriteAnimationComponent>(
+		auto * character_animation = entity_core->AddEntityComponent<game::SpriteAnimationComponent>(
 			character_entity->id, 
 			"assets/textures/temp/player_topdown.png", 
 			24, 11, 4, 0, 6);
@@ -87,7 +90,7 @@ Sint32 main(Sint32 argc, char * argv[])
 
 	core::AudioSource source(sound);
 	source.SetRepeating(true);
-	source.SetGain(0.5f);
+	//source.SetGain(1.0f);
 	source.Play();
 
 	// Main loop 
@@ -110,17 +113,17 @@ Sint32 main(Sint32 argc, char * argv[])
 			input_core->UpdateCurrentInput(event);
 		}
 
-		auto * text_entity = entity_manager->GetEntityByName("text");
+		auto * text_entity = entity_core->GetEntityByName("text");
 		if (text_entity)
 		{
-			auto * text_drawable = entity_manager->GetEntityComponent<core::TextComponent>(text_entity->id);
+			auto * text_drawable = entity_core->GetEntityComponent<game::TextComponent>(text_entity->id);
 			if (text_drawable)
 			{
 				text_drawable->SetText("FPS: " + std::to_string(1.0 / frame_time));
 			}
 		}
 		
-		entity_manager->Update((float)frame_time);
+		entity_core->Update((float)frame_time);
 
 		renderer->Invoke((float)frame_time);
 
@@ -132,6 +135,8 @@ Sint32 main(Sint32 argc, char * argv[])
 	resource_core->CleanUp();
 	graphics_core->CleanUp();
 	input_core->CleanUp();
+	audio_core->CleanUp();
+	entity_core->CleanUp();
 
 	return 0;
 }

@@ -26,7 +26,7 @@ namespace core
 
 		virtual ~System() {}
 
-		virtual void TryInitialize(Entity * entity, EntityManager * manager) override
+		virtual void TryInitialize(Entity * entity, EntityCoreSystem * manager) override
 		{
 			if ((entity->component_key & required_component_keys_) == required_component_keys_)
 			{

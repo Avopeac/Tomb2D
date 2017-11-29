@@ -1,21 +1,14 @@
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+
 #include "map_view.h"
-
-#include "glm/glm.hpp"
-
-#include "glm/gtx/transform.hpp"
-
-#include "core.h"
-
-#include "entity_manager.h"
-
 #include "sprite_component.h"
-
 #include "sprite_renderer.h"
 
 using namespace game;
 
-MapView::MapView(MapData & map, core::GraphicsCoreSystem &graphics_core, core::EntityManager &entity_manager) : 
-	map_(map), graphics_core_(graphics_core), entity_manager_(entity_manager)
+MapView::MapView(MapData & map, core::GraphicsCoreSystem &graphics_core, core::EntityCoreSystem &entity_core) : 
+	map_(map), graphics_core_(graphics_core), entity_core_(entity_core)
 {
 }
 
@@ -53,7 +46,7 @@ void MapView::Initialize()
 				std::string rel_texture_path = tile_data.image;
 				if (!rel_texture_path.empty())
 				{
-					const auto * tile = entity_manager_.CreateEntity("layer_" + std::to_string(i) +
+					const auto * tile = entity_core_.CreateEntity("layer_" + std::to_string(i) +
 						"_tile_" + std::to_string(data_index));
 
 					std::string texture_path = map_folder + rel_texture_path;
@@ -61,7 +54,7 @@ void MapView::Initialize()
 					transform[3] = glm::vec4((x - y) * size_translate.x,
 						-(x + y) * size_translate.y, 0.0f, 1.0f);
 
-					auto * sprite = entity_manager_.AddEntityComponent<core::SpriteComponent>(tile->id,
+					auto * sprite = entity_core_.AddEntityComponent<game::SpriteComponent>(tile->id,
 						texture_path,
 						glm::vec4(1.0f),
 						transform);

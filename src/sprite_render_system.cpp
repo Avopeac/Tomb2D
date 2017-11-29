@@ -1,12 +1,10 @@
 #include "sprite_render_system.h"
-
-#include "entity_manager.h"
-#include "core.h"
+#include "entity_core_system.h"
 #include "data_pipe_hub.h"
 
-using namespace core;
+using namespace game;
 
-SpriteRenderSystem::SpriteRenderSystem(ResourceCoreSystem & resource_core) :
+SpriteRenderSystem::SpriteRenderSystem(core::ResourceCoreSystem & resource_core) :
 	resource_core_(resource_core)
 {
 }
@@ -15,7 +13,7 @@ SpriteRenderSystem::~SpriteRenderSystem()
 {
 }
 
-void SpriteRenderSystem::Initialize(Entity * entity)
+void SpriteRenderSystem::Initialize(core::Entity * entity)
 {
 
 	if (!entity)
@@ -43,7 +41,7 @@ void SpriteRenderSystem::Initialize(Entity * entity)
 
 }
 
-void SpriteRenderSystem::Update(Entity * entity, float delta_time)
+void SpriteRenderSystem::Update(core::Entity * entity, float delta_time)
 {
 	if (!entity)
 	{
@@ -69,9 +67,9 @@ void SpriteRenderSystem::Update(Entity * entity, float delta_time)
 			sprite_component->LowerDirty();
 		}
 	
-		auto &sprite_data_pipe = DataPipeHub::Get().GetSpriteDataPipe();
+		auto &sprite_data_pipe = core::DataPipeHub::Get().GetSpriteDataPipe();
 
-		SpriteData sprite_data;
+		core::SpriteData sprite_data;
 		sprite_data.blend_hash = sprite_component->GetBlendHash();
 		sprite_data.sampler_hash = sprite_component->GetSamplerHash();
 
@@ -129,7 +127,7 @@ void SpriteRenderSystem::Update(Entity * entity, float delta_time)
 	}
 }
 
-void SpriteRenderSystem::Clean(Entity * entity)
+void SpriteRenderSystem::Clean(core::Entity * entity)
 {
 	// No need to clean anything for this system 
 }

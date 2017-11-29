@@ -1,12 +1,10 @@
 #include "text_render_system.h"
-
-#include "entity_manager.h"
-#include "core.h"
+#include "entity_core_system.h"
 #include "data_pipe_hub.h"
 
-using namespace core;
+using namespace game;
 
-TextRenderSystem::TextRenderSystem(ResourceCoreSystem &resource_core) :
+TextRenderSystem::TextRenderSystem(core::ResourceCoreSystem &resource_core) :
 	resource_core_(resource_core)
 {
 
@@ -17,7 +15,7 @@ TextRenderSystem::~TextRenderSystem()
 
 }
 
-void TextRenderSystem::Initialize(Entity * entity)
+void TextRenderSystem::Initialize(core::Entity * entity)
 {
 
 	if (!entity)
@@ -36,7 +34,7 @@ void TextRenderSystem::Initialize(Entity * entity)
 
 }
 
-void TextRenderSystem::Update(Entity * entity, float delta_time)
+void TextRenderSystem::Update(core::Entity * entity, float delta_time)
 {
 	if (!entity)
 	{
@@ -54,9 +52,9 @@ void TextRenderSystem::Update(Entity * entity, float delta_time)
 			text_component->LowerDirty();
 		}
 
-		auto &text_data_pipe = DataPipeHub::Get().GetTextDataPipe();
+		auto &text_data_pipe = core::DataPipeHub::Get().GetTextDataPipe();
 
-		TextData text_data;
+		core::TextData text_data;
 		text_data.font_hash = text_component->GetFontHash();
 		text_data.blend_hash = text_component->GetBlendHash();
 		text_data.sampler_hash = text_component->GetSamplerHash();
@@ -68,7 +66,7 @@ void TextRenderSystem::Update(Entity * entity, float delta_time)
 	}
 }
 
-void TextRenderSystem::Clean(Entity * entity)
+void TextRenderSystem::Clean(core::Entity * entity)
 {
 	// No need to clean anything for this system 
 }

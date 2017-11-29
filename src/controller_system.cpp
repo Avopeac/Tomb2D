@@ -1,15 +1,14 @@
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "controller_system.h"
-
-#include "glm/gtc/matrix_transform.hpp"
-
-#include "entity_manager.h"
-#include "core.h"
+#include "entity_core_system.h"
 #include "data_pipe_hub.h"
 #include "timing.h"
 
-using namespace core;
+using namespace game;
 
-ControllerSystem::ControllerSystem(InputCoreSystem &input_core) :
+ControllerSystem::ControllerSystem(core::InputCoreSystem &input_core) :
 	input_core_(input_core)
 {
 
@@ -20,7 +19,7 @@ ControllerSystem::~ControllerSystem()
 
 }
 
-void ControllerSystem::Initialize(Entity * entity)
+void ControllerSystem::Initialize(core::Entity * entity)
 {
 
 	if (!entity)
@@ -29,7 +28,7 @@ void ControllerSystem::Initialize(Entity * entity)
 	}
 }
 
-void ControllerSystem::Update(Entity * entity, float delta_time)
+void ControllerSystem::Update(core::Entity * entity, float delta_time)
 {
 	if (!entity)
 	{
@@ -79,7 +78,7 @@ void ControllerSystem::Update(Entity * entity, float delta_time)
 	}
 }
 
-void ControllerSystem::Clean(Entity * entity)
+void ControllerSystem::Clean(core::Entity * entity)
 {
 	// No need to clean anything for this system / component 
 }

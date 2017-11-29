@@ -4,9 +4,9 @@
 
 #include "component.h"
 
-namespace core
+namespace game
 {
-	class ControllerComponent : public Component
+	class ControllerComponent : public core::Component
 	{
 		glm::vec2 velocity_;
 		glm::vec2 position_;

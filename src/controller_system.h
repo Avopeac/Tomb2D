@@ -5,26 +5,26 @@
 #include "controller_component.h"
 #include "input_core_system.h"
 
-namespace core
+namespace game
 {
 
-	class ControllerSystem : public System<ControllerSystem, ControllerComponent, SpriteComponent>
+	class ControllerSystem : public core::System<ControllerSystem, ControllerComponent, SpriteComponent>
 	{
 
-		InputCoreSystem &input_core_;
+		core::InputCoreSystem &input_core_;
 
 	public:
 
-		ControllerSystem(InputCoreSystem &input_core);
+		ControllerSystem(core::InputCoreSystem &input_core);
 
 		virtual ~ControllerSystem();
 
 		// Inherited via System
-		virtual void Initialize(Entity * entity) override;
+		virtual void Initialize(core::Entity * entity) override;
 
-		virtual void Update(Entity * entity, float delta_time) override;
+		virtual void Update(core::Entity * entity, float delta_time) override;
 
-		virtual void Clean(Entity * entity) override;
+		virtual void Clean(core::Entity * entity) override;
 
 	};
 }

@@ -2,27 +2,28 @@
 
 #include "system.h"
 #include "text_component.h"
+#include "resource_core_system.h"
 
-namespace core
+namespace game
 {
 
-	class TextRenderSystem : public System<TextRenderSystem, TextComponent>
+	class TextRenderSystem : public core::System<TextRenderSystem, TextComponent>
 	{
 
-		ResourceCoreSystem &resource_core_;
+		core::ResourceCoreSystem &resource_core_;
 
 	public:
 
-		TextRenderSystem(ResourceCoreSystem &resource_core);
+		TextRenderSystem(core::ResourceCoreSystem &resource_core);
 
 		virtual ~TextRenderSystem();
 
 		// Inherited via System
-		virtual void Initialize(Entity * entity) override;
+		virtual void Initialize(core::Entity * entity) override;
 
-		virtual void Update(Entity * entity, float delta_time) override;
+		virtual void Update(core::Entity * entity, float delta_time) override;
 
-		virtual void Clean(Entity * entity) override;
+		virtual void Clean(core::Entity * entity) override;
 
 	private:
 

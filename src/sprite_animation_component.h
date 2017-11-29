@@ -1,14 +1,13 @@
 #pragma once
 
 #include <string>
-
 #include <glm/glm.hpp>
 
 #include "component.h"
 
-namespace core
+namespace game
 {
-	class SpriteAnimationComponent : public Component
+	class SpriteAnimationComponent : public core::Component
 	{
 
 		bool dirty_ = true;
