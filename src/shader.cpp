@@ -8,7 +8,8 @@
 
 using namespace core;
 
-ProgramCache::ProgramCache()
+ProgramCache::ProgramCache(TextCache * text_cache) :
+	text_cache_(text_cache)
 {
 }
 
@@ -34,7 +35,7 @@ Program * ProgramCache::GetFromFile(const std::string & name, GLenum program_typ
 		return &programs_[name_hash];
 	}
 
-	auto * str = core::Core::GetResourceSystem()->GetTextCache().GetTextFromFile(path);
+	auto * str = text_cache_->GetTextFromFile(path);
 	const char * source_ptr = str->c_str();
 
 	GLuint program_id = 0;

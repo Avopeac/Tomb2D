@@ -9,6 +9,17 @@
 
 using namespace core;
 
+ControllerSystem::ControllerSystem(InputCoreSystem &input_core) :
+	input_core_(input_core)
+{
+
+}
+
+ControllerSystem::~ControllerSystem()
+{
+
+}
+
 void ControllerSystem::Initialize(Entity * entity)
 {
 
@@ -25,19 +36,17 @@ void ControllerSystem::Update(Entity * entity, float delta_time)
 		return;
 	}
 
-	auto * controller_component = EntityManager::Get().GetEntityComponent<ControllerComponent>(entity->id);
+	auto * controller_component = manager_->GetEntityComponent<ControllerComponent>(entity->id);
 
 	if (controller_component)
 	{
-		auto * input = core::Core::GetInputSystem();
-
 		glm::vec2 velocity(0.0f);
 		float rotation = 0.0f;
 		
-		if (input->KeyPressed(core::Key::KeyA)) { velocity.x -= 1.0f; }
-		if (input->KeyPressed(core::Key::KeyD)) { velocity.x += 1.0f; }
-		if (input->KeyPressed(core::Key::KeyW)) { velocity.y += 1.0f; }
-		if (input->KeyPressed(core::Key::KeyS)) { velocity.y -= 1.0f; }
+		if (input_core_.KeyPressed(core::Key::KeyA)) { velocity.x -= 1.0f; }
+		if (input_core_.KeyPressed(core::Key::KeyD)) { velocity.x += 1.0f; }
+		if (input_core_.KeyPressed(core::Key::KeyW)) { velocity.y += 1.0f; }
+		if (input_core_.KeyPressed(core::Key::KeyS)) { velocity.y -= 1.0f; }
 
 		float length = glm::length(velocity);
 		if (length > 0.0f)
@@ -49,8 +58,8 @@ void ControllerSystem::Update(Entity * entity, float delta_time)
 			controller_component->SetVelocity(glm::vec2(0.0f));
 		}
 
-		if (input->KeyPressed(core::Key::KeyQ)) { rotation -= 1.0f; }
-		if (input->KeyPressed(core::Key::KeyE)) { rotation += 1.0f; }
+		if (input_core_.KeyPressed(core::Key::KeyQ)) { rotation -= 1.0f; }
+		if (input_core_.KeyPressed(core::Key::KeyE)) { rotation += 1.0f; }
 
 		controller_component->SetRotation(rotation);
 
@@ -59,7 +68,7 @@ void ControllerSystem::Update(Entity * entity, float delta_time)
 		controller_component->SetPosition(position);
 	}
 
-	auto * sprite_component = EntityManager::Get().GetEntityComponent<SpriteComponent>(entity->id);
+	auto * sprite_component = manager_->GetEntityComponent<SpriteComponent>(entity->id);
 
 	if (sprite_component && controller_component)
 	{

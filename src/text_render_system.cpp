@@ -6,6 +6,17 @@
 
 using namespace core;
 
+TextRenderSystem::TextRenderSystem(ResourceCoreSystem &resource_core) :
+	resource_core_(resource_core)
+{
+
+}
+
+TextRenderSystem::~TextRenderSystem()
+{
+
+}
+
 void TextRenderSystem::Initialize(Entity * entity)
 {
 
@@ -14,7 +25,7 @@ void TextRenderSystem::Initialize(Entity * entity)
 		return;
 	}
 
-	auto * text_component = EntityManager::Get().GetEntityComponent<TextComponent>(entity->id);
+	auto * text_component = manager_->GetEntityComponent<TextComponent>(entity->id);
 	
 	if (text_component && text_component->IsDirty())
 	{
@@ -32,7 +43,7 @@ void TextRenderSystem::Update(Entity * entity, float delta_time)
 		return;
 	}
 
-	auto * text_component = EntityManager::Get().GetEntityComponent<TextComponent>(entity->id);
+	auto * text_component = manager_->GetEntityComponent<TextComponent>(entity->id);
 
 	if (text_component)
 	{
@@ -66,18 +77,16 @@ void TextRenderSystem::InitializeTextComponent(TextComponent* text_component)
 {
 	if (text_component)
 	{
-		auto &blend_cache = core::Core::GetResourceSystem()->GetBlendCache();
-		auto &sampler_cache = core::Core::GetResourceSystem()->GetSamplerCache();
-		auto &font_cache = core::Core::GetResourceSystem()->GetFontCache();
-
 		size_t blend_hash, sampler_hash, font_hash;
 
-		blend_cache.GetFromParameters(text_component->GetSrcBlend(), text_component->GetDstBlend(), &blend_hash);
+		resource_core_.GetBlendCache().GetFromParameters(text_component->GetSrcBlend(), 
+			text_component->GetDstBlend(), &blend_hash);
 
-		font_cache.GetFromFile(text_component->GetFontPath(), text_component->GetFontPointSize(), &font_hash);
+		resource_core_.GetFontCache().GetFromFile(text_component->GetFontPath(), 
+			text_component->GetFontPointSize(), &font_hash);
 
-		sampler_cache.GetFromParameters(text_component->GetMagFilter(), text_component->GetMinFilter(),
-			text_component->GetWrappingS(), text_component->GetWrappingT(), &sampler_hash);
+		resource_core_.GetSamplerCache().GetFromParameters(text_component->GetMagFilter(), 
+			text_component->GetMinFilter(), text_component->GetWrappingS(), text_component->GetWrappingT(), &sampler_hash);
 
 		text_component->SetFontHash(font_hash);
 		text_component->SetBlendHash(blend_hash);

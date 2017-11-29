@@ -26,10 +26,12 @@ namespace core
 
 		virtual ~System() {}
 
-		virtual void TryInitialize(Entity * entity) override
+		virtual void TryInitialize(Entity * entity, EntityManager * manager) override
 		{
 			if ((entity->component_key & required_component_keys_) == required_component_keys_)
 			{
+				manager_ = manager;
+
 				static_cast<T*>(this)->Initialize(entity);
 			}
 		}

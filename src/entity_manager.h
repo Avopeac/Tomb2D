@@ -1,11 +1,9 @@
 #pragma once
 
-#include "SDL_assert.h"
+#include <SDL_assert.h>
 
 #include "entity_types.h"
-
 #include "component.h"
-
 #include "system.h"
 
 namespace core {
@@ -13,7 +11,7 @@ namespace core {
 	class EntityManager
 	{
 
-		EntityArray entities_;
+		EntityArray entities_{};
 
 		EntityId entity_unique_id_counter_;
 
@@ -21,19 +19,15 @@ namespace core {
 		 
 		std::unordered_map<EntityId, std::string> entity_name_map_;
 
-		EntityComponentArrays entity_components_;
+		EntityComponentArrays entity_components_{};
 
 		size_t systems_counter_;
 
-		ComponentSystemsArray component_systems_;
+		ComponentSystemsArray component_systems_{};
 
 	public:
 
-		static EntityManager &Get()
-		{
-			static EntityManager instance;
-			return instance;
-		}
+		EntityManager();
 
 		~EntityManager();
 
@@ -65,9 +59,6 @@ namespace core {
 
 		void AddSystem(AbstractSystem * system);
 
-	private:
-
-		EntityManager();
 	};
 
 	template <typename T, typename... Args> T * EntityManager::AddEntityComponent(EntityId id, Args&&... args)
@@ -86,7 +77,7 @@ namespace core {
 			{
 				if (system)
 				{
-					system->TryInitialize(entities_[id]);
+					system->TryInitialize(entities_[id], this);
 				}
 			}
 

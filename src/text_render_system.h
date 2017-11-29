@@ -1,7 +1,6 @@
 #pragma once
 
 #include "system.h"
-
 #include "text_component.h"
 
 namespace core
@@ -10,11 +9,13 @@ namespace core
 	class TextRenderSystem : public System<TextRenderSystem, TextComponent>
 	{
 
+		ResourceCoreSystem &resource_core_;
+
 	public:
 
-		TextRenderSystem() {}
+		TextRenderSystem(ResourceCoreSystem &resource_core);
 
-		virtual ~TextRenderSystem() {}
+		virtual ~TextRenderSystem();
 
 		// Inherited via System
 		virtual void Initialize(Entity * entity) override;

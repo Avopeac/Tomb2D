@@ -4,12 +4,13 @@
 
 namespace core 
 {
+	class EntityManager;
 
 	class AbstractSystem
 	{
 	public:
 
-		virtual void TryInitialize(Entity * entity) = 0;
+		virtual void TryInitialize(Entity * entity, EntityManager * manager) = 0;
 
 		virtual void TryUpdate(Entity * entity, float delta_time) = 0;
 
@@ -18,6 +19,8 @@ namespace core
 		virtual ~AbstractSystem() {}
 
 	protected:
+
+		EntityManager * manager_;
 
 		AbstractSystem() {}
 	};

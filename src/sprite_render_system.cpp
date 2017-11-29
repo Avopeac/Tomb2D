@@ -6,6 +6,15 @@
 
 using namespace core;
 
+SpriteRenderSystem::SpriteRenderSystem(ResourceCoreSystem & resource_core) :
+	resource_core_(resource_core)
+{
+}
+
+SpriteRenderSystem::~SpriteRenderSystem()
+{
+}
+
 void SpriteRenderSystem::Initialize(Entity * entity)
 {
 
@@ -14,8 +23,8 @@ void SpriteRenderSystem::Initialize(Entity * entity)
 		return;
 	}
 
-	auto * sprite_component = EntityManager::Get().GetEntityComponent<SpriteComponent>(entity->id);
-	auto * sprite_animation_component = EntityManager::Get().GetEntityComponent<SpriteAnimationComponent>(entity->id);
+	auto * sprite_component = manager_->GetEntityComponent<SpriteComponent>(entity->id);
+	auto * sprite_animation_component = manager_->GetEntityComponent<SpriteAnimationComponent>(entity->id);
 
 
 	if (sprite_animation_component && sprite_animation_component->IsDirty())
@@ -41,8 +50,8 @@ void SpriteRenderSystem::Update(Entity * entity, float delta_time)
 		return;
 	}
 
-	auto * sprite_component = EntityManager::Get().GetEntityComponent<SpriteComponent>(entity->id);
-	auto * sprite_animation_component = EntityManager::Get().GetEntityComponent<SpriteAnimationComponent>(entity->id);
+	auto * sprite_component = manager_->GetEntityComponent<SpriteComponent>(entity->id);
+	auto * sprite_animation_component = manager_->GetEntityComponent<SpriteAnimationComponent>(entity->id);
 
 	if (sprite_component)
 	{
@@ -129,17 +138,15 @@ void SpriteRenderSystem::InitializeSpriteComponent(SpriteComponent * sprite_comp
 {
 	if (sprite_component)
 	{
-		auto &blend_cache = core::Core::GetResourceSystem()->GetBlendCache();
-		auto &texture_cache = core::Core::GetResourceSystem()->GetTextureCache();
-		auto &sampler_cache = core::Core::GetResourceSystem()->GetSamplerCache();
-
 		size_t blend_hash, texture_hash, sampler_hash;
 
-		blend_cache.GetFromParameters(sprite_component->GetSrcBlend(), sprite_component->GetDstBlend(), &blend_hash);
+		resource_core_.GetBlendCache().GetFromParameters(sprite_component->GetSrcBlend(), 
+			sprite_component->GetDstBlend(), &blend_hash);
 
-		texture_cache.GetFromFile(sprite_component->GetTexturePath(), true, &texture_hash);
+		resource_core_.GetTextureCache().GetFromFile(sprite_component->GetTexturePath(), 
+			true, &texture_hash);
 
-		sampler_cache.GetFromParameters(sprite_component->GetMagFilter(), sprite_component->GetMinFilter(),
+		resource_core_.GetSamplerCache().GetFromParameters(sprite_component->GetMagFilter(), sprite_component->GetMinFilter(),
 			sprite_component->GetWrappingS(), sprite_component->GetWrappingT(), &sampler_hash);
 
 		sprite_component->SetTextureHash(texture_hash);
@@ -152,11 +159,10 @@ void SpriteRenderSystem::InitializeSpriteAnimationComponent(SpriteAnimationCompo
 {
 	if (sprite_animation_component)
 	{
-		auto &texture_cache = core::Core::GetResourceSystem()->GetTextureCache();
-
 		size_t texture_hash;
 
-		texture_cache.GetFromFile(sprite_animation_component->GetTexturePath(), true, &texture_hash);
+		resource_core_.GetTextureCache().GetFromFile(sprite_animation_component->GetTexturePath(),
+			true, &texture_hash);
 
 		sprite_animation_component->SetTextureHash(texture_hash);
 	}

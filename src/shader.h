@@ -2,11 +2,11 @@
 
 #include <string>
 #include <unordered_map>
-
-#include "SDL_assert.h"
-#include "GL/glew.h"
+#include <SDL_assert.h>
+#include <GL/glew.h>
 
 #include "logger.h"
+#include "text.h"
 
 namespace core
 {
@@ -106,9 +106,11 @@ namespace core
 
 		std::unordered_map<size_t, Program> programs_;
 
+		TextCache * text_cache_;
+
 	public:
 
-		ProgramCache();
+		ProgramCache(TextCache * text_cache);
 
 		~ProgramCache(); 
 

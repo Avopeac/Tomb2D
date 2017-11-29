@@ -1,9 +1,8 @@
 #pragma once
 
-#pragma once
 
 #include "system.h"
-
+#include "resource_core_system.h"
 #include "sprite_component.h"
 #include "sprite_animation_component.h"
 
@@ -13,11 +12,13 @@ namespace core
 	class SpriteRenderSystem : public System<SpriteRenderSystem, SpriteComponent>
 	{
 
+		ResourceCoreSystem &resource_core_;
+
 	public:
 
-		SpriteRenderSystem() {}
+		SpriteRenderSystem(ResourceCoreSystem &resource_core);
 
-		virtual ~SpriteRenderSystem() {}
+		virtual ~SpriteRenderSystem();
 
 		// Inherited via System
 		virtual void Initialize(Entity * entity) override;

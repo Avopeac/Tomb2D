@@ -2,7 +2,10 @@
 
 using namespace core;
 
-EntityManager::EntityManager() : entity_unique_id_counter_(0), systems_counter_(0) {}
+EntityManager::EntityManager() : entity_unique_id_counter_(0), systems_counter_(0) 
+{
+
+}
 
 EntityManager::~EntityManager()
 {
