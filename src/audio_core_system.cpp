@@ -7,7 +7,8 @@
 using namespace core;
 
 AudioCoreSystem::AudioCoreSystem() :
-	position_(0), velocity_(0), forward_(0, 0, -1), up_(0, 1, 0)
+	position_(0), velocity_(0), forward_(0, 0, -1), up_(0, 1, 0),
+	audio_source_unique_id_counter_(0)
 {
 }
 
@@ -41,6 +42,11 @@ void AudioCoreSystem::StartUp(const Config &config)
 	alGetError();
 }
 
+void AudioCoreSystem::Update(float delta_time)
+{
+	// Nothing here
+}
+
 void AudioCoreSystem::CleanUp()
 {
 	alcMakeContextCurrent(nullptr);
@@ -68,4 +74,45 @@ void AudioCoreSystem::SetListenerOrientation(const glm::vec3 & forward, const gl
 	float values[6]{ forward_.x, forward_.y, forward_.z, up_.x, up_.y, up_.z };
 
 	alListenerfv(AL_ORIENTATION, &values[0]);
+}
+
+AudioSource * AudioCoreSystem::CreateAudioSource(const Sound * const sound)
+{
+	AudioSource * source = nullptr;
+
+	if (audio_source_unique_id_counter_ < MAX_AUDIO_SOURCES ||
+		!free_audio_source_unique_ids_.empty())
+	{
+		size_t unique_id;
+		if (!free_audio_source_unique_ids_.empty())
+		{
+			unique_id = free_audio_source_unique_ids_.front();
+			free_audio_source_unique_ids_.pop();
+		}
+		else
+		{
+			unique_id = audio_source_unique_id_counter_++;
+		}
+
+		auto source_ptr = std::make_unique<AudioSource>(sound, unique_id);
+		source = source_ptr.get();
+
+		audio_sources_.insert({ unique_id, std::move(source_ptr) });
+	}
+	else
+	{
+		SDL_assert(false && "Too many audio sources.");
+	}
+
+	return source;
+}
+
+void AudioCoreSystem::DeleteAudioSource(size_t id)
+{
+	if (audio_sources_.find(id) != audio_sources_.end())
+	{
+		size_t unique_id = audio_sources_[id]->GetUniqueId();
+		free_audio_source_unique_ids_.push(unique_id);
+		audio_sources_.erase(unique_id);
+	}
 }

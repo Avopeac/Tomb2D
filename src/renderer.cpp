@@ -1,5 +1,4 @@
 #include "renderer.h"
-
 #include "post_effect.h"
 
 using namespace core;
@@ -39,9 +38,9 @@ void Renderer::Invoke(float frame_time)
 	post_processing_->Process();
 }
 
-core::FrameBuffer * Renderer::CreateRenderTarget()
+FrameBuffer * Renderer::CreateRenderTarget()
 {
-	std::vector<core::FrameBufferAttachmentDescriptor> descriptors;
+	std::vector<FrameBufferAttachmentDescriptor> descriptors;
 
 	core::FrameBufferAttachmentDescriptor composition;
 	composition.format = GL_RGBA;

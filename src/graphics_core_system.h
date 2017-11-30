@@ -12,7 +12,7 @@
 
 namespace core {
 
-	class GraphicsCoreSystem : AbstractCoreSystem
+	class GraphicsCoreSystem : public AbstractCoreSystem
 	{
 		SDL_Window * window_;
 		SDL_GLContext context_;
@@ -29,6 +29,8 @@ namespace core {
 		~GraphicsCoreSystem();
 
 		void StartUp(const Config &config) override;
+
+		void Update(float delta_time) override;
 
 		void CleanUp() override;
 

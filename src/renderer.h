@@ -41,7 +41,7 @@ namespace core
 
 	private:
 
-		core::FrameBuffer* CreateRenderTarget();
+		FrameBuffer* CreateRenderTarget();
 
 	};
 }

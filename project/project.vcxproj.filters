@@ -95,6 +95,9 @@
     <ClCompile Include="..\src\entity_core_system.cpp">
       <Filter>Source\Core.System</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\application_manager.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\post_processing.h">
@@ -243,6 +246,15 @@
     </ClInclude>
     <ClInclude Include="..\src\entity_core_system.h">
       <Filter>Source\Core.System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application_manager.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application_types.h">
+      <Filter>Source\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

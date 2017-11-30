@@ -9,6 +9,8 @@ namespace core {
 	class AudioSource
 	{
 
+		size_t unique_id_;
+
 		ALuint source_id_ = 0;
 
 		glm::vec3 position_;
@@ -19,7 +21,7 @@ namespace core {
 
 	public:
 		
-		AudioSource(const core::Sound * sound);
+		AudioSource(const core::Sound * sound, size_t unique_id);
 		
 		~AudioSource();
 
@@ -38,5 +40,7 @@ namespace core {
 		void SetDirection(const glm::vec3 &direction);
 
 		void SetGain(float gain);
+
+		size_t GetUniqueId() const { return unique_id_; }
 	};
 }

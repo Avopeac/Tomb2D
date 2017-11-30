@@ -24,7 +24,12 @@ void ResourceCoreSystem::StartUp(const Config &config)
 	
 }
 
+void ResourceCoreSystem::Update(float delta_time)
+{
+	// Nothing here
+}
+
 void ResourceCoreSystem::CleanUp()
 {
-	
+	// Nothing here
 }

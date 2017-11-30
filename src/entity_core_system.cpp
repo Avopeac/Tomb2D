@@ -39,11 +39,6 @@ void EntityCoreSystem::StartUp(const Config & config)
 	// Nothing here
 }
 
-void EntityCoreSystem::CleanUp()
-{
-	// Nothing here
-}
-
 void EntityCoreSystem::Update(float delta_time)
 {
 	for (auto * system : component_systems_)
@@ -59,6 +54,11 @@ void EntityCoreSystem::Update(float delta_time)
 			}
 		}
 	}
+}
+
+void EntityCoreSystem::CleanUp()
+{
+	// Nothing here
 }
 
 void EntityCoreSystem::AddSystem(AbstractSystem * system)

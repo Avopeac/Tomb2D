@@ -14,6 +14,8 @@ namespace core {
 
 		void StartUp(const Config &config) override;
 
+		void Update(float delta_time) override;
+
 		void CleanUp() override;
 	};
 }

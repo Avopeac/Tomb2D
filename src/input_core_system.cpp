@@ -12,10 +12,17 @@ InputCoreSystem::~InputCoreSystem()
 
 void InputCoreSystem::StartUp(const Config &config)
 {
+	// Nothing here
+}
+
+void InputCoreSystem::Update(float delta_time)
+{
+	// Nothing here
 }
 
 void InputCoreSystem::CleanUp()
 {
+	// Nothing here
 }
 
 void InputCoreSystem::UpdateCurrentInput(SDL_Event & e)

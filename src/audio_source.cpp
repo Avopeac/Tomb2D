@@ -2,8 +2,8 @@
 
 using namespace core;
 
-AudioSource::AudioSource(const core::Sound * sound) :
-	position_(0), velocity_(0), direction_(0)
+AudioSource::AudioSource(const core::Sound * sound, size_t unique_id) :
+	position_(0), velocity_(0), direction_(0), unique_id_(unique_id)
 {
 	alGenSources(1, &source_id_);
 	alSourcei(source_id_, AL_BUFFER, sound->GetId());

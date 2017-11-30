@@ -85,6 +85,11 @@ void GraphicsCoreSystem::StartUp(const Config &config)
 
 }
 
+void GraphicsCoreSystem::Update(float delta_time)
+{
+	// Nothing here
+}
+
 void GraphicsCoreSystem::CleanUp()
 {
 	SDL_GL_DeleteContext(context_);
