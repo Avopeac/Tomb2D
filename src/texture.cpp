@@ -1,9 +1,7 @@
-#include "texture.h"
-
 #include <functional>
+#include <SDL_image.h>
 
-#include "SDL_image.h"
-
+#include "texture.h"
 #include "logger.h"
 
 using namespace core;
@@ -188,6 +186,12 @@ uint8_t * Texture::GetSubresourceData(size_t x, size_t y, size_t w, size_t h)
 
 TextureCache::TextureCache()
 {
+	if (!IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG))
+	{
+		Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_RENDER,
+			"Failed to initialize SDL image.");
+		SDL_assert(false);
+	}
 }
 
 TextureCache::~TextureCache()
@@ -196,6 +200,8 @@ TextureCache::~TextureCache()
 	{
 		texture.second.Free();
 	}
+
+	IMG_Quit();
 }
 
 Texture * TextureCache::GetFromHash(size_t hash)

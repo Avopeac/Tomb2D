@@ -67,15 +67,32 @@ bool SampleGameApplication::StartUp(const core::SystemPtrs &system_ptrs, const c
 	background_music_ = system_ptrs.audio->CreateAudioSource(sound);
 	background_music_->SetRepeating(true);
 	background_music_->SetGain(1.0f);
-	background_music_->Play();
+	//background_music_->Play();
 
 	return true;
 }
 
 bool SampleGameApplication::Run(const core::SystemPtrs &system_ptrs, const core::Config &config, float delta_time)
 {
+	if (!system_ptrs.audio ||
+		!system_ptrs.entity ||
+		!system_ptrs.graphics ||
+		!system_ptrs.input ||
+		!system_ptrs.resource)
+	{
+		return false;
+	}
 
+	auto * text_entity = system_ptrs.entity->GetEntityByName("text");
+	if (text_entity)
+	{
+		auto * text_drawable = system_ptrs.entity->GetEntityComponent<TextComponent>(text_entity->id);
 
+		if (text_drawable)
+		{
+			text_drawable->SetText("FPS: " + std::to_string(1.0f / delta_time));
+		}
+	}
 
 	return true;
 }

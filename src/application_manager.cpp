@@ -11,10 +11,12 @@ ApplicationManager::ApplicationManager(Application * application, uint8_t system
 	application_(application), 
 	renderer_(nullptr)
 {
+	SDL_Init(0);
 }
 
 ApplicationManager::~ApplicationManager()
 {
+	SDL_Quit();
 }
 
 void ApplicationManager::StartUp(const std::string &config_path)
@@ -90,6 +92,9 @@ void ApplicationManager::Run()
 		double current_time = core::GetSeconds();
 		double frame_time = current_time - previous_time;
 		previous_time = current_time;
+
+		//Log(SDL_LOG_PRIORITY_VERBOSE, SDL_LOG_CATEGORY_APPLICATION,
+			//std::to_string(frame_time).c_str());
 
 		bool requested_quit = false;
 

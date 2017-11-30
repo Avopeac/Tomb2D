@@ -3,9 +3,8 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-
-#include "SDL.h"
-#include "GL/glew.h"
+#include <SDL.h>
+#include <GL/glew.h>
 
 #include "disposable.h"
 
