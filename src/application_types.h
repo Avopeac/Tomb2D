@@ -5,6 +5,12 @@
 #include <unordered_map>
 
 #include "abstract_core_system.h"
+#include "audio_core_system.h"
+#include "entity_core_system.h"
+#include "graphics_core_system.h"
+#include "gui_core_system.h"
+#include "input_core_system.h"
+#include "resource_core_system.h"
 
 namespace core {
 
@@ -24,4 +30,14 @@ namespace core {
 	}
 
 	using SystemsMap = std::unordered_map<SystemFlagBit, std::unique_ptr<AbstractCoreSystem>>;
+
+	struct SystemPtrs
+	{
+		AudioCoreSystem * audio = nullptr;
+		GraphicsCoreSystem * graphics = nullptr;
+		InputCoreSystem * input = nullptr;
+		EntityCoreSystem * entity = nullptr;
+		GuiCoreSystem * gui = nullptr;
+		ResourceCoreSystem * resource = nullptr;
+	};
 }

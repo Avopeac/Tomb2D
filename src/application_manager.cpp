@@ -2,17 +2,13 @@
 
 #include "application_manager.h"
 #include "timing.h"
-#include "audio_core_system.h"
-#include "entity_core_system.h"
-#include "graphics_core_system.h"
-#include "gui_core_system.h"
-#include "input_core_system.h"
-#include "resource_core_system.h"
+#include "logger.h"
 
 using namespace core;
 
-ApplicationManager::ApplicationManager(uint8_t system_flag_bits) :
+ApplicationManager::ApplicationManager(Application * application, uint8_t system_flag_bits) :
 	system_flag_bits_(system_flag_bits),
+	application_(application), 
 	renderer_(nullptr)
 {
 }
@@ -29,31 +25,37 @@ void ApplicationManager::StartUp(const std::string &config_path)
 	if (system_flag_bits_ & static_cast<uint8_t>(SystemFlagBit::Audio))
 	{
 		systems_map_.insert({ SystemFlagBit::Audio, std::move(std::make_unique<AudioCoreSystem>()) });
+		system_ptrs_.audio = static_cast<AudioCoreSystem*>(systems_map_[SystemFlagBit::Audio].get());
 	}
 
 	if (system_flag_bits_ & static_cast<uint8_t>(SystemFlagBit::Entity))
 	{
 		systems_map_.insert({ SystemFlagBit::Entity, std::move(std::make_unique<EntityCoreSystem>()) });
+		system_ptrs_.entity = static_cast<EntityCoreSystem*>(systems_map_[SystemFlagBit::Entity].get());
 	}
 
 	if (system_flag_bits_ & static_cast<uint8_t>(SystemFlagBit::Graphics))
 	{
 		systems_map_.insert({ SystemFlagBit::Graphics, std::move(std::make_unique<GraphicsCoreSystem>()) });
+		system_ptrs_.graphics = static_cast<GraphicsCoreSystem*>(systems_map_[SystemFlagBit::Graphics].get());
 	}
 
 	if (system_flag_bits_ & static_cast<uint8_t>(SystemFlagBit::Gui))
 	{
 		systems_map_.insert({ SystemFlagBit::Gui, std::move(std::make_unique<GuiCoreSystem>()) });
+		system_ptrs_.gui = static_cast<GuiCoreSystem*>(systems_map_[SystemFlagBit::Gui].get());
 	}
 
 	if (system_flag_bits_ & static_cast<uint8_t>(SystemFlagBit::Input))
 	{
 		systems_map_.insert({ SystemFlagBit::Input, std::move(std::make_unique<InputCoreSystem>()) });
+		system_ptrs_.input = static_cast<InputCoreSystem*>(systems_map_[SystemFlagBit::Input].get());
 	}
 
 	if (system_flag_bits_ & static_cast<uint8_t>(SystemFlagBit::Resource))
 	{
 		systems_map_.insert({ SystemFlagBit::Resource, std::move(std::make_unique<ResourceCoreSystem>()) });
+		system_ptrs_.resource = static_cast<ResourceCoreSystem*>(systems_map_[SystemFlagBit::Resource].get());
 	}
 
 	for (auto it = systems_map_.begin(); it != systems_map_.end(); ++it)
@@ -69,7 +71,14 @@ void ApplicationManager::StartUp(const std::string &config_path)
 		renderer_ = std::make_unique<Renderer>(*resource_core, *graphics_core);
 	}
 
-	start_up_hook(systems_map_, config_);
+	if (!application_->StartUp(system_ptrs_, config_))
+	{
+		// TODO: Ability to return a reason for the failure
+		Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_APPLICATION,
+			"Game application start up failed.");
+
+		SDL_assert(false);
+	}
 }
 
 void ApplicationManager::Run()
@@ -82,26 +91,32 @@ void ApplicationManager::Run()
 		double frame_time = current_time - previous_time;
 		previous_time = current_time;
 
+		bool requested_quit = false;
+
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
 		{
 			// These events trigger quit of application
 			if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE))
 			{
-				running = false;
+				requested_quit = true;
 			}
 
 			// Update current input state
-			if (systems_map_.find(SystemFlagBit::Input) != systems_map_.end())
+			if (system_ptrs_.input)
 			{
-				InputCoreSystem * input = static_cast<InputCoreSystem *>(systems_map_[SystemFlagBit::Input].get());
-				input->UpdateCurrentInput(event);
+				system_ptrs_.input->UpdateCurrentInput(event);
 			}
 			
 		}
 
 		// Update game logic, the changes here will ripple into the other systems
-		running = run_hook_(systems_map_, config_, float(frame_time));
+		running = application_->Run(system_ptrs_, config_, float(frame_time));
+
+		if (requested_quit)
+		{
+			running = false;
+		}
 
 		// Update core systems based on the game logic
 		for (auto it = systems_map_.begin(); it != systems_map_.end(); ++it)
@@ -116,17 +131,15 @@ void ApplicationManager::Run()
 		}
 
 		// Present image
-		if (systems_map_.find(SystemFlagBit::Graphics) != systems_map_.end())
+		if (system_ptrs_.graphics)
 		{
-			GraphicsCoreSystem * graphics = static_cast<GraphicsCoreSystem *>(systems_map_[SystemFlagBit::Graphics].get());
-			SDL_GL_SwapWindow(graphics->GetWindow());
+			SDL_GL_SwapWindow(system_ptrs_.graphics->GetWindow());
 		}
 
 		// Save previous input states
-		if (systems_map_.find(SystemFlagBit::Input) != systems_map_.end())
+		if (system_ptrs_.input)
 		{
-			InputCoreSystem * input = static_cast<InputCoreSystem *>(systems_map_[SystemFlagBit::Input].get());
-			input->CarryCurrentInput();
+			system_ptrs_.input->CarryCurrentInput();
 		}
 	}
 
@@ -135,18 +148,16 @@ void ApplicationManager::Run()
 
 void ApplicationManager::CleanUp()
 {
+
+	if (!application_->CleanUp(system_ptrs_))
+	{
+		// TODO: Ability to see reason for error
+		Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_APPLICATION,
+			"Game application failed to clean up.");
+	}
+
 	for (auto it = systems_map_.begin(); it != systems_map_.end(); ++it)
 	{
 		it->second->CleanUp();
 	}
-}
-
-void ApplicationManager::SetStartUpHook(std::function<bool(const SystemsMap&, const Config&)> hook)
-{
-	start_up_hook = hook;
-}
-
-void ApplicationManager::SetRunHook(std::function<bool(const SystemsMap&, const Config&, float)> hook)
-{
-	run_hook_ = hook;
 }

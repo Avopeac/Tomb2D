@@ -7,13 +7,16 @@
 
 #include "application_types.h"
 #include "renderer.h"
+#include "application.h"
 
 namespace core {
 
 
 	class ApplicationManager
 	{
+		Application * application_;
 		Config config_;
+		SystemPtrs system_ptrs_;
 		SystemsMap systems_map_;
 		uint8_t system_flag_bits_;
 		std::unique_ptr<Renderer> renderer_;
@@ -22,7 +25,7 @@ namespace core {
 
 	public:
 
-		ApplicationManager(uint8_t system_flag_bits);
+		ApplicationManager(Application * application, uint8_t system_flag_bits);
 
 		~ApplicationManager();
 
@@ -31,10 +34,6 @@ namespace core {
 		void Run();
 
 		void CleanUp();
-
-		void SetStartUpHook(std::function<bool(const SystemsMap &, const Config &)> hook);
-
-		void SetRunHook(std::function<bool(const SystemsMap &, const Config &, float)> hook);
 
 	};
 }

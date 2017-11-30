@@ -11,9 +11,11 @@ namespace core {
 
 		virtual ~Application() = default;
 
-		virtual bool Run(const SystemsMap &, const Config &, float) = 0;
+		virtual bool StartUp(const SystemPtrs &, const Config &) = 0;
 
-		virtual bool StartUp(const SystemsMap &, const Config &) = 0;
+		virtual bool Run(const SystemPtrs &, const Config &, float) = 0;
+
+		virtual bool CleanUp(const SystemPtrs &) = 0;
 
 	protected:
 

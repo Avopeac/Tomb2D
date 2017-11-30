@@ -98,6 +98,9 @@
     <ClCompile Include="..\src\application_manager.cpp">
       <Filter>Source\Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\sample_game_application.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\post_processing.h">
@@ -255,6 +258,9 @@
     </ClInclude>
     <ClInclude Include="..\src\application_types.h">
       <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sample_game_application.h">
+      <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
