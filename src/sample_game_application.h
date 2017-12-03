@@ -24,10 +24,10 @@ namespace game {
 		~SampleGameApplication() = default;
 
 		// Inherited via Application
-		virtual bool Run(const core::SystemPtrs &, const core::Config &, float) override;
+		virtual bool Run(const core::ApplicationSystemServer &, const core::Config &, float) override;
 
-		virtual bool StartUp(const core::SystemPtrs &, const core::Config &) override;
+		virtual bool StartUp(const core::ApplicationSystemServer &, const core::Config &) override;
 
-		virtual bool CleanUp(const core::SystemPtrs &) override;
+		virtual bool CleanUp(const core::ApplicationSystemServer &) override;
 	};
 }

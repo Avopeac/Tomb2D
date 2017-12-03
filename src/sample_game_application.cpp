@@ -12,25 +12,16 @@
 
 using namespace game;
 
-bool SampleGameApplication::StartUp(const core::SystemPtrs &system_ptrs, const core::Config &config)
+bool SampleGameApplication::StartUp(const core::ApplicationSystemServer &server, const core::Config &config)
 {
 
-	if (!system_ptrs.audio ||
-		!system_ptrs.entity ||
-		!system_ptrs.graphics ||
-		!system_ptrs.input ||
-		!system_ptrs.resource)
-	{
-		return false;
- 	}
+	float aspect = server.GetGraphics().GetAspectRatio();	
+	server.GetEntity().AddSystem(new game::SpriteRenderSystem(server.GetResource()));
+	server.GetEntity().AddSystem(new game::ControllerSystem(server.GetInput()));
+	server.GetEntity().AddSystem(new game::TextRenderSystem(server.GetResource()));
 
-	float aspect = system_ptrs.graphics->GetAspectRatio();	
-	system_ptrs.entity->AddSystem(new game::SpriteRenderSystem(*system_ptrs.resource));
-	system_ptrs.entity->AddSystem(new game::ControllerSystem(*system_ptrs.input));
-	system_ptrs.entity->AddSystem(new game::TextRenderSystem(*system_ptrs.resource));
-
-	auto * text_entity = system_ptrs.entity->CreateEntity("text");
-	auto * text_drawable = system_ptrs.entity->AddEntityComponent<game::TextComponent>(
+	auto * text_entity = server.GetEntity().CreateEntity("text");
+	auto * text_drawable = server.GetEntity().AddEntityComponent<game::TextComponent>(
 	text_entity->id, "assets/fonts/arial/arial.ttf", 36, "abcdefghijklmnopqrstuvwxyz", 
 	glm::vec2(24.0f), 
 	glm::vec2(128.0f, 128.0f));
@@ -38,55 +29,46 @@ bool SampleGameApplication::StartUp(const core::SystemPtrs &system_ptrs, const c
 	map_parser_ = std::make_unique<MapParser>();
 	map_data_ = std::make_unique<MapData>();
 	*map_data_ = map_parser_->GetMapData("assets/maps/inn_2.json");
-	map_view_ = std::make_unique<MapView>(*map_data_, *system_ptrs.graphics, *system_ptrs.entity);
+	map_view_ = std::make_unique<MapView>(*map_data_, server.GetGraphics(), server.GetEntity());
 	map_view_->Initialize();
 
-	auto * character_entity = system_ptrs.entity->CreateEntity("character");
-	auto * character_sprite = system_ptrs.entity->AddEntityComponent<SpriteComponent>(
+	auto * character_entity = server.GetEntity().CreateEntity("character");
+	auto * character_sprite = server.GetEntity().AddEntityComponent<SpriteComponent>(
 	character_entity->id,  
 	"assets/textures/temp/smiley.png", 
 	glm::vec4(1.0f),
 	glm::scale(glm::vec3(0.1f, 0.1f * aspect, 1.0f)));
 	character_sprite->SetLayer(0);
 
-	auto * character_controller = system_ptrs.entity->AddEntityComponent<game::ControllerComponent>(
+	auto * character_controller = server.GetEntity().AddEntityComponent<game::ControllerComponent>(
 	character_entity->id, 
 	glm::vec2(0, 0),  
 	glm::vec2(0, 0),
 	0.0f);
 
-	auto * character_animation = system_ptrs.entity->AddEntityComponent<game::SpriteAnimationComponent>(
+	auto * character_animation = server.GetEntity().AddEntityComponent<game::SpriteAnimationComponent>(
 	character_entity->id, 
 	"assets/textures/temp/player_topdown.png", 
 	24, 11, 4, 0, 6);
 
 	size_t sound_hash;
-	auto * sound = system_ptrs.resource->GetSoundCache().
+	auto * sound = server.GetResource().GetSoundCache().
 		GetBufferFromFile("assets/audio/temp/fairywoods.wav", &sound_hash);
 
-	background_music_ = system_ptrs.audio->CreateAudioSource(sound);
+	background_music_ = server.GetAudio().CreateAudioSource(sound);
 	background_music_->SetRepeating(true);
 	background_music_->SetGain(1.0f);
-	//background_music_->Play();
+	background_music_->Play();
 
 	return true;
 }
 
-bool SampleGameApplication::Run(const core::SystemPtrs &system_ptrs, const core::Config &config, float delta_time)
+bool SampleGameApplication::Run(const core::ApplicationSystemServer &server, const core::Config &config, float delta_time)
 {
-	if (!system_ptrs.audio ||
-		!system_ptrs.entity ||
-		!system_ptrs.graphics ||
-		!system_ptrs.input ||
-		!system_ptrs.resource)
-	{
-		return false;
-	}
-
-	auto * text_entity = system_ptrs.entity->GetEntityByName("text");
+	auto * text_entity = server.GetEntity().GetEntityByName("text");
 	if (text_entity)
 	{
-		auto * text_drawable = system_ptrs.entity->GetEntityComponent<TextComponent>(text_entity->id);
+		auto * text_drawable = server.GetEntity().GetEntityComponent<TextComponent>(text_entity->id);
 
 		if (text_drawable)
 		{
@@ -97,7 +79,7 @@ bool SampleGameApplication::Run(const core::SystemPtrs &system_ptrs, const core:
 	return true;
 }
 
-bool SampleGameApplication::CleanUp(const core::SystemPtrs &system_ptrs)
+bool SampleGameApplication::CleanUp(const core::ApplicationSystemServer &server)
 {
 	return true;
 }

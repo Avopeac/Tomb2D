@@ -6,22 +6,27 @@
 #include <functional>
 
 #include "application_types.h"
-#include "renderer.h"
 #include "application.h"
+#include "application_system_server.h"
+#include "renderer.h"
 
 namespace core {
 
 
 	class ApplicationManager
 	{
-		Application * application_;
 		Config config_;
+
+		Application * application_;
+		
+		uint8_t system_flag_bits_;
 		SystemPtrs system_ptrs_;
 		SystemsMap systems_map_;
-		uint8_t system_flag_bits_;
+		std::unique_ptr<ApplicationSystemServer> system_server_;
+		
 		std::unique_ptr<Renderer> renderer_;
-		std::function<bool(const SystemsMap &, const Config &, float)> run_hook_;
-		std::function<bool(const SystemsMap &, const Config &)> start_up_hook;
+		std::function<bool(const ApplicationSystemServer &, const Config &, float)> run_hook_;
+		std::function<bool(const ApplicationSystemServer &, const Config &)> start_up_hook;
 
 	public:
 

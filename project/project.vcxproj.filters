@@ -262,6 +262,9 @@
     <ClInclude Include="..\src\sample_game_application.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\application_system_server.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

@@ -73,7 +73,9 @@ void ApplicationManager::StartUp(const std::string &config_path)
 		renderer_ = std::make_unique<Renderer>(*resource_core, *graphics_core);
 	}
 
-	if (!application_->StartUp(system_ptrs_, config_))
+	system_server_ = std::make_unique<ApplicationSystemServer>(systems_map_, system_ptrs_);
+
+	if (!application_->StartUp(*system_server_, config_))
 	{
 		// TODO: Ability to return a reason for the failure
 		Log(SDL_LOG_PRIORITY_CRITICAL, SDL_LOG_CATEGORY_APPLICATION,
@@ -116,7 +118,7 @@ void ApplicationManager::Run()
 		}
 
 		// Update game logic, the changes here will ripple into the other systems
-		running = application_->Run(system_ptrs_, config_, float(frame_time));
+		running = application_->Run(*system_server_, config_, float(frame_time));
 
 		if (requested_quit)
 		{
@@ -154,7 +156,7 @@ void ApplicationManager::Run()
 void ApplicationManager::CleanUp()
 {
 
-	if (!application_->CleanUp(system_ptrs_))
+	if (!application_->CleanUp(*system_server_))
 	{
 		// TODO: Ability to see reason for error
 		Log(SDL_LOG_PRIORITY_ERROR, SDL_LOG_CATEGORY_APPLICATION,
