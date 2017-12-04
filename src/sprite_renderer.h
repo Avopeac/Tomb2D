@@ -10,56 +10,18 @@
 
 namespace core 
 {
-	constexpr size_t MAX_SPRITE_INSTANCES{ 8192 };
+	constexpr size_t MAX_SPRITE_INSTANCES{ 1024 };
 
-	constexpr size_t MAX_SPRITE_LAYERS{ 32 };
+	constexpr size_t MAX_SPRITE_LAYERS{ 16 };
 
 	class SpriteRenderer
 	{
-		const glm::vec2 sharp_hexagon_vertices_[7] =
-		{
-			glm::vec2(0.0f, 1.0f), // Top vertex
-			glm::vec2(1.0f, 0.5f), // Top right vertex
-			glm::vec2(1.0f, -0.5f), // Bottom right vertex
-			glm::vec2(0.0f, -1.0f), // Bottom vertex
-			glm::vec2(-1.0f, -0.5f), // Bottom left vertex
-			glm::vec2(-1.0f, 0.5f), // Top left vertex
-			glm::vec2(0.0f, 0.0f), // Center vertex
-		};
-
-		const glm::vec2 flat_hexagon_vertices_[7] =
-		{
-			glm::vec2(-1.0f, 0.0f), // Left vertex
-			glm::vec2(-0.5f, 1.0f), // Top left vertex
-			glm::vec2(0.5f, 1.0f), // Top right vertex
-			glm::vec2(1.0f, 0.0f), // Right vertex
-			glm::vec2(0.5f, -1.0f), // Bottom right vertex
-			glm::vec2(-0.5f, -1.0f), // Bottom left vertex
-			glm::vec2(0.0f, 0.0f), // Center vertex
-		};
-
-		const Uint32 hexagon_indices_[18] = {
-			0, 6, 1,
-			1, 6, 2,
-			2, 6, 3,
-			3, 6, 4,
-			4, 6, 5,
-			5, 6, 0,
-		};
-
 		const glm::vec2 quad_vertices_[4] =
 		{
 			glm::vec2(-1.0f, -1.0f),
 			glm::vec2(1.0f, -1.0f),
 			glm::vec2(-1.0f,  1.0f),
 			glm::vec2(1.0f,  1.0f),
-		};
-
-		const glm::vec2 isometric_quad_vertices_[4]{
-			glm::vec2(-1.0f, 0.0f),
-			glm::vec2(0.0f, -1.0f),
-			glm::vec2(0.0f, 1.0f),
-			glm::vec2(1.0f, 0.0f),
 		};
 
 		const Uint32 quad_indices_[6] =
@@ -97,14 +59,7 @@ namespace core
 		GLuint instance_buffer_ = 0;
 
 		std::vector<Batch> quad_batches_;
-		std::vector<Batch> isometric_quad_batches_;
-		std::vector<Batch> flat_hex_batches_;
-		std::vector<Batch> sharp_hex_batches_;
-
-		BatchObject isometric_quad_batch_object_;
 		BatchObject quad_batch_object_;
-		BatchObject flat_hex_batch_object_;
-		BatchObject sharp_hex_batch_object_;
 
 		ProgramPipeline pipeline_;
 		Program * default_vert_program_;

@@ -87,7 +87,6 @@ void SpriteRenderSystem::Update(core::Entity * entity, float delta_time)
 		
 		sprite_data.sprite_color = sprite_component->GetColor();
 		sprite_data.sprite_layer = sprite_component->GetLayer();
-		sprite_data.sprite_shape = sprite_component->GetShape();
 		sprite_data.sprite_transform = sprite_component->GetTransform();
 		
 		// Push data 

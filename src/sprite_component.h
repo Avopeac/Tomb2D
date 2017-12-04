@@ -27,7 +27,6 @@ namespace game
 		size_t layer_;
 		glm::vec4 color_;
 		glm::mat4 transform_;
-		core::SpriteShape shape_;
 
 		size_t texture_hash_ = 0;
 		size_t blend_hash_ = 0;
@@ -39,7 +38,6 @@ namespace game
 			const glm::vec4 &color = glm::vec4(1.0f),
 			const glm::mat4 &transform = glm::mat4(1.0f),
 			size_t layer = 0,
-			core::SpriteShape shape = core::SpriteShape::Quad,
 			core::BlendMode src_blend = core::BlendMode::SrcAlpha,
 			core::BlendMode dst_blend = core::BlendMode::OneMinusSrcAlpha,
 			core::MagnificationFiltering magnification = core::MagnificationFiltering::Linear,
@@ -54,7 +52,6 @@ namespace game
 			s_wrapping_(s),
 			t_wrapping_(t),
 			layer_(layer),
-			shape_(shape),
 			color_(color),
 			transform_(transform)
 		{
@@ -133,10 +130,6 @@ namespace game
 		inline size_t GetLayer() const { return layer_; }
 
 		inline void SetLayer(size_t layer) { layer_ = layer; }
-
-		inline core::SpriteShape GetShape() const { return shape_; }
-
-		inline void SetShape(core::SpriteShape shape) {	shape_ = shape;	}
 
 		inline size_t GetTextureHash() const { return texture_hash_; }
 

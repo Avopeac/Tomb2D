@@ -26,5 +26,7 @@ namespace core
 		~OrthographicCamera();
 
 		virtual void Update(float delta_time) override;
+
+		bool Intersects(const glm::vec2 &lower_left, const glm::vec2 &upper_right);
 	};
 }

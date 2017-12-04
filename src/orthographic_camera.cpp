@@ -39,3 +39,8 @@ void OrthographicCamera::Update(float delta_time)
 	inv_proj_ = glm::inverse(proj_); 
 	inv_view_proj_ = glm::inverse(view_proj_);
 }
+
+bool OrthographicCamera::Intersects(const glm::vec2 & lower_left, const glm::vec2 & upper_right)
+{
+	return true;
+}
