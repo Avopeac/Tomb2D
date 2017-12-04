@@ -30,48 +30,41 @@ SpriteRenderer::~SpriteRenderer()
 
 void SpriteRenderer::Draw(float delta_time)
 {
-	// Clear old batch
-	quad_batches_.clear();
-
+	// Clear old batches
+	for (auto it = quad_batches_.begin(); it != quad_batches_.end(); ++it)
+	{
+		it->clear();
+	}
+	
 	// Push sprites to batch
 	SpriteData data{};
 	while (queue_.TryPop(data))
 	{
-		PushToBatchObject(quad_batches_, data);
+		if (data.sprite_layer > MAX_SPRITE_LAYERS)
+		{
+			data.sprite_layer = MAX_SPRITE_LAYERS;
+		}
+		
+		PushToBatchObject(quad_batches_[data.sprite_layer], data);
 	}
 
 	FrameBuffer * render_target = resource_core_.GetFrameBufferCache().
 		GetFromName(Renderer::render_target_name);
 	render_target->BindDraw(GL_COLOR_BUFFER_BIT, 0.0f, 0.0f, 0.0f, 0.0f);
 
+	int texture_index = 0;
+	default_vert_program_->SetUniform("u_viewproj",
+		(void*)glm::value_ptr(graphics_core_.GetOrthographicCamera()->GetViewProj()));
+	default_frag_program_->SetUniform("u_texture",
+		(void*)&texture_index); 
+	
 	pipeline_.Bind();
 
-	int texture_index = 0;
-	default_vert_program_->SetUniform("u_viewproj", (void*)glm::value_ptr(graphics_core_.GetOrthographicCamera()->GetViewProj()));
-	default_frag_program_->SetUniform("u_texture",	(void*)&texture_index); 
-	
-	// Sort by layer
-	std::sort(quad_batches_.begin(), quad_batches_.end(), [](const Batch &a, const Batch &b) { return a.layer < b.layer; });
-
-	size_t quad_start = 0;
-
-	for (size_t layer = 0; layer < MAX_SPRITE_LAYERS; ++layer)
+	for (auto it = quad_batches_.rbegin(); it != quad_batches_.rend(); ++it)
 	{
-		int quad_layer_count = 0;
-
-		for (size_t j = quad_start; j < quad_batches_.size(); ++j)
+		if (!it->empty())
 		{
-			if (quad_batches_[j].layer == layer)
-			{
-				quad_layer_count++;
-			}
-		}
-
-		if (quad_layer_count != 0)
-		{
-			DrawBatchObject(quad_batch_object_, quad_start, quad_start + quad_layer_count, quad_batches_);
-
-			quad_start += quad_layer_count;
+			DrawBatchObject(quad_batch_object_, *it);
 		}
 	}
 
@@ -188,72 +181,62 @@ void SpriteRenderer::DeleteBatchObject(BatchObject & object)
 	glDeleteBuffers(1, &object.element_buffer);
 }
 
-void SpriteRenderer::PushToBatchObject(std::vector<Batch> &batches, const SpriteData & data)
+void SpriteRenderer::PushToBatchObject(std::unordered_map<size_t, Batch> &batches, const SpriteData & data)
 {
-	// Reverse order of sprite layers
-	uint32_t data_sprite_layer = uint32_t((MAX_SPRITE_LAYERS - 1) - data.sprite_layer);
-
 	BatchElement element;
 	element.sprite_color = data.sprite_color;
 	element.sprite_transform = data.sprite_transform;
 	element.sprite_animation = data.sprite_animation;
-	element.sprite_layer = data_sprite_layer;
 
-	if (batches.empty() ||
-		data_sprite_layer != batches.back().layer || 
-		data.texture_hash != batches.back().texture_hash ||
-		data.blend_hash != batches.back().blend_hash ||
-		data.sampler_hash != batches.back().sampler_hash)
+	size_t batch_id =
+		data.texture_hash ^
+		data.blend_hash ^
+		data.sampler_hash;
+
+	if (batches.find(batch_id) == batches.end())
 	{
 		// Add sprite data to new sprite batch
 		Batch batch;
 		batch.texture_hash = data.texture_hash;
 		batch.blend_hash = data.blend_hash;
 		batch.sampler_hash = data.sampler_hash;
-		batch.layer = data_sprite_layer;
-		batch.elements.push_back(element);
+		batches[batch_id] = batch;
+	}
 
-		batches.push_back(batch);
-	}
-	else
-	{
-		// Add sprite data to old sprite batch
-		batches.back().elements.push_back(element);
-	}
+	batches.at(batch_id).elements.push_back(element);
 }
 
-void SpriteRenderer::DrawBatchObject(BatchObject & object, size_t start, size_t end, std::vector<Batch> &batches)
+void SpriteRenderer::DrawBatchObject(BatchObject & object, std::unordered_map<size_t, Batch> &batches)
 {
-
 	glBindVertexArray(object.vertex_array);
 	glBindBuffer(GL_ARRAY_BUFFER, instance_buffer_);
 
-	for (size_t i = start; i < end; ++i)
+	for (auto it = batches.begin(); it != batches.end(); ++it)
 	{
 		
 		// Especially for isometric tiles we need to draw higher y-coordinates first
-		std::sort(batches[i].elements.begin(), batches[i].elements.end(),
+		std::sort(it->second.elements.begin(), it->second.elements.end(),
 			[](BatchElement &a, BatchElement &b) { return a.sprite_transform[3][1] > b.sprite_transform[3][1]; });
 
 		// Set blend mode for batch
-		resource_core_.GetBlendCache().GetFromHash(batches[i].blend_hash)->Set();
+		resource_core_.GetBlendCache().GetFromHash(it->second.blend_hash)->Set();
 
 		// Set sampler and texture if present
-		if (batches[i].sampler_hash && batches[i].texture_hash)
+		if (it->second.sampler_hash && it->second.texture_hash)
 		{
-			resource_core_.GetSamplerCache().GetFromHash(batches[i].sampler_hash)->Bind(0);
-			resource_core_.GetTextureCache().GetFromHash(batches[i].texture_hash)->Bind(0);
+			resource_core_.GetSamplerCache().GetFromHash(it->second.sampler_hash)->Bind(0);
+			resource_core_.GetTextureCache().GetFromHash(it->second.texture_hash)->Bind(0);
 		}
 
 		// Re-upload subdata for instance buffer
-		size_t instance_size = batches[i].elements.size() * sizeof(BatchElement);
+		size_t instance_size = it->second.elements.size() * sizeof(BatchElement);
 		glInvalidateBufferSubData(GL_ARRAY_BUFFER, 0, instance_size);
-		glBufferSubData(GL_ARRAY_BUFFER, (GLintptr)0, (GLsizei)instance_size, &batches[i].elements[0]);
+		glBufferSubData(GL_ARRAY_BUFFER, (GLintptr)0, (GLsizei)instance_size, &it->second.elements[0]);
 	
 		// Draw all sprites for the batch
 		glDrawElementsInstanced(GL_TRIANGLES,
 			(GLsizei)object.num_indices, GL_UNSIGNED_INT, 0,
-			(GLsizei)batches[i].elements.size());
+			(GLsizei)it->second.elements.size());
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

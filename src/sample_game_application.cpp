@@ -32,7 +32,7 @@ bool SampleGameApplication::StartUp(const core::ApplicationSystemServer &server,
 	map_view_ = std::make_unique<MapView>(*map_data_, server);
 	map_view_->Initialize();
 
-	/*auto * character_entity = server.GetEntity().CreateEntity("character");
+	auto * character_entity = server.GetEntity().CreateEntity("character");
 	auto * character_sprite = server.GetEntity().AddEntityComponent<SpriteComponent>(
 	character_entity->id,  
 	"assets/textures/temp/smiley.png", 
@@ -58,7 +58,7 @@ bool SampleGameApplication::StartUp(const core::ApplicationSystemServer &server,
 	background_music_ = server.GetAudio().CreateAudioSource(sound);
 	background_music_->SetRepeating(true);
 	background_music_->SetGain(1.0f);
-	background_music_->Play();*/
+	background_music_->Play();
 
 	return true;
 }

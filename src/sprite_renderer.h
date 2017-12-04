@@ -44,7 +44,6 @@ namespace core
 			size_t texture_hash;
 			size_t blend_hash;
 			size_t sampler_hash;
-			uint32_t layer;
 			std::vector<BatchElement> elements;
 		};
 
@@ -59,9 +58,8 @@ namespace core
 
 		GLuint instance_buffer_ = 0;
 
-		std::vector<Batch> quad_batches_;
+		std::array<std::unordered_map<size_t, Batch>, MAX_SPRITE_LAYERS> quad_batches_;
 
-		
 		Program * default_vert_program_;
 		Program * default_frag_program_;
 		ProgramPipeline pipeline_;
@@ -91,8 +89,8 @@ namespace core
 
 		void DeleteBatchObject(BatchObject &object);
 
-		void PushToBatchObject(std::vector<Batch> &batches, const SpriteData &data);
+		void PushToBatchObject(std::unordered_map<size_t, Batch> &batches, const SpriteData &data);
 
-		void DrawBatchObject(BatchObject &object, size_t start, size_t end, std::vector<Batch> &batches);
+		void DrawBatchObject(BatchObject &object, std::unordered_map<size_t, Batch> &batches);
 	};
 }
