@@ -2,9 +2,7 @@
 
 using namespace core;
 
-size_t AbstractGuiElement::uid_counter_ = 0;
-
-AbstractGuiElement::AbstractGuiElement() :
-	uid_(uid_counter_++)
+AbstractGuiElement::AbstractGuiElement(size_t uid) :
+	uid_(uid)
 {
 }

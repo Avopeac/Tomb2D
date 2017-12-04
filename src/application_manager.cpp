@@ -65,6 +65,8 @@ void ApplicationManager::StartUp(const std::string &config_path)
 		it->second->StartUp(config_);
 	}
 
+	system_server_ = std::make_unique<ApplicationSystemServer>(systems_map_, system_ptrs_);
+
 	// If both resource and graphics systems are available, then request renderer
 	if (system_flag_bits_ & static_cast<uint8_t>(SystemFlagBit::Resource | SystemFlagBit::Graphics))
 	{
@@ -75,7 +77,15 @@ void ApplicationManager::StartUp(const std::string &config_path)
 			*resource_core, *graphics_core);
 	}
 
-	system_server_ = std::make_unique<ApplicationSystemServer>(systems_map_, system_ptrs_);
+	// If both resource, graphics, gui and input are available, then request gui tree
+	if (system_flag_bits_ & static_cast<uint8_t>(SystemFlagBit::Resource | SystemFlagBit::Graphics |
+		SystemFlagBit::Gui | SystemFlagBit::Input))
+	{
+		ResourceCoreSystem * resource_core = static_cast<ResourceCoreSystem*>(systems_map_[SystemFlagBit::Resource].get());
+		GraphicsCoreSystem * graphics_core = static_cast<GraphicsCoreSystem*>(systems_map_[SystemFlagBit::Graphics].get());
+		gui_tree_ = std::make_unique<GuiTree>(*system_server_, graphics_core->GetSpriteMessageQueue(),
+			graphics_core->GetTextMessageQueue());
+	}
 
 	if (!application_->StartUp(*system_server_, config_))
 	{
@@ -128,6 +138,12 @@ void ApplicationManager::Run()
 		for (auto it = systems_map_.begin(); it != systems_map_.end(); ++it)
 		{
 			it->second->Update(float(frame_time));
+		}
+
+		// Update the GUI tree
+		if (gui_tree_)
+		{
+			gui_tree_->Update(float(frame_time));
 		}
 
 		// Invoke the renderer at the end of the frame

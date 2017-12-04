@@ -58,7 +58,7 @@ bool SampleGameApplication::StartUp(const core::ApplicationSystemServer &server,
 	background_music_ = server.GetAudio().CreateAudioSource(sound);
 	background_music_->SetRepeating(true);
 	background_music_->SetGain(1.0f);
-	background_music_->Play();
+	//background_music_->Play();
 
 	return true;
 }

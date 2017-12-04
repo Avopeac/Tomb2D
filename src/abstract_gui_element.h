@@ -10,8 +10,6 @@ namespace core {
 	class AbstractGuiElement
 	{
 
-		static size_t uid_counter_;
-
 		size_t uid_;
 
 	protected:
@@ -20,7 +18,7 @@ namespace core {
 
 	public:
 
-		AbstractGuiElement();
+		AbstractGuiElement(size_t uid);
 
 		~AbstractGuiElement() = default;
 

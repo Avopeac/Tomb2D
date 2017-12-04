@@ -36,11 +36,11 @@ namespace core
 
 		~Renderer();
 
-		inline SpriteRenderer &GetSpriteRenderer() { return *sprite_renderer_; }
+		//inline SpriteRenderer &GetSpriteRenderer() { return *sprite_renderer_; }
 
-		inline FontRenderer &GetFontRenderer() { return *font_renderer_; }
+		//inline FontRenderer &GetFontRenderer() { return *font_renderer_; }
 
-		inline PostProcessing &GetPostProcessing() { return *post_processing_; }
+		//inline PostProcessing &GetPostProcessing() { return *post_processing_; }
 
 		void Invoke(float frame_time);
 
