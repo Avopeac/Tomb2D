@@ -3,9 +3,10 @@
 #include <vector>
 #include <unordered_map>
 #include <GL/glew.h>
-#include "data_pipe_hub.h"
+
 #include "resource_core_system.h"
 #include "graphics_core_system.h"
+#include "sprite_data_message_queue.h"
 
 namespace core 
 {
@@ -111,10 +112,13 @@ namespace core
 
 		ResourceCoreSystem &resource_core_;
 		GraphicsCoreSystem &graphics_core_;
+
+		SpriteDataMessageQueue &queue_;
 		
 	public:
 
-		SpriteRenderer(ResourceCoreSystem &resource_core, GraphicsCoreSystem &graphics_core);
+		SpriteRenderer(SpriteDataMessageQueue &sprite_queue, 
+			ResourceCoreSystem &resource_core, GraphicsCoreSystem &graphics_core);
 
 		~SpriteRenderer();
 

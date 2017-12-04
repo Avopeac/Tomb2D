@@ -5,7 +5,7 @@
 #include <string>
 
 #include "component.h"
-#include "sprite_data_pipe.h"
+#include "sprite_data_message_queue.h"
 #include "resource_core_system.h"
 
 namespace game

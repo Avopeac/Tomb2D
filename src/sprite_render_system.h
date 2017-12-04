@@ -1,22 +1,20 @@
 #pragma once
 
-
 #include "system.h"
-#include "resource_core_system.h"
 #include "sprite_component.h"
 #include "sprite_animation_component.h"
+#include "application_system_server.h"
 
 namespace game
 {
 
 	class SpriteRenderSystem : public core::System<SpriteRenderSystem, SpriteComponent>
 	{
-
-		core::ResourceCoreSystem &resource_core_;
+		const core::ApplicationSystemServer &application_system_server_;
 
 	public:
 
-		SpriteRenderSystem(core::ResourceCoreSystem &resource_core);
+		SpriteRenderSystem(const core::ApplicationSystemServer &application_system_server);
 
 		virtual ~SpriteRenderSystem();
 

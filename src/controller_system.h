@@ -3,7 +3,7 @@
 #include "system.h"
 #include "sprite_component.h"
 #include "controller_component.h"
-#include "input_core_system.h"
+#include "application_system_server.h"
 
 namespace game
 {
@@ -11,11 +11,11 @@ namespace game
 	class ControllerSystem : public core::System<ControllerSystem, ControllerComponent, SpriteComponent>
 	{
 
-		core::InputCoreSystem &input_core_;
+		const core::ApplicationSystemServer &application_system_server_;
 
 	public:
 
-		ControllerSystem(core::InputCoreSystem &input_core);
+		ControllerSystem(const core::ApplicationSystemServer &application_system_server);
 
 		virtual ~ControllerSystem();
 

@@ -11,17 +11,17 @@ EntityCoreSystem::~EntityCoreSystem()
 {
 	for (size_t i = 0; i < MAX_ENTITIES; ++i)
 	{
-		if (entities_[i])
+		if (entities_.at(i))
 		{
 			for (size_t j = 0; j < MAX_COMPONENTS; ++j)
 			{
-				if (entity_components_[i][j])
+				if (entity_components_.at(i)[j])
 				{
-					delete entity_components_[i][j];
+					delete entity_components_.at(i)[j];
 				}
 			}
 
-			delete entities_[i];
+			delete entities_.at(i);
 		}
 	}
 
@@ -45,12 +45,9 @@ void EntityCoreSystem::Update(float delta_time)
 	{
 		if (system)
 		{
-			for (size_t i = 0; i < MAX_ENTITIES; ++i)
+			for (auto it = entities_.begin(); it != entities_.end(); ++it)
 			{
-				if (entities_[i])
-				{
-					system->TryUpdate(entities_[i], delta_time);
-				}
+				system->TryUpdate(it->second, delta_time);
 			}
 		}
 	}
@@ -91,8 +88,8 @@ const Entity * const EntityCoreSystem::CreateEntity(const std::string &name)
 	}
 
 	Entity * entity = new Entity(id);
-	entities_[id] = entity;
-	entity_name_map_[id] = name;
+	entities_.insert({ id, entity });
+	entity_name_map_.insert({ id, name });
 	return entity;
 }
 
@@ -108,7 +105,7 @@ const Entity * const EntityCoreSystem::GetEntityByName(const std::string & name)
 	{
 		if (it->second == name)
 		{
-			return entities_[it->first];
+			return entities_.at(it->first);
 		}
 	}
 
@@ -117,14 +114,14 @@ const Entity * const EntityCoreSystem::GetEntityByName(const std::string & name)
 
 const Entity * const EntityCoreSystem::GetEntityById(EntityId id) const
 {
-	return id < MAX_ENTITIES ? entities_[id] : nullptr;
+	return id < MAX_ENTITIES ? entities_.at(id) : nullptr;
 }
 
 void EntityCoreSystem::DeleteEntity(EntityId id)
 {
-	if (id < MAX_ENTITIES && entities_[id])
+	if (id < MAX_ENTITIES && entities_.at(id))
 	{
-		delete entities_[id];
+		delete entities_.at(id);
 		entity_name_map_.erase(id);
 		entity_unique_id_counter_queue_.push(id);
 	}

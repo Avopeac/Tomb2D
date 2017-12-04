@@ -5,12 +5,16 @@ using namespace core;
 
 const std::string Renderer::render_target_name = "main_render_target";
 
-Renderer::Renderer(ResourceCoreSystem &resource_core, GraphicsCoreSystem &graphics_core) :
-	resource_core_(resource_core), graphics_core_(graphics_core)
+Renderer::Renderer(SpriteDataMessageQueue &sprite_queue,
+	TextDataMessageQueue &text_queue,
+	ResourceCoreSystem &resource_core, 
+	GraphicsCoreSystem &graphics_core) : 
+	resource_core_(resource_core), 
+	graphics_core_(graphics_core)
 {
 	render_target_ = CreateRenderTarget();
-	sprite_renderer_ = std::make_unique<SpriteRenderer>(resource_core_, graphics_core_);
-	font_renderer_ = std::make_unique<FontRenderer>(quad_, resource_core_, graphics_core_);
+	sprite_renderer_ = std::make_unique<SpriteRenderer>(sprite_queue, resource_core_, graphics_core_);
+	font_renderer_ = std::make_unique<FontRenderer>(text_queue, quad_, resource_core_, graphics_core_);
 	post_processing_ = std::make_unique<PostProcessing>(quad_, resource_core_, graphics_core_);
 	post_processing_->Add(std::move(std::make_unique<PostEffect>()));  
 

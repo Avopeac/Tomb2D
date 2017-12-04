@@ -112,9 +112,6 @@
     <ClInclude Include="..\src\abstract_camera.h">
       <Filter>Source\Core.Graphics.Camera</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\data_pipe_hub.h">
-      <Filter>Source\Core.Graphics.Data</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\component.h">
       <Filter>Source\Core.Entity</Filter>
     </ClInclude>
@@ -129,9 +126,6 @@
     </ClInclude>
     <ClInclude Include="..\src\sprite_renderer.h">
       <Filter>Source\Core.Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\sprite_data_pipe.h">
-      <Filter>Source\Core.Graphics.Data</Filter>
     </ClInclude>
     <ClInclude Include="..\src\post_effect.h">
       <Filter>Source\Core.Graphics.Effects</Filter>
@@ -153,9 +147,6 @@
     </ClInclude>
     <ClInclude Include="..\src\sprite_animation_component.h">
       <Filter>Source\Game.Entity.Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\text_data_pipe.h">
-      <Filter>Source\Core.Graphics.Data</Filter>
     </ClInclude>
     <ClInclude Include="..\src\text_component.h">
       <Filter>Source\Game.Entity.Component</Filter>
@@ -264,6 +255,18 @@
     </ClInclude>
     <ClInclude Include="..\src\application_system_server.h">
       <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\data_bus.h">
+      <Filter>Source\Core.Graphics.Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sprite_data_message_queue.h">
+      <Filter>Source\Core.Graphics.Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\abstract_data_message_queue.h">
+      <Filter>Source\Core.Graphics.Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\text_data_message_queue.h">
+      <Filter>Source\Core.Graphics.Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

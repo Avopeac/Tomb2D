@@ -70,7 +70,9 @@ void ApplicationManager::StartUp(const std::string &config_path)
 	{
 		ResourceCoreSystem * resource_core = static_cast<ResourceCoreSystem*>(systems_map_[SystemFlagBit::Resource].get());
 		GraphicsCoreSystem * graphics_core = static_cast<GraphicsCoreSystem*>(systems_map_[SystemFlagBit::Graphics].get());
-		renderer_ = std::make_unique<Renderer>(*resource_core, *graphics_core);
+		renderer_ = std::make_unique<Renderer>(graphics_core->GetSpriteMessageQueue(),
+			graphics_core->GetTextMessageQueue(),
+			*resource_core, *graphics_core);
 	}
 
 	system_server_ = std::make_unique<ApplicationSystemServer>(systems_map_, system_ptrs_);
@@ -94,9 +96,6 @@ void ApplicationManager::Run()
 		double current_time = core::GetSeconds();
 		double frame_time = current_time - previous_time;
 		previous_time = current_time;
-
-		//Log(SDL_LOG_PRIORITY_VERBOSE, SDL_LOG_CATEGORY_APPLICATION,
-			//std::to_string(frame_time).c_str());
 
 		bool requested_quit = false;
 

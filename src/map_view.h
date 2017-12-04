@@ -1,8 +1,7 @@
 #pragma once
 
 #include "map_data.h"
-#include "entity_core_system.h"
-#include "graphics_core_system.h"
+#include "application_system_server.h"
 
 namespace game {
 
@@ -11,13 +10,11 @@ namespace game {
 
 		MapData &map_;
 
-		core::GraphicsCoreSystem &graphics_core_;
-
-		core::EntityCoreSystem &entity_core_;
+		const core::ApplicationSystemServer &application_system_server_;
 
 	public:
 
-		MapView(MapData &map, core::GraphicsCoreSystem &graphics_core, core::EntityCoreSystem &entity_core);
+		MapView(MapData &map, const core::ApplicationSystemServer &server);
 
 		~MapView();
 

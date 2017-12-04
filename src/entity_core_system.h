@@ -12,7 +12,7 @@ namespace core {
 	class EntityCoreSystem : public AbstractCoreSystem
 	{
 
-		EntityArray entities_{};
+		EntityMap entities_{};
 
 		EntityId entity_unique_id_counter_;
 
@@ -20,7 +20,7 @@ namespace core {
 		 
 		std::unordered_map<EntityId, std::string> entity_name_map_;
 
-		EntityComponentArrays entity_components_{};
+		EntityComponentArrayMap entity_components_{};
 
 		size_t systems_counter_;
 
@@ -71,7 +71,7 @@ namespace core {
 		static_assert(std::is_base_of<Component, T>::value, "Derived class must be of base type Component.");
 		RemoveEntityComponent<T>(id);
 		
-		if (id < MAX_ENTITIES && entities_[id]) 
+		if (id < MAX_ENTITIES && entities_.at(id)) 
 		{
 			EntityComponentKey key{ Component::GetId<T>() };
 			T * component = new T(std::forward<Args>(args)...);
@@ -82,7 +82,7 @@ namespace core {
 			{
 				if (system)
 				{
-					system->TryInitialize(entities_[id], this);
+					system->TryInitialize(entities_.at(id), this);
 				}
 			}
 
@@ -103,13 +103,13 @@ namespace core {
 			{
 				if (system)
 				{
-					system->TryClean(entities_[id]);
+					system->TryClean(entities_.at(id));
 				}
 			}
 
-			delete entity_components_[id][key.to_ullong() - 1];
-			entity_components_[id][key.to_ullong() - 1] = nullptr;
-			entities_[id]->component_key &= key.flip();
+			delete entity_components_.at(id)[key.to_ullong() - 1];
+			entity_components_.at(id)[key.to_ullong() - 1] = nullptr;
+			entities_.at(id)->component_key &= key.flip();
 		}
 	}
 
@@ -117,13 +117,13 @@ namespace core {
 	{
 		static_assert(std::is_base_of<Component, T>::value, "Derived class must be of base type Component.");
 		EntityComponentKey key{ Component::GetId<T>() };
-		return id < MAX_ENTITIES && entities_[id] ? (key & entities_[id]->component_key) == key : false;
+		return id < MAX_ENTITIES && entities_.at(id) ? (key & entities_.at(id)->component_key) == key : false;
 	}
 
 	template <typename T> T * EntityCoreSystem::GetEntityComponent(EntityId id)
 	{
 		static_assert(std::is_base_of<Component, T>::value, "Derived class must be of base type Component.");
 		EntityComponentKey key{ Component::GetId<T>() };
-		return id < MAX_ENTITIES && entities_[id] ? static_cast<T*>(entity_components_[id][key.to_ullong() - 1]) : nullptr;
+		return id < MAX_ENTITIES && entities_.at(id) ? static_cast<T*>(entity_components_.at(id)[key.to_ullong() - 1]) : nullptr;
 	}
 }

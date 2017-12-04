@@ -5,7 +5,6 @@
 #include <string>
 
 #include "component.h"
-#include "text_data_pipe.h"
 #include "resource_core_system.h"
 
 namespace game

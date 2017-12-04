@@ -1,8 +1,9 @@
 #pragma once
 
 #include <vector>
+#include <glm/glm.hpp>
 
-#include "glm/glm.hpp"
+#include "abstract_data_message_queue.h"
 
 namespace core {
 
@@ -26,27 +27,14 @@ namespace core {
 		glm::mat4 sprite_transform;
 	};
 
-	class SpriteDataPipe
+	class SpriteDataMessageQueue : public AbstractDataMessageQueue<SpriteData>
 	{
-
-		std::vector<SpriteData> data_;
 
 	public:
 
-		SpriteDataPipe() {}
+		SpriteDataMessageQueue() {}
 
-		~SpriteDataPipe() {}
+		~SpriteDataMessageQueue() {}
 
-		void Push(const SpriteData &sprite_data)
-		{
-			data_.push_back(sprite_data);
-		}
-
-		void Flush()
-		{
-			data_.clear();
-		}
-
-		inline const std::vector<SpriteData> &GetData() const { return data_; }
 	};
 }

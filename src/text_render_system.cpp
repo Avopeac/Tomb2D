@@ -1,11 +1,9 @@
 #include "text_render_system.h"
-#include "entity_core_system.h"
-#include "data_pipe_hub.h"
 
 using namespace game;
 
-TextRenderSystem::TextRenderSystem(core::ResourceCoreSystem &resource_core) :
-	resource_core_(resource_core)
+TextRenderSystem::TextRenderSystem(const core::ApplicationSystemServer &application_system_server) :
+	application_system_server_(application_system_server)
 {
 
 }
@@ -52,8 +50,6 @@ void TextRenderSystem::Update(core::Entity * entity, float delta_time)
 			text_component->LowerDirty();
 		}
 
-		auto &text_data_pipe = core::DataPipeHub::Get().GetTextDataPipe();
-
 		core::TextData text_data;
 		text_data.font_hash = text_component->GetFontHash();
 		text_data.blend_hash = text_component->GetBlendHash();
@@ -61,8 +57,9 @@ void TextRenderSystem::Update(core::Entity * entity, float delta_time)
 		text_data.text_string = text_component->GetText();
 		text_data.position = text_component->GetFontPosition();
 		text_data.scale = text_component->GetFontScale();
+		
 		// Push data 
-		text_data_pipe.Push(text_data);
+		application_system_server_.GetGraphics().GetTextMessageQueue().Push(text_data);
 	}
 }
 
@@ -76,14 +73,11 @@ void TextRenderSystem::InitializeTextComponent(TextComponent* text_component)
 	if (text_component)
 	{
 		size_t blend_hash, sampler_hash, font_hash;
-
-		resource_core_.GetBlendCache().GetFromParameters(text_component->GetSrcBlend(), 
+		application_system_server_.GetResource().GetBlendCache().GetFromParameters(text_component->GetSrcBlend(), 
 			text_component->GetDstBlend(), &blend_hash);
-
-		resource_core_.GetFontCache().GetFromFile(text_component->GetFontPath(), 
+		application_system_server_.GetResource().GetFontCache().GetFromFile(text_component->GetFontPath(),
 			text_component->GetFontPointSize(), &font_hash);
-
-		resource_core_.GetSamplerCache().GetFromParameters(text_component->GetMagFilter(), 
+		application_system_server_.GetResource().GetSamplerCache().GetFromParameters(text_component->GetMagFilter(),
 			text_component->GetMinFilter(), text_component->GetWrappingS(), text_component->GetWrappingT(), &sampler_hash);
 
 		text_component->SetFontHash(font_hash);

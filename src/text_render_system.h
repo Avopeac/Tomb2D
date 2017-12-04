@@ -2,7 +2,10 @@
 
 #include "system.h"
 #include "text_component.h"
+#include "application_system_server.h"
+
 #include "resource_core_system.h"
+#include "text_data_message_queue.h"
 
 namespace game
 {
@@ -10,11 +13,11 @@ namespace game
 	class TextRenderSystem : public core::System<TextRenderSystem, TextComponent>
 	{
 
-		core::ResourceCoreSystem &resource_core_;
+		const core::ApplicationSystemServer &application_system_server_;
 
 	public:
 
-		TextRenderSystem(core::ResourceCoreSystem &resource_core);
+		TextRenderSystem(const core::ApplicationSystemServer &application_system_server);
 
 		virtual ~TextRenderSystem();
 

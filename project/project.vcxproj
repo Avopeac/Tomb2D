@@ -175,8 +175,9 @@
     <ClInclude Include="..\src\config.h" />
     <ClInclude Include="..\src\controller_component.h" />
     <ClInclude Include="..\src\controller_system.h" />
-    <ClInclude Include="..\src\data_pipe_hub.h" />
+    <ClInclude Include="..\src\data_bus.h" />
     <ClInclude Include="..\src\component.h" />
+    <ClInclude Include="..\src\abstract_data_message_queue.h" />
     <ClInclude Include="..\src\entity_core_system.h" />
     <ClInclude Include="..\src\entity_types.h" />
     <ClInclude Include="..\src\event.h" />
@@ -208,13 +209,13 @@
     <ClInclude Include="..\src\abstract_system.h" />
     <ClInclude Include="..\src\sprite_animation_component.h" />
     <ClInclude Include="..\src\sprite_component.h" />
-    <ClInclude Include="..\src\sprite_data_pipe.h" />
+    <ClInclude Include="..\src\sprite_data_message_queue.h" />
     <ClInclude Include="..\src\sprite_renderer.h" />
     <ClInclude Include="..\src\sprite_render_system.h" />
     <ClInclude Include="..\src\system.h" />
     <ClInclude Include="..\src\texture.h" />
     <ClInclude Include="..\src\text_component.h" />
-    <ClInclude Include="..\src\text_data_pipe.h" />
+    <ClInclude Include="..\src\text_data_message_queue.h" />
     <ClInclude Include="..\src\timing.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -25,11 +25,11 @@ namespace core
 
 	using EntityId = size_t;
 
-	using EntityArray = std::array<Entity *, MAX_ENTITIES>;
+	using EntityMap = std::unordered_map<EntityId, Entity *>;
 
 	using EntityComponentArray = std::array<Component *, MAX_COMPONENTS>;
 
-	using EntityComponentArrays = std::array<EntityComponentArray, MAX_ENTITIES>;
+	using EntityComponentArrayMap = std::unordered_map<EntityId, EntityComponentArray>;
 
 	using EntityComponentKey = std::bitset<MAX_COMPONENTS>;
 

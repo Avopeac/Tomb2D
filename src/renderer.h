@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include "sprite_data_message_queue.h"
+#include "text_data_message_queue.h"
 #include "render_quad.h"
 #include "post_processing.h"
 #include "sprite_renderer.h"
@@ -27,7 +29,10 @@ namespace core
 
 		static const std::string render_target_name;
 
-		Renderer(ResourceCoreSystem &resource_core, GraphicsCoreSystem &graphics_core);
+		Renderer(SpriteDataMessageQueue &sprite_queue,
+			TextDataMessageQueue &text_queue,
+			ResourceCoreSystem &resource_core, 
+			GraphicsCoreSystem &graphics_core);
 
 		~Renderer();
 

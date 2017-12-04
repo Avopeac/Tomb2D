@@ -2,14 +2,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "controller_system.h"
-#include "entity_core_system.h"
-#include "data_pipe_hub.h"
 #include "timing.h"
 
 using namespace game;
 
-ControllerSystem::ControllerSystem(core::InputCoreSystem &input_core) :
-	input_core_(input_core)
+ControllerSystem::ControllerSystem(const core::ApplicationSystemServer &application_system_server) :
+	application_system_server_(application_system_server)
 {
 
 }
@@ -42,10 +40,10 @@ void ControllerSystem::Update(core::Entity * entity, float delta_time)
 		glm::vec2 velocity(0.0f);
 		float rotation = 0.0f;
 		
-		if (input_core_.KeyPressed(core::Key::KeyA)) { velocity.x -= 1.0f; }
-		if (input_core_.KeyPressed(core::Key::KeyD)) { velocity.x += 1.0f; }
-		if (input_core_.KeyPressed(core::Key::KeyW)) { velocity.y += 1.0f; }
-		if (input_core_.KeyPressed(core::Key::KeyS)) { velocity.y -= 1.0f; }
+		if (application_system_server_.GetInput().KeyPressed(core::Key::KeyA)) { velocity.x -= 1.0f; }
+		if (application_system_server_.GetInput().KeyPressed(core::Key::KeyD)) { velocity.x += 1.0f; }
+		if (application_system_server_.GetInput().KeyPressed(core::Key::KeyW)) { velocity.y += 1.0f; }
+		if (application_system_server_.GetInput().KeyPressed(core::Key::KeyS)) { velocity.y -= 1.0f; }
 
 		float length = glm::length(velocity);
 		if (length > 0.0f)
@@ -57,8 +55,8 @@ void ControllerSystem::Update(core::Entity * entity, float delta_time)
 			controller_component->SetVelocity(glm::vec2(0.0f));
 		}
 
-		if (input_core_.KeyPressed(core::Key::KeyQ)) { rotation -= 1.0f; }
-		if (input_core_.KeyPressed(core::Key::KeyE)) { rotation += 1.0f; }
+		if (application_system_server_.GetInput().KeyPressed(core::Key::KeyQ)) { rotation -= 1.0f; }
+		if (application_system_server_.GetInput().KeyPressed(core::Key::KeyE)) { rotation += 1.0f; }
 
 		controller_component->SetRotation(rotation);
 

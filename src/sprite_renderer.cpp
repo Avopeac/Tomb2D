@@ -1,12 +1,14 @@
-#include "glm/gtc/type_ptr.hpp"
+#include <glm/gtc/type_ptr.hpp>
 #include <algorithm>
+
 #include "sprite_renderer.h"
 #include "renderer.h"
 
 using namespace core;
 
-SpriteRenderer::SpriteRenderer(ResourceCoreSystem &resource_core, GraphicsCoreSystem &graphics_core) : 
-	resource_core_(resource_core), graphics_core_(graphics_core)
+SpriteRenderer::SpriteRenderer(SpriteDataMessageQueue &sprite_queue,
+	ResourceCoreSystem &resource_core, GraphicsCoreSystem &graphics_core) : 
+	queue_(sprite_queue), resource_core_(resource_core), graphics_core_(graphics_core)
 {
 	default_vert_program_ = resource_core.GetProgramCache().GetFromFile("default_sprite.vert", GL_VERTEX_SHADER, "assets/shaders/default_sprite.vert");
 	default_frag_program_ = resource_core.GetProgramCache().GetFromFile("default_sprite.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_sprite.frag");
@@ -46,25 +48,23 @@ void SpriteRenderer::Draw(float delta_time)
 	quad_batches_.clear();
 	isometric_quad_batches_.clear();
 
-	auto &data = DataPipeHub::Get().GetSpriteDataPipe().GetData();
-	for (auto it = data.begin(); it != data.end(); ++it)
+	SpriteData data{};
+	while (queue_.TryPop(data))
 	{
-		switch (it->sprite_shape)
+		switch (data.sprite_shape)
 		{
-			case SpriteShape::FlatHex: { PushToBatchObject(flat_hex_batches_, *it); } break;
-			case SpriteShape::SharpHex: { PushToBatchObject(sharp_hex_batches_, *it); } break;
-			case SpriteShape::Quad: { PushToBatchObject(quad_batches_, *it); } break;
-			case SpriteShape::IsometricQuad: { PushToBatchObject(isometric_quad_batches_, *it); } break;
+			case SpriteShape::FlatHex: { PushToBatchObject(flat_hex_batches_, data); } break;
+			case SpriteShape::SharpHex: { PushToBatchObject(sharp_hex_batches_, data); } break;
+			case SpriteShape::Quad: { PushToBatchObject(quad_batches_, data); } break;
+			case SpriteShape::IsometricQuad: { PushToBatchObject(isometric_quad_batches_, data); } break;
 			default:
 			{
 				core::Log(SDL_LOG_PRIORITY_CRITICAL,
-					SDL_LOG_CATEGORY_RENDER, "Trying to render unknown sprite shape."); 
+					SDL_LOG_CATEGORY_RENDER, "Trying to render unknown sprite shape.");
 				assert(false);
 			}
 		}
 	}
-
-	DataPipeHub::Get().GetSpriteDataPipe().Flush();
 
 	FrameBuffer * render_target = resource_core_.GetFrameBufferCache().GetFromName(Renderer::render_target_name);
 	render_target->BindDraw(GL_COLOR_BUFFER_BIT, 0.0f, 0.0f, 0.0f, 0.0f);
