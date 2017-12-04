@@ -1,6 +1,6 @@
 #include "abstract_gui_element.h"
 
-using namespace graphics;
+using namespace core;
 
 size_t AbstractGuiElement::uid_counter_ = 0;
 

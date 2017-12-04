@@ -5,19 +5,13 @@
 
 #include "abstract_gui_element.h"
 
-namespace graphics {
-
-	struct GuiHit
-	{
-		std::weak_ptr<AbstractGuiElement> element;
-		glm::ivec2 hit;
-	};
+namespace core {
 
 	class GuiContainer : public AbstractGuiElement
 	{
 		std::string texture_name_;
 
-
+		glm::vec2 size_;
 
 	public:
 
@@ -25,6 +19,5 @@ namespace graphics {
 
 		~GuiContainer();
 
-		void HitTest(const glm::ivec2 &point, std::deque<GuiHit> &hit_queue);
 	};
 }

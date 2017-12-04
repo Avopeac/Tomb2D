@@ -30,16 +30,20 @@ SpriteRenderer::~SpriteRenderer()
 
 void SpriteRenderer::Draw(float delta_time)
 {
+	// Clear old batch
 	quad_batches_.clear();
 
+	// Push sprites to batch
 	SpriteData data{};
 	while (queue_.TryPop(data))
 	{
 		PushToBatchObject(quad_batches_, data);
 	}
 
-	FrameBuffer * render_target = resource_core_.GetFrameBufferCache().GetFromName(Renderer::render_target_name);
+	FrameBuffer * render_target = resource_core_.GetFrameBufferCache().
+		GetFromName(Renderer::render_target_name);
 	render_target->BindDraw(GL_COLOR_BUFFER_BIT, 0.0f, 0.0f, 0.0f, 0.0f);
+
 	pipeline_.Bind();
 
 	int texture_index = 0;
@@ -54,6 +58,7 @@ void SpriteRenderer::Draw(float delta_time)
 	for (size_t layer = 0; layer < MAX_SPRITE_LAYERS; ++layer)
 	{
 		int quad_layer_count = 0;
+
 		for (size_t j = quad_start; j < quad_batches_.size(); ++j)
 		{
 			if (quad_batches_[j].layer == layer)
@@ -65,6 +70,7 @@ void SpriteRenderer::Draw(float delta_time)
 		if (quad_layer_count != 0)
 		{
 			DrawBatchObject(quad_batch_object_, quad_start, quad_start + quad_layer_count, quad_batches_);
+
 			quad_start += quad_layer_count;
 		}
 	}
@@ -220,6 +226,7 @@ void SpriteRenderer::DrawBatchObject(BatchObject & object, size_t start, size_t 
 {
 
 	glBindVertexArray(object.vertex_array);
+	glBindBuffer(GL_ARRAY_BUFFER, instance_buffer_);
 
 	for (size_t i = start; i < end; ++i)
 	{
@@ -240,17 +247,15 @@ void SpriteRenderer::DrawBatchObject(BatchObject & object, size_t start, size_t 
 
 		// Re-upload subdata for instance buffer
 		size_t instance_size = batches[i].elements.size() * sizeof(BatchElement);
-
-		glBindBuffer(GL_ARRAY_BUFFER, instance_buffer_);
 		glInvalidateBufferSubData(GL_ARRAY_BUFFER, 0, instance_size);
 		glBufferSubData(GL_ARRAY_BUFFER, (GLintptr)0, (GLsizei)instance_size, &batches[i].elements[0]);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+	
 		// Draw all sprites for the batch
 		glDrawElementsInstanced(GL_TRIANGLES,
 			(GLsizei)object.num_indices, GL_UNSIGNED_INT, 0,
 			(GLsizei)batches[i].elements.size());
 	}
 
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }

@@ -1,9 +1,6 @@
-#include "shader.h"
-
 #include <functional>
 
-#include "core.h"
-
+#include "shader.h"
 #include "logger.h"
 
 using namespace core;

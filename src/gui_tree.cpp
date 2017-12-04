@@ -2,15 +2,11 @@
 
 #include "gui_container.h"
 
-using namespace graphics;
+using namespace core;
 
-GuiTree::GuiTree(const GraphicsBase &graphics_base) :
-	graphics_base_(&graphics_base)
+GuiTree::GuiTree() 
 {
-	glm::vec2 canvas_size = { graphics_base_->GetBackbufferWidth(),
-		graphics_base_->GetBackbufferHeight() };
-
-	root_ = new GuiContainer(canvas_size, "");
+	root_ = new GuiContainer(glm::vec2(512,512), "root");
 }
 
 GuiTree::~GuiTree()
@@ -21,27 +17,7 @@ GuiTree::~GuiTree()
 	}
 }
 
-void GuiTree::Render()
-{
-	// TODO: Push GUI tree render data to an actual GUI renderer as with the other things
-}
-
 void GuiTree::Update(float delta_time)
 {
 	// TODO: Propagate input events to all elements
-}
-
-PropagateInteraction GuiTree::GetHitInteraction(const glm::vec2 & mouse)
-{
-	return PropagateInteraction();
-}
-
-PropagateInteraction GuiTree::GetHoverInteraction(const glm::vec2 & mouse)
-{
-	return PropagateInteraction();
-}
-
-PropagateInteraction GuiTree::GetDehoverInteraction(const glm::vec2 & mouse)
-{
-	return PropagateInteraction();
 }

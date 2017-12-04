@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <array>
 #include <unordered_map>
 #include <GL/glew.h>
 
@@ -54,16 +55,16 @@ namespace core
 			GLuint element_buffer = 0;
 			size_t num_indices = 0;
 			size_t num_vertices = 0;
-		};
+		} quad_batch_object_;
 
 		GLuint instance_buffer_ = 0;
 
 		std::vector<Batch> quad_batches_;
-		BatchObject quad_batch_object_;
 
-		ProgramPipeline pipeline_;
+		
 		Program * default_vert_program_;
 		Program * default_frag_program_;
+		ProgramPipeline pipeline_;
 
 		ResourceCoreSystem &resource_core_;
 		GraphicsCoreSystem &graphics_core_;
