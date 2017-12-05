@@ -1,32 +1,50 @@
 #pragma once
 
-#include <deque>
+#include <type_traits>
 #include <vector>
 
 #include "abstract_gui_element.h"
+#include "gui_draw_data.h"
 
 namespace core {
 
 	class GuiContainer : public AbstractGuiElement
 	{
-		std::string texture_name_ = "";
+		std::vector<std::shared_ptr<AbstractGuiElement>> children_;
 
-		glm::vec2 size_ = { 1, 1 };
-
-		bool visible_ = false;
+		GuiDrawData draw_data_;
 
 	public:
 
-		GuiContainer(size_t uid, const glm::vec2 &size, const std::string &texture_name); 
+		GuiContainer() = default; 
 
-		~GuiContainer();
+		virtual ~GuiContainer() = default;
 
-		void SetVisible(bool visible) { visible_ = visible; }
+		template <typename T, std::enable_if_t<std::is_base_of_v<AbstractGuiElement, T>>,
+			typename ... Args> std::weak_ptr<T> AddChildElement(Args ... args)
+		{
+			children_.push_back(std::make_shared<T>(std::forward<Args>(args)));
+			return children_.back();
+		}
 
-		bool IsVisible() const { return visible_; }
+		const auto &GetChildElementBeginIterator() const
+		{
+			return children_.cbegin();
+		}
 
-		const std::string &GetTextureName() const { return texture_name_; }
+		const auto &GetChildElementEndIterator() const
+		{
+			return children_.cend();
+		}
 
-		const glm::vec2 &GetSize() const { return size_; }
+		const GuiDrawData &GetDrawData() const
+		{
+			return draw_data_;
+		}
+
+		void SetDrawData(const GuiDrawData &draw_data)
+		{
+			draw_data_ = draw_data;
+		}
 	};
 }

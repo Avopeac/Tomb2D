@@ -65,6 +65,9 @@ bool SampleGameApplication::StartUp(const core::ApplicationSystemServer &server,
 
 bool SampleGameApplication::Run(const core::ApplicationSystemServer &server, const core::Config &config, float delta_time)
 {
+	++frame_counter_;
+	average_frame_time += ((double)delta_time - average_frame_time) / frame_counter_;
+
 	auto * text_entity = server.GetEntity().GetEntityByName("text");
 	if (text_entity)
 	{
@@ -72,7 +75,7 @@ bool SampleGameApplication::Run(const core::ApplicationSystemServer &server, con
 
 		if (text_drawable)
 		{
-			text_drawable->SetText("FPS: " + std::to_string(1.0f / delta_time));
+			text_drawable->SetText("FPS: " + std::to_string(1.0f / average_frame_time));
 		}
 	}
 

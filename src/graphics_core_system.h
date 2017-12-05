@@ -8,6 +8,7 @@
 #include "orthographic_camera.h"
 #include "sprite_data_message_queue.h"
 #include "text_data_message_queue.h"
+#include "gui_data_message_queue.h"
 
 namespace core {
 
@@ -22,8 +23,8 @@ namespace core {
 		std::unique_ptr<OrthographicCamera> camera_;
 
 		TextDataMessageQueue text_queue_;
-
 		SpriteDataMessageQueue sprite_queue_;
+		GuiDataMessageQueue gui_queue_;
 
 	public:
 
@@ -50,6 +51,8 @@ namespace core {
 		inline SpriteDataMessageQueue &GetSpriteMessageQueue() { return sprite_queue_; }
 
 		inline TextDataMessageQueue &GetTextMessageQueue() { return text_queue_; }
+
+		inline GuiDataMessageQueue &GetGuiMessageQueue() { return gui_queue_; }
 
 		glm::vec2 PixelsToScaleAspect(const glm::uvec2 &pixels) const;
 

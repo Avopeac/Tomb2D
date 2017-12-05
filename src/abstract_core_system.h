@@ -10,7 +10,7 @@ namespace core {
 
 		AbstractCoreSystem() = default;
 
-		~AbstractCoreSystem() = default;
+		virtual ~AbstractCoreSystem() = default;
 
 		virtual void StartUp(const Config &config) = 0; 
 

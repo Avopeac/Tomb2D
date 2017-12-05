@@ -74,6 +74,7 @@ void ApplicationManager::StartUp(const std::string &config_path)
 		GraphicsCoreSystem * graphics_core = static_cast<GraphicsCoreSystem*>(systems_map_[SystemFlagBit::Graphics].get());
 		renderer_ = std::make_unique<Renderer>(graphics_core->GetSpriteMessageQueue(),
 			graphics_core->GetTextMessageQueue(),
+			graphics_core->GetGuiMessageQueue(),
 			*resource_core, *graphics_core);
 	}
 

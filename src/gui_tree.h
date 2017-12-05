@@ -11,8 +11,6 @@ namespace core {
 
 	class GuiTree
 	{
-		size_t uid_counter_ = 0;
-
 		AbstractGuiElement * root_ = nullptr;
 
 		const ApplicationSystemServer &server_;

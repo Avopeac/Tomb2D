@@ -15,9 +15,6 @@ FontRenderer::FontRenderer(TextDataMessageQueue &text_queue,
 	pipeline_.SetStages(*default_vert_program_);
 	pipeline_.SetStages(*default_frag_program_);
 
-	size_t vertex_size = sizeof(float) * 2;
-	size_t index_size = sizeof(Uint32);
-
 	proj_ = glm::ortho(0.0f, float(graphics_core_.GetBackbufferWidth()),
 		0.0f, float(graphics_core_.GetBackbufferHeight()),
 		-1.0f, 1.0f);

@@ -9,21 +9,29 @@ EntityCoreSystem::EntityCoreSystem() : entity_unique_id_counter_(0), systems_cou
 
 EntityCoreSystem::~EntityCoreSystem()
 {
-	for (size_t i = 0; i < MAX_ENTITIES; ++i)
-	{
-		if (entities_.at(i))
-		{
-			for (size_t j = 0; j < MAX_COMPONENTS; ++j)
-			{
-				if (entity_components_.at(i)[j])
-				{
-					delete entity_components_.at(i)[j];
-				}
-			}
 
-			delete entities_.at(i);
+	for (auto cit = entity_components_.begin(); cit != entity_components_.end(); ++cit)
+	{
+		for (size_t i = 0; i < MAX_COMPONENTS; ++i)
+		{
+			if (cit->second[i])
+			{
+				delete cit->second[i];
+			}
+		}
+
+	}
+
+	for (auto eit = entities_.begin(); eit != entities_.end(); ++eit)
+	{
+		if (eit->second)
+		{
+			delete eit->second;
 		}
 	}
+
+	entity_components_.clear();
+	entities_.clear();
 
 	for (size_t i = 0; i < MAX_SYSTEMS; ++i)
 	{

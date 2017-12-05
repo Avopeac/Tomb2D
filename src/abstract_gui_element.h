@@ -5,22 +5,23 @@
 #include <memory>
 #include <glm/glm.hpp>
 
+#include "sprite_data_message_queue.h"
+#include "text_data_message_queue.h"
+
 namespace core {
 
 	class AbstractGuiElement
 	{
 
+		static size_t uid_counter_;
+
 		size_t uid_;
-
-	protected:
-
-		std::vector<std::weak_ptr<AbstractGuiElement>> children_;
 
 	public:
 
-		AbstractGuiElement(size_t uid);
+		AbstractGuiElement();
 
-		~AbstractGuiElement() = default;
+		virtual ~AbstractGuiElement() = default;
 
 		AbstractGuiElement(const AbstractGuiElement &) = delete;
 

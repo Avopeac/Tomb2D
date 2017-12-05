@@ -4,9 +4,11 @@
 
 #include "sprite_data_message_queue.h"
 #include "text_data_message_queue.h"
+#include "gui_data_message_queue.h"
 #include "render_quad.h"
 #include "post_processing.h"
 #include "sprite_renderer.h"
+#include "gui_renderer.h"
 #include "font_renderer.h"
 
 namespace core
@@ -20,6 +22,7 @@ namespace core
 
 		std::unique_ptr<SpriteRenderer> sprite_renderer_;
 		std::unique_ptr<FontRenderer> font_renderer_;
+		std::unique_ptr<GuiRenderer> gui_renderer_;
 		std::unique_ptr<PostProcessing> post_processing_;
 
 		ResourceCoreSystem &resource_core_;
@@ -31,16 +34,11 @@ namespace core
 
 		Renderer(SpriteDataMessageQueue &sprite_queue,
 			TextDataMessageQueue &text_queue,
+			GuiDataMessageQueue &gui_queue,
 			ResourceCoreSystem &resource_core, 
 			GraphicsCoreSystem &graphics_core);
 
 		~Renderer();
-
-		//inline SpriteRenderer &GetSpriteRenderer() { return *sprite_renderer_; }
-
-		//inline FontRenderer &GetFontRenderer() { return *font_renderer_; }
-
-		//inline PostProcessing &GetPostProcessing() { return *post_processing_; }
 
 		void Invoke(float frame_time);
 

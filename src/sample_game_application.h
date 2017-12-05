@@ -17,6 +17,10 @@ namespace game {
 
 		core::AudioSource * background_music_ = nullptr;
 
+		size_t frame_counter_ = 0;
+
+		double average_frame_time = 0.0f;
+
 	public:
 
 		SampleGameApplication() = default;

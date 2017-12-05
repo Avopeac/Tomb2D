@@ -12,8 +12,12 @@ GuiTree::GuiTree(const ApplicationSystemServer &server,
 	TextDataMessageQueue &text) :
 	server_(server), sprite_(sprite), text_(text)
 {
-	root_ = new GuiContainer(uid_counter_++, glm::vec2(512,512),
-		"assets/textures/white2x2.png");
+	root_ = new GuiContainer();
+
+	GuiDrawData draw_data;
+	draw_data.size = glm::vec2(512.0f);
+	draw_data.texture_name = "assets/textures/white2x2.png";
+
 }
 
 GuiTree::~GuiTree()
@@ -35,23 +39,28 @@ void GuiTree::Update(float delta_time)
 
 		if (server_.GetInput().KeyDown(Key::KeySpace))
 		{
-			root_container->SetVisible(!root_container->IsVisible());
+			auto draw_data = root_container->GetDrawData();
+			draw_data.visible = !draw_data.visible;
+			root_container->SetDrawData(draw_data);
 		}
 
-		if (root_container->IsVisible())
+		auto draw_data = root_container->GetDrawData();
+		if (draw_data.visible)
 		{
+
 			SpriteData data{};
+
 			server_.GetResource().GetBlendCache().GetFromParameters(
-				BlendMode::SrcAlpha, BlendMode::OneMinusSrcAlpha, &data.blend_hash);
+				draw_data.src_blend, draw_data.dst_blend, &data.blend_hash);
 			server_.GetResource().GetSamplerCache().GetFromParameters(
-				MagnificationFiltering::Linear, MinificationFiltering::Linear,
-				Wrapping::ClampToEdge, Wrapping::ClampToEdge, &data.sampler_hash);
-			server_.GetResource().GetTextureCache().GetFromFile(root_container->GetTextureName(),
+				draw_data.mag_filter, draw_data.min_filter,
+				draw_data.s_wrapping, draw_data.t_wrapping, &data.sampler_hash);
+			server_.GetResource().GetTextureCache().GetFromFile(draw_data.texture_name,
 				true, &data.texture_hash);
 
 			data.sprite_layer = 0;
 			data.sprite_transform = glm::scale(glm::mat4(1.0f),
-				glm::vec3(server_.GetGraphics().PixelsToScale(root_container->GetSize()), 1.0f));
+				glm::vec3(server_.GetGraphics().PixelsToScale(draw_data.size), 1.0f));
 			data.sprite_color = glm::vec4(1.0f);
 
 			sprite_.Push(data);
