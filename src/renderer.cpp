@@ -38,6 +38,7 @@ void Renderer::Invoke(float frame_time)
 
 	sprite_renderer_->Draw(frame_time);
 	font_renderer_->Draw(frame_time);
+	gui_renderer_->Draw(frame_time);
 
 	glDisable(GL_BLEND);
 

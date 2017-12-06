@@ -283,6 +283,9 @@
     <ClInclude Include="..\src\gui_panel.h">
       <Filter>Source\Core.Graphics.Gui</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\gui_element_types.h">
+      <Filter>Source\Core.Graphics.Gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

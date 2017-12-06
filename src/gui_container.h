@@ -13,11 +13,11 @@ namespace core {
 
 	public:
 
-		GuiContainer() = default; 
+		GuiContainer(GuiElementTypes type);
 
-		virtual ~GuiContainer() = default;
+		virtual ~GuiContainer();
 
-		template <typename T, typename ... Args> std::weak_ptr<T> AddChildElement(Args &&... args)
+		template <typename T, typename ... Args> std::shared_ptr<T> AddChildElement(Args &&... args)
 		{
 			static_assert(std::is_base_of<AbstractGuiElement, T>::value,
 				"Derived class must be of base type AbstractGuiElement.");
@@ -26,12 +26,12 @@ namespace core {
 			return ptr;
 		}
 
-		const auto &GetChildElementBeginIterator() const
+		auto GetChildElementBeginIterator() const
 		{
 			return children_.cbegin();
 		}
 
-		const auto &GetChildElementEndIterator() const
+		auto GetChildElementEndIterator() const
 		{
 			return children_.cend();
 		}

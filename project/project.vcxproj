@@ -188,6 +188,7 @@
     <ClInclude Include="..\src\graphics_core_system.h" />
     <ClInclude Include="..\src\gui_core_system.h" />
     <ClInclude Include="..\src\gui_data_message_queue.h" />
+    <ClInclude Include="..\src\gui_element_types.h" />
     <ClInclude Include="..\src\gui_panel.h" />
     <ClInclude Include="..\src\gui_renderer.h" />
     <ClInclude Include="..\src\gui_tree.h" />

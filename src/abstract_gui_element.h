@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 #include "gui_data_message_queue.h"
+#include "gui_element_types.h"
 
 namespace core {
 
@@ -18,13 +19,11 @@ namespace core {
 
 		bool visible_ = true;
 
-	protected:
-
-		GuiData gui_data_;
+		GuiElementTypes type_;
 
 	public:
 
-		AbstractGuiElement();
+		AbstractGuiElement(GuiElementTypes type);
 
 		virtual ~AbstractGuiElement() = default;
 
@@ -41,6 +40,11 @@ namespace core {
 			return uid_;
 		}
 
+		inline GuiElementTypes GetType()
+		{
+			return type_;
+		}
+
 		inline bool IsVisible() const
 		{
 			return visible_;
@@ -49,16 +53,6 @@ namespace core {
 		inline void SetVisible(bool visible)
 		{
 			visible_ = visible;
-		}
-
-		inline const GuiData &GetDrawData()
-		{
-			return gui_data_;
-		}
-
-		inline void SetDrawData(const GuiData &data)
-		{
-			gui_data_ = data;
 		}
  	};
 }
