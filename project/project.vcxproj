@@ -134,7 +134,7 @@
     <ClCompile Include="..\src\config.cpp" />
     <ClCompile Include="..\src\controller_system.cpp" />
     <ClCompile Include="..\src\entity_core_system.cpp" />
-    <ClCompile Include="..\src\gui_menu_bar.cpp" />
+    <ClCompile Include="..\src\gui_panel.cpp" />
     <ClCompile Include="..\src\gui_renderer.cpp" />
     <ClCompile Include="..\src\render_quad.cpp" />
     <ClCompile Include="..\src\sample_game_application.cpp" />
@@ -188,8 +188,7 @@
     <ClInclude Include="..\src\graphics_core_system.h" />
     <ClInclude Include="..\src\gui_core_system.h" />
     <ClInclude Include="..\src\gui_data_message_queue.h" />
-    <ClInclude Include="..\src\gui_draw_data.h" />
-    <ClInclude Include="..\src\gui_menu_bar.h" />
+    <ClInclude Include="..\src\gui_panel.h" />
     <ClInclude Include="..\src\gui_renderer.h" />
     <ClInclude Include="..\src\gui_tree.h" />
     <ClInclude Include="..\src\gui_container.h" />

@@ -101,11 +101,11 @@
     <ClCompile Include="..\src\sample_game_application.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\gui_menu_bar.cpp">
-      <Filter>Source\Core.Graphics.Gui</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\gui_renderer.cpp">
       <Filter>Source\Core.Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gui_panel.cpp">
+      <Filter>Source\Core.Graphics.Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,17 +274,14 @@
     <ClInclude Include="..\src\text_data_message_queue.h">
       <Filter>Source\Core.Graphics.Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\gui_menu_bar.h">
-      <Filter>Source\Core.Graphics.Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\gui_draw_data.h">
-      <Filter>Source\Core.Graphics.Gui</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\gui_renderer.h">
       <Filter>Source\Core.Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gui_data_message_queue.h">
       <Filter>Source\Core.Graphics.Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gui_panel.h">
+      <Filter>Source\Core.Graphics.Gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

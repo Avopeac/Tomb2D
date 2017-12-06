@@ -82,10 +82,8 @@ void ApplicationManager::StartUp(const std::string &config_path)
 	if (system_flag_bits_ & static_cast<uint8_t>(SystemFlagBit::Resource | SystemFlagBit::Graphics |
 		SystemFlagBit::Gui | SystemFlagBit::Input))
 	{
-		ResourceCoreSystem * resource_core = static_cast<ResourceCoreSystem*>(systems_map_[SystemFlagBit::Resource].get());
 		GraphicsCoreSystem * graphics_core = static_cast<GraphicsCoreSystem*>(systems_map_[SystemFlagBit::Graphics].get());
-		gui_tree_ = std::make_unique<GuiTree>(*system_server_, graphics_core->GetSpriteMessageQueue(),
-			graphics_core->GetTextMessageQueue());
+		gui_tree_ = std::make_unique<GuiTree>(*system_server_, graphics_core->GetGuiMessageQueue());
 	}
 
 	if (!application_->StartUp(*system_server_, config_))

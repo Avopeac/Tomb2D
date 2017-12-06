@@ -4,8 +4,7 @@
 
 #include "abstract_gui_element.h"
 #include "application_system_server.h"
-#include "sprite_data_message_queue.h"
-#include "text_data_message_queue.h"
+#include "gui_data_message_queue.h"
 
 namespace core {
 
@@ -14,16 +13,13 @@ namespace core {
 		AbstractGuiElement * root_ = nullptr;
 
 		const ApplicationSystemServer &server_;
-
-		SpriteDataMessageQueue &sprite_;
-
-		TextDataMessageQueue &text_;
+		
+		GuiDataMessageQueue &gui_queue_;
 
 	public:
 
 		GuiTree(const ApplicationSystemServer &server,
-			SpriteDataMessageQueue &sprite,
-			TextDataMessageQueue &text);
+			GuiDataMessageQueue &gui_queue);
 
 		~GuiTree();
 

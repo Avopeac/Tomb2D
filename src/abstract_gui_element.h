@@ -5,8 +5,7 @@
 #include <memory>
 #include <glm/glm.hpp>
 
-#include "sprite_data_message_queue.h"
-#include "text_data_message_queue.h"
+#include "gui_data_message_queue.h"
 
 namespace core {
 
@@ -16,6 +15,12 @@ namespace core {
 		static size_t uid_counter_;
 
 		size_t uid_;
+
+		bool visible_ = true;
+
+	protected:
+
+		GuiData gui_data_;
 
 	public:
 
@@ -35,5 +40,25 @@ namespace core {
 		{
 			return uid_;
 		}
-	};
+
+		inline bool IsVisible() const
+		{
+			return visible_;
+		}
+
+		inline void SetVisible(bool visible)
+		{
+			visible_ = visible;
+		}
+
+		inline const GuiData &GetDrawData()
+		{
+			return gui_data_;
+		}
+
+		inline void SetDrawData(const GuiData &data)
+		{
+			gui_data_ = data;
+		}
+ 	};
 }
