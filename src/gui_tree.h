@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "abstract_gui_element.h"
+#include "gui_container.h"
 #include "application_system_server.h"
 #include "gui_data_message_queue.h"
 
@@ -10,7 +10,7 @@ namespace core {
 
 	class GuiTree
 	{
-		AbstractGuiElement * root_ = nullptr;
+		std::shared_ptr<GuiContainer> root_ = nullptr;
 
 		const ApplicationSystemServer &server_;
 		

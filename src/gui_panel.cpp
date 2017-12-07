@@ -10,26 +10,6 @@ GuiPanel::~GuiPanel()
 {
 }
 
-void GuiPanel::SetSize(const glm::vec2 & size)
-{
-	size_ = size;
-}
-
-const glm::vec2 & GuiPanel::GetSize() const
-{
-	return size_;
-}
-
-void GuiPanel::SetPosition(const glm::vec2 & position)
-{
-	position_ = position;
-}
-
-const glm::vec2 & GuiPanel::GetPosition() const
-{
-	return position_;
-}
-
 void GuiPanel::SetWrappingS(Wrapping wrapping)
 {
 	s_wrapping_ = wrapping;

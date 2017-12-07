@@ -2,6 +2,5 @@
 
 enum class GuiElementTypes
 {
-	Root,
 	Panel,
 };

@@ -12,18 +12,22 @@ GuiTree::GuiTree(const ApplicationSystemServer &server,
 	GuiDataMessageQueue &gui_queue) :
 	server_(server), gui_queue_(gui_queue)
 {
-	root_ = new GuiContainer(GuiElementTypes::Root);
-	auto * root_container = static_cast<GuiContainer*>(root_);
-	root_container->SetVisible(true);
+	
+	auto root = std::make_shared<GuiPanel>();
+	root->SetVisible(true);
+	root->SetPosition(glm::vec2(0.0f));
+	root->SetSize(glm::vec2(1280.0f, 720.0f));
 
-	auto child_panel0 = root_container->AddChildElement<GuiPanel>();
+	root_ = static_cast<std::shared_ptr<GuiContainer>>(root);
+
+	auto child_panel0 = root_->AddChildElement<GuiPanel>();
 	child_panel0->SetTexturePath("assets/textures/white2x2.png");
 	child_panel0->SetSize(glm::vec2(512.0f));
 	child_panel0->SetPosition(glm::vec2(128.0f));
 	child_panel0->SetVisible(true);
 	child_panel0->SetColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 
-	auto child_panel1 = root_container->AddChildElement<GuiPanel>();
+	auto child_panel1 = root_->AddChildElement<GuiPanel>();
 	child_panel1->SetTexturePath("assets/textures/white2x2.png");
 	child_panel1->SetSize(glm::vec2(1280.0f, 64.0f));
 	child_panel1->SetPosition(glm::vec2(0.0f, 720.0f - 64.0f));
@@ -40,19 +44,14 @@ GuiTree::GuiTree(const ApplicationSystemServer &server,
 
 GuiTree::~GuiTree()
 {
-	if (root_)
-	{
-		delete root_;
-	}
 }
 
 void GuiTree::Update(float delta_time)
 {
-	auto * root_container = static_cast<GuiContainer*>(root_);
-	if (root_container)
+	if (root_)
 	{
-		for (auto it = root_container->GetChildElementBeginIterator();
-			it != root_container->GetChildElementEndIterator(); ++it)
+		for (auto it = root_->GetChildElementBeginIterator();
+			it != root_->GetChildElementEndIterator(); ++it)
 		{
 			DrawElement(*it);
 		}

@@ -21,6 +21,10 @@ namespace core {
 
 		GuiElementTypes type_;
 
+		glm::vec2 size_;
+
+		glm::vec2 position_;
+
 	public:
 
 		AbstractGuiElement(GuiElementTypes type);
@@ -53,6 +57,26 @@ namespace core {
 		inline void SetVisible(bool visible)
 		{
 			visible_ = visible;
+		}
+
+		inline const glm::vec2 &GetPosition() const
+		{
+			return position_;
+		}
+
+		inline void SetPosition(const glm::vec2 &position)
+		{
+			position_ = position;
+		}
+
+		inline const glm::vec2 &GetSize() const
+		{
+			return size_;
+		}
+
+		inline void SetSize(const glm::vec2 &size)
+		{
+			size_ = size;
 		}
  	};
 }

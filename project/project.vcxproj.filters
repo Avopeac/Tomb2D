@@ -107,6 +107,9 @@
     <ClCompile Include="..\src\gui_panel.cpp">
       <Filter>Source\Core.Graphics.Gui</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\gui_float_layout.cpp">
+      <Filter>Source\Core.Graphics.Gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\post_processing.h">
@@ -284,6 +287,12 @@
       <Filter>Source\Core.Graphics.Gui</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gui_element_types.h">
+      <Filter>Source\Core.Graphics.Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\abstract_gui_layout.h">
+      <Filter>Source\Core.Graphics.Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gui_float_layout.h">
       <Filter>Source\Core.Graphics.Gui</Filter>
     </ClInclude>
   </ItemGroup>

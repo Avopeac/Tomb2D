@@ -9,8 +9,6 @@ namespace core {
 
 	class GuiPanel : public GuiContainer
 	{
-		glm::vec2 size_;
-		glm::vec2 position_;
 		glm::vec4 color_;
 		std::string texture_path_ = "assets/textures/white2x2.png";
 		Wrapping s_wrapping_ = Wrapping::ClampToEdge;
@@ -25,14 +23,6 @@ namespace core {
 		GuiPanel();
 
 		~GuiPanel();
-
-		void SetSize(const glm::vec2 &size);
-
-		const glm::vec2 &GetSize() const;
-
-		void SetPosition(const glm::vec2 &position);
-
-		const glm::vec2 &GetPosition() const;
 
 		void SetWrappingS(Wrapping wrapping);
 
