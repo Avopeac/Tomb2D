@@ -1,4 +1,5 @@
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "font_renderer.h"
 #include "renderer.h"
@@ -80,7 +81,10 @@ void FontRenderer::Draw(float delta_time)
 				glm::translate(glm::mat4(1.0f), glm::vec3(offset, 0.0f)) *
 				glm::scale(glm::mat4(1.0f), glm::vec3(glyph->bitmap_width, glyph->bitmap_height, 1.0f));
 
+			glm::vec4 default_color = glm::vec4(1.0f);
+
 			default_vert_program_->SetUniform("u_mvp", (void *)&mvp);
+			default_frag_program_->SetUniform("u_color", (void *)glm::value_ptr(default_color));
 
 			if (texture)
 			{

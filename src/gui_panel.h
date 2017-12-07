@@ -11,6 +11,7 @@ namespace core {
 	{
 		glm::vec2 size_;
 		glm::vec2 position_;
+		glm::vec4 color_;
 		std::string texture_path_ = "assets/textures/white2x2.png";
 		Wrapping s_wrapping_ = Wrapping::ClampToEdge;
 		Wrapping t_wrapping_ = Wrapping::ClampToEdge;
@@ -61,6 +62,9 @@ namespace core {
 
 		const std::string &GetTexturePath() const;
 		
+		void SetColor(const glm::vec4 &color_tint);
+
+		const glm::vec4 &GetColor() const;
 	};
 }
 

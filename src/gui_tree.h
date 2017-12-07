@@ -24,5 +24,9 @@ namespace core {
 		~GuiTree();
 
 		void Update(float delta_time);
+
+	private:
+
+		void DrawElement(const std::shared_ptr<AbstractGuiElement> &container);
 	};
 }

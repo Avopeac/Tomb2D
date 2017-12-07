@@ -19,7 +19,7 @@ vec3 gamma_correction(vec3 ldr)
 }
 
 float vignette(float inner, float outer) {
-	return smoothstep(inner, outer, 1.0 - length(v_texcoord - vec2(0.5)));
+	return 1.0; //smoothstep(inner, outer, 1.0 - length(v_texcoord - vec2(0.5)));
 }
 
 void main()

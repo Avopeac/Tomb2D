@@ -17,6 +17,7 @@ namespace core {
 		glm::vec2 text_scale;
 		glm::vec3 text_position;
 		glm::mat4 sprite_transform;
+		glm::vec4 color;
 	};
 
 	class GuiDataMessageQueue : public AbstractDataMessageQueue<GuiData>

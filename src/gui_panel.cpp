@@ -99,3 +99,13 @@ const std::string & GuiPanel::GetTexturePath() const
 {
 	return texture_path_;
 }
+
+void GuiPanel::SetColor(const glm::vec4 & color)
+{
+	color_ = color;
+}
+
+const glm::vec4 & GuiPanel::GetColor() const
+{
+	return color_;
+}

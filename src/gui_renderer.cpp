@@ -1,4 +1,5 @@
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "gui_renderer.h"
 #include "renderer.h"
@@ -11,8 +12,8 @@ GuiRenderer::GuiRenderer(GuiDataMessageQueue & gui_queue, RenderQuad &quad,
 {
 	default_text_vert_program_ = resource_core_.GetProgramCache().GetFromFile("default_font.vert", GL_VERTEX_SHADER, "assets/shaders/default_font.vert");
 	default_text_frag_program_ = resource_core_.GetProgramCache().GetFromFile("default_font.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_font.frag");
-	default_sprite_vert_program_ = resource_core_.GetProgramCache().GetFromFile("default_font.vert", GL_VERTEX_SHADER, "assets/shaders/default_gui_sprite.vert");
-	default_sprite_frag_program_ = resource_core_.GetProgramCache().GetFromFile("default_font.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_gui_sprite.frag");
+	default_sprite_vert_program_ = resource_core_.GetProgramCache().GetFromFile("default_gui_sprite.vert", GL_VERTEX_SHADER, "assets/shaders/default_gui_sprite.vert");
+	default_sprite_frag_program_ = resource_core_.GetProgramCache().GetFromFile("default_gui_sprite.frag", GL_FRAGMENT_SHADER, "assets/shaders/default_gui_sprite.frag");
 
 	pipeline_.SetStages(*default_text_vert_program_);
 	pipeline_.SetStages(*default_text_frag_program_);
@@ -104,6 +105,7 @@ void GuiRenderer::DrawText(const GuiData & data)
 			glm::scale(glm::mat4(1.0f), glm::vec3(glyph->bitmap_width, glyph->bitmap_height, 1.0f));
 
 		default_text_vert_program_->SetUniform("u_mvp", (void *)&mvp);
+		default_text_frag_program_->SetUniform("u_color", (void *)glm::value_ptr(data.color));
 
 		if (texture)
 		{
@@ -139,6 +141,7 @@ void GuiRenderer::DrawSprite(const GuiData & data)
 	glm::mat4 mvp = proj_ * data.sprite_transform;
 
 	default_text_vert_program_->SetUniform("u_mvp", (void *)&mvp);
+	default_text_frag_program_->SetUniform("u_color", (void *)glm::value_ptr(data.color));
 
 	if (texture)
 	{
