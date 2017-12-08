@@ -2,8 +2,8 @@
 
 using namespace core;
 
-GuiContainer::GuiContainer(GuiElementTypes type) :
-	AbstractGuiElement(type)
+GuiContainer::GuiContainer(const GuiContainer * const parent) :
+	AbstractGuiElement(GuiElementType::Container), parent_(parent)
 {
 }
 

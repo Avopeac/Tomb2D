@@ -134,7 +134,7 @@
     <ClCompile Include="..\src\config.cpp" />
     <ClCompile Include="..\src\controller_system.cpp" />
     <ClCompile Include="..\src\entity_core_system.cpp" />
-    <ClCompile Include="..\src\gui_float_layout.cpp" />
+    <ClCompile Include="..\src\gui_image.cpp" />
     <ClCompile Include="..\src\gui_panel.cpp" />
     <ClCompile Include="..\src\gui_renderer.cpp" />
     <ClCompile Include="..\src\render_quad.cpp" />
@@ -167,7 +167,6 @@
   <ItemGroup>
     <ClInclude Include="..\src\abstract_core_system.h" />
     <ClInclude Include="..\src\abstract_gui_element.h" />
-    <ClInclude Include="..\src\abstract_gui_layout.h" />
     <ClInclude Include="..\src\application.h" />
     <ClInclude Include="..\src\application_manager.h" />
     <ClInclude Include="..\src\application_system_server.h" />
@@ -190,8 +189,8 @@
     <ClInclude Include="..\src\graphics_core_system.h" />
     <ClInclude Include="..\src\gui_core_system.h" />
     <ClInclude Include="..\src\gui_data_message_queue.h" />
-    <ClInclude Include="..\src\gui_element_types.h" />
-    <ClInclude Include="..\src\gui_float_layout.h" />
+    <ClInclude Include="..\src\gui_enums.h" />
+    <ClInclude Include="..\src\gui_image.h" />
     <ClInclude Include="..\src\gui_panel.h" />
     <ClInclude Include="..\src\gui_renderer.h" />
     <ClInclude Include="..\src\gui_tree.h" />

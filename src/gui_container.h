@@ -11,9 +11,11 @@ namespace core {
 	{
 		std::vector<std::shared_ptr<AbstractGuiElement>> children_;
 
+		const GuiContainer * const parent_ = nullptr;
+
 	public:
 
-		GuiContainer(GuiElementTypes type);
+		GuiContainer(const GuiContainer * const parent);
 
 		virtual ~GuiContainer();
 
@@ -21,7 +23,7 @@ namespace core {
 		{
 			static_assert(std::is_base_of<AbstractGuiElement, T>::value,
 				"Derived class must be of base type AbstractGuiElement.");
-			auto ptr = std::make_shared<T>(std::forward<Args>(args)...);
+			auto ptr = std::make_shared<T>(this, std::forward<Args>(args)...);
 			children_.push_back(ptr);
 			return ptr;
 		}

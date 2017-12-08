@@ -2,7 +2,8 @@
 
 using namespace core;
 
-GuiPanel::GuiPanel() : GuiContainer(GuiElementTypes::Panel)
+GuiPanel::GuiPanel(const GuiContainer * const parent, GuiImage image) :
+	GuiContainer(parent), image_(image)
 {
 }
 
@@ -10,82 +11,44 @@ GuiPanel::~GuiPanel()
 {
 }
 
-void GuiPanel::SetWrappingS(Wrapping wrapping)
+GuiData GuiPanel::GetRenderData(const ApplicationSystemServer & server)
 {
-	s_wrapping_ = wrapping;
-}
 
-Wrapping GuiPanel::GetWrappingS() const
-{
-	return s_wrapping_;
-}
+	GuiData data{};
 
-void GuiPanel::SetWrappingT(Wrapping wrapping)
-{
-	t_wrapping_ = wrapping;
-}
+	if (!initialized)
+	{
+		server.GetResource().GetBlendCache().GetFromParameters(
+			image_.GetBlendModeSrc(),
+			image_.GetBlendModeDst(),
+			&blend_hash_);
 
-Wrapping GuiPanel::GetWrappingT() const
-{
-	return t_wrapping_;
-}
+		server.GetResource().GetSamplerCache().GetFromParameters(
+			image_.GetMagFilter(),
+			image_.GetMinFilter(),
+			image_.GetWrappingS(),
+			image_.GetWrappingT(),
+			&sampler_hash_);
 
-void GuiPanel::SetBlendModeSrc(BlendMode mode)
-{
-	src_blend_ = mode;
-}
+		server.GetResource().GetTextureCache().GetFromFile(
+			image_.GetTexturePath(),
+			true,
+			&texture_hash_);
 
-BlendMode GuiPanel::GetBlendModeSrc() const
-{
-	return src_blend_;
-}
+		initialized = true;
+	}
 
-void GuiPanel::SetBlendModeDst(BlendMode mode)
-{
-	dst_blend_ = mode;
-}
+	data.blend_hash = blend_hash_;
+	data.texture_hash = texture_hash_;
+	data.sampler_hash = sampler_hash_;
 
-BlendMode GuiPanel::GetBlendModeDst() const
-{
-	return dst_blend_;
-}
+	data.color = image_.GetColor();
 
-void GuiPanel::SetMagFilter(MagnificationFiltering filter)
-{
-	mag_filter_ = filter;
-}
+	data.sprite_transform = glm::mat4(1.0f);
+	data.sprite_transform[0][0] = GetPreferredSize().x;
+	data.sprite_transform[1][1] = GetPreferredSize().y;
+	data.sprite_transform[3][0] = GetPreferredPosition().x;
+	data.sprite_transform[3][1] = GetPreferredPosition().y;
 
-MagnificationFiltering GuiPanel::GetMagFilter() const
-{
-	return mag_filter_;
-}
-
-void GuiPanel::SetMinFilter(MinificationFiltering filter)
-{
-	min_filter_ = filter;
-}
-
-MinificationFiltering GuiPanel::GetMinFilter() const
-{
-	return min_filter_;
-}
-
-void GuiPanel::SetTexturePath(const std::string & texture_path)
-{
-	texture_path_ = texture_path;
-}
-
-const std::string & GuiPanel::GetTexturePath() const
-{
-	return texture_path_;
-}
-
-void GuiPanel::SetColor(const glm::vec4 & color)
-{
-	color_ = color;
-}
-
-const glm::vec4 & GuiPanel::GetColor() const
-{
-	return color_;
+	return data;
 }

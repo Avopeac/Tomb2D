@@ -5,8 +5,9 @@
 #include <memory>
 #include <glm/glm.hpp>
 
+#include "gui_enums.h"
 #include "gui_data_message_queue.h"
-#include "gui_element_types.h"
+#include "application_system_server.h"
 
 namespace core {
 
@@ -19,15 +20,14 @@ namespace core {
 
 		bool visible_ = true;
 
-		GuiElementTypes type_;
-
 		glm::vec2 size_;
-
 		glm::vec2 position_;
+
+		GuiElementType type_;
 
 	public:
 
-		AbstractGuiElement(GuiElementTypes type);
+		AbstractGuiElement(GuiElementType type);
 
 		virtual ~AbstractGuiElement() = default;
 
@@ -38,15 +38,15 @@ namespace core {
 		AbstractGuiElement& operator=(const AbstractGuiElement &) = delete;
 
 		AbstractGuiElement& operator=(AbstractGuiElement &&) = delete;
+		
+		inline GuiElementType GetType() const
+		{
+			return type_;
+		}
 
 		inline size_t GetUniqueId() const
 		{
 			return uid_;
-		}
-
-		inline GuiElementTypes GetType()
-		{
-			return type_;
 		}
 
 		inline bool IsVisible() const
@@ -59,24 +59,27 @@ namespace core {
 			visible_ = visible;
 		}
 
-		inline const glm::vec2 &GetPosition() const
+		inline const glm::vec2 &GetPreferredPosition() const
 		{
 			return position_;
 		}
 
-		inline void SetPosition(const glm::vec2 &position)
+		inline void SetPreferredPosition(const glm::vec2 &position)
 		{
 			position_ = position;
 		}
 
-		inline const glm::vec2 &GetSize() const
+		inline const glm::vec2 &GetPreferredSize() const
 		{
 			return size_;
 		}
 
-		inline void SetSize(const glm::vec2 &size)
+		inline void SetPreferredSize(const glm::vec2 &size)
 		{
 			size_ = size;
 		}
+
+		virtual GuiData GetRenderData(const ApplicationSystemServer &server) = 0;
+
  	};
 }

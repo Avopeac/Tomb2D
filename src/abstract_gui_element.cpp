@@ -4,7 +4,7 @@ using namespace core;
 
 size_t AbstractGuiElement::uid_counter_ = 0;
 
-AbstractGuiElement::AbstractGuiElement(GuiElementTypes type) :
+AbstractGuiElement::AbstractGuiElement(GuiElementType type) :
 	uid_(uid_counter_++), type_(type)
 {
 }
