@@ -10,13 +10,6 @@ namespace core {
 
 	class GuiPanel : public GuiContainer
 	{
-
-		bool initialized = false;
-
-		size_t texture_hash_;
-		size_t blend_hash_;
-		size_t sampler_hash_;
-
 		GuiImage image_;
 
 	public:
@@ -25,7 +18,10 @@ namespace core {
 
 		~GuiPanel();
 
-		virtual GuiData GetRenderData(const ApplicationSystemServer & server) override;
+		virtual GuiData GetRenderData() override;
+
+		// Inherited via GuiContainer
+		virtual glm::vec2 GetPreferredSize() override;
 	};
 }
 

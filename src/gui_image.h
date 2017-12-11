@@ -8,13 +8,17 @@ namespace core {
 
 	class GuiImage
 	{
-		glm::vec4 color_;
 
+		size_t blend_hash_;
+		size_t texture_hash_;
+		size_t sampler_hash_;
+
+		size_t texture_width_;
+		size_t texture_height_;
 		std::string texture_path_ = "assets/textures/white2x2.png";
 
 		BlendMode src_blend_ = BlendMode::SrcAlpha;
 		BlendMode dst_blend_ = BlendMode::OneMinusSrcAlpha;
-		
 		Wrapping s_wrapping_ = Wrapping::ClampToEdge;
 		Wrapping t_wrapping_ = Wrapping::ClampToEdge;
 		MagnificationFiltering mag_filter_ = MagnificationFiltering::Linear;
@@ -22,9 +26,17 @@ namespace core {
 
 	public:
 
-		GuiImage() = default;
+		GuiImage(const ApplicationSystemServer &server, const std::string &texture_path,
+			BlendMode src, BlendMode dst, Wrapping s, Wrapping t,
+			MagnificationFiltering mag, MinificationFiltering min);
 
 		~GuiImage() = default;
+
+		size_t GetSamplerHash() const;
+
+		size_t GetBlendHash() const;
+
+		size_t GetTextureHash() const;
 
 		Wrapping GetWrappingS() const;
 
@@ -34,22 +46,14 @@ namespace core {
 
 		MinificationFiltering GetMinFilter() const;
 
-		void SetSampler(Wrapping s_wrapping, Wrapping t_wrapping,
-			MagnificationFiltering magnification,
-			MinificationFiltering minification);
-
 		BlendMode GetBlendModeSrc() const;
 
 		BlendMode GetBlendModeDst() const;
 
-		void SetBlendMode(BlendMode src, BlendMode dst);
-
-		void SetTexturePath(const std::string &texture_path);
-
 		const std::string &GetTexturePath() const;
 
-		void SetColor(const glm::vec4 &color);
+		size_t GetTextureWidth() const;
 
-		const glm::vec4 &GetColor() const;
+		size_t GetTextureHeight() const;
 	};
 }

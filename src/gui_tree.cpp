@@ -4,6 +4,7 @@
 #include "gui_tree.h"
 #include "gui_container.h"
 #include "gui_panel.h"
+#include "gui_canvas.h"
 #include "application_system_server.h"
 
 using namespace core;
@@ -12,37 +13,35 @@ GuiTree::GuiTree(const ApplicationSystemServer &server,
 	GuiDataMessageQueue &gui_queue) :
 	server_(server), gui_queue_(gui_queue)
 {
-	GuiImage image{};
-	image.SetTexturePath("assets/textures/white2x2.png");
-	image.SetColor({ 0.0f, 0.0f, 0.0f, 0.0f });
+	GuiImage image(server_, "assets/textures/ui/panel_brown.png", 
+		BlendMode::SrcAlpha, BlendMode::OneMinusSrcAlpha,
+		Wrapping::ClampToEdge, Wrapping::ClampToEdge, 
+		MagnificationFiltering::Linear,
+		MinificationFiltering::LinearMipmapLinear);
 
-	auto root = std::make_shared<GuiPanel>(nullptr, image);
+	auto root = std::make_shared<GuiCanvas>(server_);
+	root->SetWidthProperty(GuiSizeProperty::Fill);
+	root->SetHeightProperty(GuiSizeProperty::Fill);
+	root->SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty::Center);
+	root->SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty::Center);
 	root->SetVisible(true);
-	root->SetPreferredPosition(glm::vec2(0.0f));
-	root->SetPreferredSize(glm::vec2(1280.0f, 720.0f));
 	root_ = static_cast<std::shared_ptr<GuiContainer>>(root);
 
-	image.SetTexturePath("assets/textures/white2x2.png");
-	image.SetColor({ 1.0f, 0.0f, 1.0f, 1.0f });
-
 	auto child_panel0 = root_->AddChildElement<GuiPanel>(image);
-	child_panel0->SetPreferredSize(glm::vec2(512.0f));
-	child_panel0->SetPreferredPosition(glm::vec2(128.0f));
+	child_panel0->SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty::Center);
+	child_panel0->SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty::Top);
+	child_panel0->SetWidthProperty(GuiSizeProperty::Fill);
+	child_panel0->SetHeightProperty(GuiSizeProperty::Absolute);
 	child_panel0->SetVisible(true);
 
-	image.SetColor({ 0.0f, 1.0f, 1.0f, 1.0f });
+	//auto child_panel1 = root_->AddChildElement<GuiPanel>(image);
+	//child_panel1->SetWidthProperty(GuiSizeProperty::Fill);
+	//child_panel1->SetHeightProperty(GuiSizeProperty::Absolute);
+	//child_panel1->SetHorizontalAlignmentProperty(GuiAlignmentProperty::Left);
+	//child_panel1->SetVisible(true);
 
-	auto child_panel1 = root_->AddChildElement<GuiPanel>(image);
-	child_panel1->SetPreferredSize(glm::vec2(1280.0f, 64.0f));
-	child_panel1->SetPreferredPosition(glm::vec2(0.0f, 720.0f - 64.0f));
-	child_panel1->SetVisible(true);
-
-	image.SetColor({ 1.0f, 1.0f, 0.0f, 1.0f });
-
-	auto grandchild_panel0 = child_panel0->AddChildElement<GuiPanel>(image);
-	grandchild_panel0->SetPreferredSize(glm::vec2(128.0f));
-	grandchild_panel0->SetPreferredPosition(glm::vec2(128.0f));
-	grandchild_panel0->SetVisible(true);
+	//auto grandchild_panel0 = child_panel0->AddChildElement<GuiPanel>(image);
+	//grandchild_panel0->SetVisible(true);
 }
 
 GuiTree::~GuiTree()
@@ -53,6 +52,8 @@ void GuiTree::Update(float delta_time)
 {
 	if (root_)
 	{
+		root_->Arrange();
+
 		for (auto it = root_->GetChildElementBeginIterator();
 			it != root_->GetChildElementEndIterator(); ++it)
 		{
@@ -65,7 +66,7 @@ void GuiTree::DrawElement(const std::shared_ptr<AbstractGuiElement>& element)
 {
 	if (element && element->IsVisible())
 	{
-		gui_queue_.Push(element->GetRenderData(server_));
+		gui_queue_.Push(element->GetRenderData());
 
 		if (element->GetType() == GuiElementType::Container)
 		{
@@ -75,7 +76,6 @@ void GuiTree::DrawElement(const std::shared_ptr<AbstractGuiElement>& element)
 			{
 				DrawElement(*it);
 			}
-		}
-		
+		}		
 	}
 }

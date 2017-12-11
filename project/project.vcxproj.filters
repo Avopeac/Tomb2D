@@ -110,6 +110,9 @@
     <ClCompile Include="..\src\gui_image.cpp">
       <Filter>Source\Core.Graphics.Gui</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\gui_canvas.cpp">
+      <Filter>Source\Core.Graphics.Gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\post_processing.h">
@@ -290,6 +293,9 @@
       <Filter>Source\Core.Graphics.Gui</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gui_enums.h">
+      <Filter>Source\Core.Graphics.Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gui_canvas.h">
       <Filter>Source\Core.Graphics.Gui</Filter>
     </ClInclude>
   </ItemGroup>

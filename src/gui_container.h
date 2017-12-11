@@ -37,5 +37,7 @@ namespace core {
 		{
 			return children_.cend();
 		}
+
+		void Arrange();
 	};
 }

@@ -2,6 +2,54 @@
 
 using namespace core;
 
+GuiImage::GuiImage(const ApplicationSystemServer &server, const std::string &texture_path,
+	BlendMode src, BlendMode dst, Wrapping s, Wrapping t,
+	MagnificationFiltering mag, MinificationFiltering min) :
+	texture_path_(texture_path),
+	src_blend_(src),
+	dst_blend_(dst),
+	s_wrapping_(s),
+	t_wrapping_(t),
+	mag_filter_(mag),
+	min_filter_(min)
+{
+	server.GetResource().GetBlendCache().GetFromParameters(
+		src_blend_,
+		dst_blend_,
+		&blend_hash_);
+
+	server.GetResource().GetSamplerCache().GetFromParameters(
+		mag_filter_,
+		min_filter_,
+		s_wrapping_,
+		t_wrapping_,
+		&sampler_hash_);
+
+	auto * texture = server.GetResource().GetTextureCache().GetFromFile(
+		texture_path,
+		true,
+		&texture_hash_);
+
+	texture_width_ = texture->GetWidth();
+	texture_height_ = texture->GetHeight();
+}
+
+size_t GuiImage::GetSamplerHash() const
+{
+	return sampler_hash_;
+}
+
+size_t GuiImage::GetBlendHash() const
+{
+	return blend_hash_;
+}
+
+size_t GuiImage::GetTextureHash() const
+{
+	return texture_hash_;
+}
+
+
 Wrapping GuiImage::GetWrappingS() const
 {
 	return s_wrapping_;
@@ -22,14 +70,6 @@ BlendMode GuiImage::GetBlendModeDst() const
 	return dst_blend_;
 }
 
-void GuiImage::SetBlendMode(BlendMode src, BlendMode dst)
-{
-	src_blend_ = src;
-	dst_blend_ = dst;
-
-
-}
-
 MagnificationFiltering GuiImage::GetMagFilter() const
 {
 	return mag_filter_;
@@ -40,26 +80,17 @@ MinificationFiltering GuiImage::GetMinFilter() const
 	return min_filter_;
 }
 
-void GuiImage::SetSampler(Wrapping s_wrapping, Wrapping t_wrapping, MagnificationFiltering magnification, MinificationFiltering minification)
-{
-}
-
-void GuiImage::SetTexturePath(const std::string & texture_path)
-{
-	texture_path_ = texture_path;
-}
-
 const std::string & GuiImage::GetTexturePath() const
 {
 	return texture_path_;
 }
 
-void GuiImage::SetColor(const glm::vec4 & color)
+size_t GuiImage::GetTextureWidth() const
 {
-	color_ = color;
+	return texture_width_;
 }
 
-const glm::vec4 & GuiImage::GetColor() const
+size_t GuiImage::GetTextureHeight() const
 {
-	return color_;
+	return texture_height_;
 }

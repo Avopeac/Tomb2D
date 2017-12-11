@@ -102,7 +102,7 @@ void ApplicationManager::Run()
 	double previous_time = core::GetSeconds();
 	while (running)
 	{
-		double current_time = core::GetSeconds();
+		double current_time = core::GetSeconds(); 
 		double frame_time = current_time - previous_time;
 		previous_time = current_time;
 

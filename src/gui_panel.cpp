@@ -11,44 +11,27 @@ GuiPanel::~GuiPanel()
 {
 }
 
-GuiData GuiPanel::GetRenderData(const ApplicationSystemServer & server)
+GuiData GuiPanel::GetRenderData()
 {
 
 	GuiData data{};
 
-	if (!initialized)
-	{
-		server.GetResource().GetBlendCache().GetFromParameters(
-			image_.GetBlendModeSrc(),
-			image_.GetBlendModeDst(),
-			&blend_hash_);
+	data.blend_hash = image_.GetBlendHash();
+	data.texture_hash = image_.GetTextureHash();
+	data.sampler_hash = image_.GetSamplerHash();
 
-		server.GetResource().GetSamplerCache().GetFromParameters(
-			image_.GetMagFilter(),
-			image_.GetMinFilter(),
-			image_.GetWrappingS(),
-			image_.GetWrappingT(),
-			&sampler_hash_);
-
-		server.GetResource().GetTextureCache().GetFromFile(
-			image_.GetTexturePath(),
-			true,
-			&texture_hash_);
-
-		initialized = true;
-	}
-
-	data.blend_hash = blend_hash_;
-	data.texture_hash = texture_hash_;
-	data.sampler_hash = sampler_hash_;
-
-	data.color = image_.GetColor();
+	data.color = glm::vec4(0.9f);
 
 	data.sprite_transform = glm::mat4(1.0f);
-	data.sprite_transform[0][0] = GetPreferredSize().x;
-	data.sprite_transform[1][1] = GetPreferredSize().y;
-	data.sprite_transform[3][0] = GetPreferredPosition().x;
-	data.sprite_transform[3][1] = GetPreferredPosition().y;
+	data.sprite_transform[0][0] = GetInternalRelativeSize().x;
+	data.sprite_transform[1][1] = GetInternalRelativeSize().y;
+	data.sprite_transform[3][0] = GetInternalRelativePosition().x;
+	data.sprite_transform[3][1] = GetInternalRelativePosition().y;
 
 	return data;
+}
+
+glm::vec2 GuiPanel::GetPreferredSize()
+{
+	return glm::vec2(image_.GetTextureWidth(), image_.GetTextureHeight());
 }

@@ -20,10 +20,14 @@ namespace core {
 
 		bool visible_ = true;
 
-		glm::vec2 size_;
-		glm::vec2 position_;
+		glm::vec2 relative_position_;
+		glm::vec2 relative_size_;
 
 		GuiElementType type_;
+		GuiSizeProperty width_property_;
+		GuiSizeProperty height_property_;
+		GuiHorizontalAlignmentProperty horizontal_alignment_;
+		GuiVerticalAlignmentProperty vertical_alignment_;
 
 	public:
 
@@ -59,27 +63,68 @@ namespace core {
 			visible_ = visible;
 		}
 
-		inline const glm::vec2 &GetPreferredPosition() const
+		inline void SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty alignment)
 		{
-			return position_;
+			vertical_alignment_ = alignment;
 		}
 
-		inline void SetPreferredPosition(const glm::vec2 &position)
+		inline GuiVerticalAlignmentProperty GetVerticalAlignmentProperty()
 		{
-			position_ = position;
+			return vertical_alignment_;
 		}
 
-		inline const glm::vec2 &GetPreferredSize() const
+		inline void SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty alignment)
 		{
-			return size_;
+			horizontal_alignment_ = alignment;
 		}
 
-		inline void SetPreferredSize(const glm::vec2 &size)
+		inline GuiHorizontalAlignmentProperty GetHorizontalAlignmentProperty()
 		{
-			size_ = size;
+			return horizontal_alignment_;
 		}
 
-		virtual GuiData GetRenderData(const ApplicationSystemServer &server) = 0;
+		inline void SetWidthProperty(GuiSizeProperty width)
+		{
+			width_property_ = width;
+		}
 
+		inline GuiSizeProperty GetWidthProperty()
+		{
+			return width_property_;
+		}
+
+		inline void SetHeightProperty(GuiSizeProperty height)
+		{
+			height_property_ = height;
+		}
+
+		inline GuiSizeProperty SetHeightProperty()
+		{
+			return height_property_;
+		}
+
+		inline void SetInternalRelativeSize(const glm::vec2 &relative_size)
+		{
+			relative_size_ = relative_size;
+		}
+
+		inline void SetInternalRelativePosition(const glm::vec2 &relative_position)
+		{
+			relative_position_ = relative_position;
+		}
+
+		inline const glm::vec2 &GetInternalRelativeSize() const
+		{
+			return relative_size_;
+		}
+
+		inline const glm::vec2 &GetInternalRelativePosition() const
+		{
+			return relative_position_;
+		}
+
+		virtual GuiData GetRenderData() = 0;
+
+		virtual glm::vec2 GetPreferredSize() = 0;
  	};
 }
