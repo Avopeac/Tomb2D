@@ -11,6 +11,11 @@ GuiPanel::~GuiPanel()
 {
 }
 
+void GuiPanel::SetPreferredSize(const glm::vec2 & preferred_size)
+{
+	preferred_size_ = preferred_size;
+}
+
 GuiData GuiPanel::GetRenderData()
 {
 
@@ -23,15 +28,27 @@ GuiData GuiPanel::GetRenderData()
 	data.color = glm::vec4(0.9f);
 
 	data.sprite_transform = glm::mat4(1.0f);
-	data.sprite_transform[0][0] = GetInternalRelativeSize().x;
-	data.sprite_transform[1][1] = GetInternalRelativeSize().y;
-	data.sprite_transform[3][0] = GetInternalRelativePosition().x;
-	data.sprite_transform[3][1] = GetInternalRelativePosition().y;
+	data.sprite_transform[0][0] = GetArrangedSize().x;
+	data.sprite_transform[1][1] = GetArrangedSize().y;
+	data.sprite_transform[3][0] = GetArrangedPosition().x;
+	data.sprite_transform[3][1] = GetArrangedPosition().y;
 
 	return data;
 }
 
 glm::vec2 GuiPanel::GetPreferredSize()
 {
-	return glm::vec2(image_.GetTextureWidth(), image_.GetTextureHeight());
+	glm::vec2 size = glm::vec2(image_.GetTextureWidth(), image_.GetTextureHeight());
+
+	if (GetWidthProperty() == GuiSizeProperty::Absolute)
+	{
+		size.x = preferred_size_.x;
+	} 
+
+	if (GetHeightProperty() == GuiSizeProperty::Absolute)
+	{
+		size.y = preferred_size_.y;
+	}
+
+	return size;
 }

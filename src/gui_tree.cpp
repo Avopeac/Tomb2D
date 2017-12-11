@@ -13,7 +13,7 @@ GuiTree::GuiTree(const ApplicationSystemServer &server,
 	GuiDataMessageQueue &gui_queue) :
 	server_(server), gui_queue_(gui_queue)
 {
-	GuiImage image(server_, "assets/textures/ui/panel_brown.png", 
+	GuiImage image(server_, "assets/textures/ui/vert_grad_gray.png", 
 		BlendMode::SrcAlpha, BlendMode::OneMinusSrcAlpha,
 		Wrapping::ClampToEdge, Wrapping::ClampToEdge, 
 		MagnificationFiltering::Linear,
@@ -32,7 +32,16 @@ GuiTree::GuiTree(const ApplicationSystemServer &server,
 	child_panel0->SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty::Top);
 	child_panel0->SetWidthProperty(GuiSizeProperty::Fill);
 	child_panel0->SetHeightProperty(GuiSizeProperty::Absolute);
+	child_panel0->SetPreferredSize(glm::vec2(0.0, 32.0f));
 	child_panel0->SetVisible(true);
+
+	auto child_panel1 = root_->AddChildElement<GuiPanel>(image);
+	child_panel1->SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty::Center);
+	child_panel1->SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty::Bottom);
+	child_panel1->SetWidthProperty(GuiSizeProperty::Fill);
+	child_panel1->SetHeightProperty(GuiSizeProperty::Absolute);
+	child_panel1->SetPreferredSize(glm::vec2(0.0f, 32.0f));
+	child_panel1->SetVisible(true);
 
 	//auto child_panel1 = root_->AddChildElement<GuiPanel>(image);
 	//child_panel1->SetWidthProperty(GuiSizeProperty::Fill);

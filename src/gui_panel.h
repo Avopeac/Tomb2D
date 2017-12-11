@@ -10,6 +10,8 @@ namespace core {
 
 	class GuiPanel : public GuiContainer
 	{
+		glm::vec2 preferred_size_;
+
 		GuiImage image_;
 
 	public:
@@ -18,9 +20,10 @@ namespace core {
 
 		~GuiPanel();
 
+		void SetPreferredSize(const glm::vec2 &preferred_size);
+
 		virtual GuiData GetRenderData() override;
 
-		// Inherited via GuiContainer
 		virtual glm::vec2 GetPreferredSize() override;
 	};
 }

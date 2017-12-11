@@ -5,8 +5,9 @@ using namespace core;
 GuiCanvas::GuiCanvas(const ApplicationSystemServer &server) :
 	GuiContainer(nullptr)
 {
-	SetInternalRelativePosition(glm::vec2(0.0f));
-	SetInternalRelativeSize(glm::vec2(server.GetGraphics().GetBackbufferWidth(),
+	// Canvas just fills the whole window
+	SetArrangedPosition(glm::vec2(0.0f));
+	SetArrangedSize(glm::vec2(server.GetGraphics().GetBackbufferWidth(),
 		server.GetGraphics().GetBackbufferHeight()));
 }
 
@@ -23,5 +24,5 @@ GuiData GuiCanvas::GetRenderData()
 
 glm::vec2 GuiCanvas::GetPreferredSize()
 {
-	return GetInternalRelativeSize();
+	return GetArrangedSize();
 }

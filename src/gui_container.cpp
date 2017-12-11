@@ -13,47 +13,75 @@ GuiContainer::~GuiContainer()
 
 void GuiContainer::Arrange()
 {
-	glm::vec2 parent_size = GetInternalRelativeSize();
-	glm::vec2 parent_pos = GetInternalRelativePosition();
+	glm::vec2 parent_size = GetArrangedSize();
+	glm::vec2 parent_pos = GetArrangedPosition();
 
 	for (auto it = children_.begin(); it != children_.end(); ++it)
 	{
-
 		AbstractGuiElement * abstract_element = (*it).get();
 
 		glm::vec2 child_preferred_size = abstract_element->GetPreferredSize();
-		glm::vec2 child_pos = glm::vec2(0.0f);
-		glm::vec2 child_size = glm::vec2(0.0f);
+		glm::vec2 child_pos = parent_pos;
+		glm::vec2 child_size = child_preferred_size;
 
-		if (GetHorizontalAlignmentProperty() == GuiHorizontalAlignmentProperty::Left)
+		auto halign = abstract_element->GetHorizontalAlignmentProperty();
+		auto valign = abstract_element->GetVerticalAlignmentProperty();
+		auto hsize = abstract_element->GetWidthProperty();
+		auto vsize = abstract_element->GetHeightProperty();
+
+		if (hsize == GuiSizeProperty::Absolute)
 		{
 
 		}
-		else if (GetHorizontalAlignmentProperty() == GuiHorizontalAlignmentProperty::Right)
+		else if (hsize == GuiSizeProperty::Auto)
 		{
 
 		}
-		else if (GetHorizontalAlignmentProperty() == GuiHorizontalAlignmentProperty::Center)
+		else if (hsize == GuiSizeProperty::Fill)
 		{
-			child_pos.x = (parent_pos.x + 0.5f * parent_size.x) -  0.5f * child_preferred_size.x;
-			child_size.x = child_preferred_size.x;
+			child_size.x = parent_size.x;
 		}
 
-		if (GetVerticalAlignmentProperty() == GuiVerticalAlignmentProperty::Top)
-		{
-			child_pos.y = (parent_pos.y + parent_size.y) - child_preferred_size.y;
-			child_size.y = child_preferred_size.y;
-		}
-		else if (GetVerticalAlignmentProperty() == GuiVerticalAlignmentProperty::Center)
+		if (vsize == GuiSizeProperty::Absolute)
 		{
 
 		}
-		else if (GetVerticalAlignmentProperty() == GuiVerticalAlignmentProperty::Bottom)
+		else if (vsize == GuiSizeProperty::Auto)
 		{
 
 		}
+		else if (vsize == GuiSizeProperty::Fill)
+		{
+			child_size.y = parent_size.y;
+		}
 
-		abstract_element->SetInternalRelativePosition(child_pos);
-		abstract_element->SetInternalRelativeSize(child_size);
+		if (halign == GuiHorizontalAlignmentProperty::Left)
+		{
+			child_pos.x = parent_pos.x;
+		}
+		else if (halign == GuiHorizontalAlignmentProperty::Right)
+		{
+			child_pos.x = (parent_pos.x + parent_size.x) - child_size.x;
+		}
+		else if (halign == GuiHorizontalAlignmentProperty::Center)
+		{
+			child_pos.x = (parent_pos.x + 0.5f * parent_size.x) -  0.5f * child_size.x;
+		}
+
+		if (valign == GuiVerticalAlignmentProperty::Top)
+		{
+			child_pos.y = (parent_pos.y + parent_size.y) - child_size.y;
+		}
+		else if (valign == GuiVerticalAlignmentProperty::Center)
+		{
+			child_pos.y = (parent_pos.y + 0.5f * parent_size.y) - 0.5f * child_size.y;
+		}
+		else if (valign == GuiVerticalAlignmentProperty::Bottom)
+		{
+			child_pos.y = parent_pos.y;
+		}
+
+		abstract_element->SetArrangedPosition(child_pos);
+		abstract_element->SetArrangedSize(child_size);
 	}
 }

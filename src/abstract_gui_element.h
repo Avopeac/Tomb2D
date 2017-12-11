@@ -20,8 +20,8 @@ namespace core {
 
 		bool visible_ = true;
 
-		glm::vec2 relative_position_;
-		glm::vec2 relative_size_;
+		glm::vec2 arranged_position_;
+		glm::vec2 arranged_size_;
 
 		GuiElementType type_;
 		GuiSizeProperty width_property_;
@@ -42,89 +42,41 @@ namespace core {
 		AbstractGuiElement& operator=(const AbstractGuiElement &) = delete;
 
 		AbstractGuiElement& operator=(AbstractGuiElement &&) = delete;
-		
-		inline GuiElementType GetType() const
-		{
-			return type_;
-		}
-
-		inline size_t GetUniqueId() const
-		{
-			return uid_;
-		}
-
-		inline bool IsVisible() const
-		{
-			return visible_;
-		}
-
-		inline void SetVisible(bool visible)
-		{
-			visible_ = visible;
-		}
-
-		inline void SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty alignment)
-		{
-			vertical_alignment_ = alignment;
-		}
-
-		inline GuiVerticalAlignmentProperty GetVerticalAlignmentProperty()
-		{
-			return vertical_alignment_;
-		}
-
-		inline void SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty alignment)
-		{
-			horizontal_alignment_ = alignment;
-		}
-
-		inline GuiHorizontalAlignmentProperty GetHorizontalAlignmentProperty()
-		{
-			return horizontal_alignment_;
-		}
-
-		inline void SetWidthProperty(GuiSizeProperty width)
-		{
-			width_property_ = width;
-		}
-
-		inline GuiSizeProperty GetWidthProperty()
-		{
-			return width_property_;
-		}
-
-		inline void SetHeightProperty(GuiSizeProperty height)
-		{
-			height_property_ = height;
-		}
-
-		inline GuiSizeProperty SetHeightProperty()
-		{
-			return height_property_;
-		}
-
-		inline void SetInternalRelativeSize(const glm::vec2 &relative_size)
-		{
-			relative_size_ = relative_size;
-		}
-
-		inline void SetInternalRelativePosition(const glm::vec2 &relative_position)
-		{
-			relative_position_ = relative_position;
-		}
-
-		inline const glm::vec2 &GetInternalRelativeSize() const
-		{
-			return relative_size_;
-		}
-
-		inline const glm::vec2 &GetInternalRelativePosition() const
-		{
-			return relative_position_;
-		}
 
 		virtual GuiData GetRenderData() = 0;
 
 		virtual glm::vec2 GetPreferredSize() = 0;
+
+		GuiVerticalAlignmentProperty GetVerticalAlignmentProperty() const;
+
+		GuiHorizontalAlignmentProperty GetHorizontalAlignmentProperty() const;
+		
+		GuiSizeProperty GetWidthProperty() const;
+
+		GuiSizeProperty GetHeightProperty() const;
+
+		GuiElementType GetType() const;
+
+		size_t GetUniqueId() const;
+
+		bool IsVisible() const;
+
+		const glm::vec2 &GetArrangedSize() const;
+
+		const glm::vec2 &GetArrangedPosition() const;
+
+		void SetVisible(bool visible);
+
+		void SetHeightProperty(GuiSizeProperty height);
+
+		void SetWidthProperty(GuiSizeProperty width);
+
+		void SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty alignment);
+
+		void SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty alignment);
+
+		void SetArrangedSize(const glm::vec2 &arranged_size);
+		
+		void SetArrangedPosition(const glm::vec2 &arranged_position);
  	};
 }
