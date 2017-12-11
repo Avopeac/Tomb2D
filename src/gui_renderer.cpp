@@ -140,15 +140,17 @@ void GuiRenderer::DrawSprite(const GuiData & data)
 
 	glm::mat4 mvp = proj_ * data.sprite_transform;
 
-	default_text_vert_program_->SetUniform("u_mvp", (void *)&mvp);
-	default_text_frag_program_->SetUniform("u_color", (void *)glm::value_ptr(data.color));
+	default_sprite_vert_program_->SetUniform("u_mvp", (void *)&mvp);
+	default_sprite_frag_program_->SetUniform("u_color", (void *)glm::value_ptr(data.color));
 
 	if (texture)
 	{
 		glActiveTexture(GL_TEXTURE0 + texture_index);
 		glBindTexture(GL_TEXTURE_2D, texture->GetId());
-		default_text_frag_program_->SetUniform("u_texture", &texture_index);
+		default_sprite_frag_program_->SetUniform("u_texture", &texture_index);
 	}
 
 	quad_.DrawElements();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 }

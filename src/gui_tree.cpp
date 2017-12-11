@@ -13,7 +13,7 @@ GuiTree::GuiTree(const ApplicationSystemServer &server,
 	GuiDataMessageQueue &gui_queue) :
 	server_(server), gui_queue_(gui_queue)
 {
-	GuiImage image(server_, "assets/textures/ui/vert_grad_gray.png", 
+	GuiImage image(server_, "assets/textures/white2x2.png", 
 		BlendMode::SrcAlpha, BlendMode::OneMinusSrcAlpha,
 		Wrapping::ClampToEdge, Wrapping::ClampToEdge, 
 		MagnificationFiltering::Linear,
