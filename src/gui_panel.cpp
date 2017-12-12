@@ -16,6 +16,11 @@ void GuiPanel::SetPreferredSize(const glm::vec2 & preferred_size)
 	preferred_size_ = preferred_size;
 }
 
+void GuiPanel::SetPreferredSizeRelative(const glm::vec2 & preferred_size)
+{
+	preferred_size_ = preferred_size;
+}
+
 GuiData GuiPanel::GetRenderData()
 {
 
@@ -48,6 +53,23 @@ glm::vec2 GuiPanel::GetPreferredSize()
 	if (GetHeightProperty() == GuiSizeProperty::Absolute)
 	{
 		size.y = preferred_size_.y;
+	}
+
+	return size;
+}
+
+glm::vec2 GuiPanel::GetPreferredSizeRelative()
+{
+	glm::vec2 size = glm::vec2(0.0f);
+
+	if (GetWidthProperty() == GuiSizeProperty::Relative)
+	{
+		size.x = relative_size_.x;
+	}
+
+	if (GetHeightProperty() == GuiSizeProperty::Relative)
+	{
+		size.y = relative_size_.y;
 	}
 
 	return size;

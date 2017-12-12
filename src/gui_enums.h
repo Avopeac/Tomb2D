@@ -4,7 +4,6 @@ namespace core {
 
 	enum class GuiElementType
 	{
-		Canvas,
 		Container,
 		Leaf,
 	};
@@ -14,6 +13,7 @@ namespace core {
 		Auto,
 		Fill,
 		Absolute,
+		Relative,
 	};
 
 	enum class GuiHorizontalAlignmentProperty

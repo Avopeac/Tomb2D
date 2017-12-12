@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <vector>
 
 #include "gui_container.h"
 #include "application_system_server.h"
@@ -10,7 +11,7 @@ namespace core {
 
 	class GuiTree
 	{
-		std::shared_ptr<GuiContainer> root_ = nullptr;
+		std::vector<std::shared_ptr<GuiContainer>> top_containers_;
 
 		const ApplicationSystemServer &server_;
 		

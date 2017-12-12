@@ -4,7 +4,8 @@
 #include "gui_tree.h"
 #include "gui_container.h"
 #include "gui_panel.h"
-#include "gui_canvas.h"
+#include "gui_icon.h"
+#include "gui_table_layout.h"
 #include "application_system_server.h"
 
 using namespace core;
@@ -13,44 +14,32 @@ GuiTree::GuiTree(const ApplicationSystemServer &server,
 	GuiDataMessageQueue &gui_queue) :
 	server_(server), gui_queue_(gui_queue)
 {
-	GuiImage image(server_, "assets/textures/white2x2.png", 
+	GuiImage image(server_, "assets/textures/ui/vert_grad_gray.png", 
 		BlendMode::SrcAlpha, BlendMode::OneMinusSrcAlpha,
 		Wrapping::ClampToEdge, Wrapping::ClampToEdge, 
 		MagnificationFiltering::Linear,
 		MinificationFiltering::LinearMipmapLinear);
 
-	auto root = std::make_shared<GuiCanvas>(server_);
-	root->SetWidthProperty(GuiSizeProperty::Fill);
-	root->SetHeightProperty(GuiSizeProperty::Fill);
-	root->SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty::Center);
-	root->SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty::Center);
-	root->SetVisible(true);
-	root_ = static_cast<std::shared_ptr<GuiContainer>>(root);
+	GuiImage icon_image(server_, "assets/textures/ui/cursorSword_silver.png",
+		BlendMode::SrcAlpha, BlendMode::OneMinusSrcAlpha,
+		Wrapping::ClampToEdge, Wrapping::ClampToEdge,
+		MagnificationFiltering::Linear,
+		MinificationFiltering::LinearMipmapLinear);
 
-	auto child_panel1 = root_->AddChildElement<GuiPanel>(image);
-	child_panel1->SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty::Center);
-	child_panel1->SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty::Bottom);
-	child_panel1->SetWidthProperty(GuiSizeProperty::Fill);
-	child_panel1->SetHeightProperty(GuiSizeProperty::Absolute);
-	child_panel1->SetPreferredSize(glm::vec2(0.0f, 32.0f));
-	child_panel1->SetVisible(true);
+	auto top_bar = std::make_shared<GuiPanel>(nullptr, image);
+	top_bar->SetArrangedPosition(glm::vec2(0.0f, server_.GetGraphics().GetBackbufferHeight() - 32));
+	top_bar->SetArrangedSize(glm::vec2(server_.GetGraphics().GetBackbufferWidth(), 32));
+	top_bar->SetVisible(true);
+	top_bar->SetLayout<GuiTableLayout>(3, 3, glm::vec2(0.1f / 3.0f), glm::vec2(1.0f / 3.0f));
 
-	auto child_panel0 = root_->AddChildElement<GuiPanel>(image);
-	child_panel0->SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty::Center);
-	child_panel0->SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty::Top);
-	child_panel0->SetWidthProperty(GuiSizeProperty::Fill);
-	child_panel0->SetHeightProperty(GuiSizeProperty::Absolute);
-	child_panel0->SetPreferredSize(glm::vec2(0.0, 32.0f));
-	child_panel0->SetVisible(true);
+	auto icon = top_bar->AddChildElement<GuiIcon>(icon_image);
+	icon->SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty::Center);
+	icon->SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty::Center);
+	icon->SetWidthProperty(GuiSizeProperty::Fill);
+	icon->SetHeightProperty(GuiSizeProperty::Fill);
+	icon->SetVisible(true);
 
-	//auto child_panel1 = root_->AddChildElement<GuiPanel>(image);
-	//child_panel1->SetWidthProperty(GuiSizeProperty::Fill);
-	//child_panel1->SetHeightProperty(GuiSizeProperty::Absolute);
-	//child_panel1->SetHorizontalAlignmentProperty(GuiAlignmentProperty::Left);
-	//child_panel1->SetVisible(true);
-
-	//auto grandchild_panel0 = child_panel0->AddChildElement<GuiPanel>(image);
-	//grandchild_panel0->SetVisible(true);
+	top_containers_.push_back(top_bar);
 }
 
 GuiTree::~GuiTree()
@@ -59,14 +48,21 @@ GuiTree::~GuiTree()
 
 void GuiTree::Update(float delta_time)
 {
-	if (root_)
+	for (auto it = top_containers_.begin(); it != top_containers_.end(); ++it)
 	{
-		root_->Arrange();
+		auto * container = (*it).get();
 
-		for (auto it = root_->GetChildElementBeginIterator();
-			it != root_->GetChildElementEndIterator(); ++it)
+		if (container && container->IsVisible())
 		{
+			container->Arrange();
+
 			DrawElement(*it);
+
+			for (auto it = container->GetChildElementBeginIterator();
+				it != container->GetChildElementEndIterator(); ++it)
+			{
+				DrawElement(*it);
+			}
 		}
 	}
 }

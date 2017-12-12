@@ -47,6 +47,8 @@ namespace core {
 
 		virtual glm::vec2 GetPreferredSize() = 0;
 
+		virtual glm::vec2 GetPreferredSizeRelative() = 0;
+
 		GuiVerticalAlignmentProperty GetVerticalAlignmentProperty() const;
 
 		GuiHorizontalAlignmentProperty GetHorizontalAlignmentProperty() const;
