@@ -2,11 +2,12 @@
 
 #include <glm/glm.hpp>
 
+#include "gui_leaf.h"
 #include "gui_container.h"
 
 namespace core {
 
-	class GuiImage
+	class GuiImage : public GuiLeaf
 	{
 
 		size_t blend_hash_;
@@ -26,7 +27,7 @@ namespace core {
 
 	public:
 
-		GuiImage(const ApplicationSystemServer &server, const std::string &texture_path,
+		GuiImage(const GuiContainer * const parent, const ApplicationSystemServer &server, const std::string &texture_path,
 			BlendMode src, BlendMode dst, Wrapping s, Wrapping t,
 			MagnificationFiltering mag, MinificationFiltering min);
 
@@ -55,5 +56,11 @@ namespace core {
 		size_t GetTextureWidth() const;
 
 		size_t GetTextureHeight() const;
+
+		virtual glm::vec2 GetPreferredSize() override;
+
+		virtual glm::vec2 GetPreferredSizeRelative() override;
+
+		virtual GuiData GetRenderData() override;
 	};
 }

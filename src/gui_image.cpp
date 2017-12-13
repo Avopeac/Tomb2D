@@ -2,9 +2,10 @@
 
 using namespace core;
 
-GuiImage::GuiImage(const ApplicationSystemServer &server, const std::string &texture_path,
+GuiImage::GuiImage(const GuiContainer * const parent, const ApplicationSystemServer &server, const std::string &texture_path,
 	BlendMode src, BlendMode dst, Wrapping s, Wrapping t,
 	MagnificationFiltering mag, MinificationFiltering min) :
+	GuiLeaf(parent),
 	texture_path_(texture_path),
 	src_blend_(src),
 	dst_blend_(dst),
@@ -49,7 +50,6 @@ size_t GuiImage::GetTextureHash() const
 	return texture_hash_;
 }
 
-
 Wrapping GuiImage::GetWrappingS() const
 {
 	return s_wrapping_;
@@ -93,4 +93,33 @@ size_t GuiImage::GetTextureWidth() const
 size_t GuiImage::GetTextureHeight() const
 {
 	return texture_height_;
+}
+
+glm::vec2 core::GuiImage::GetPreferredSize()
+{
+	return glm::vec2();
+}
+
+glm::vec2 core::GuiImage::GetPreferredSizeRelative()
+{
+	return glm::vec2();
+}
+
+GuiData core::GuiImage::GetRenderData()
+{
+	GuiData data{};
+
+	data.blend_hash = blend_hash_;
+	data.texture_hash = texture_hash_;
+	data.sampler_hash = sampler_hash_;
+
+	data.color = glm::vec4(0.9f);
+
+	data.sprite_transform = glm::mat4(1.0f);
+	data.sprite_transform[0][0] = GetArrangedSize().x;
+	data.sprite_transform[1][1] = GetArrangedSize().y;
+	data.sprite_transform[3][0] = GetArrangedPosition().x;
+	data.sprite_transform[3][1] = GetArrangedPosition().y;
+
+	return data;
 }

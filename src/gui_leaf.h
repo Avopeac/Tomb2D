@@ -14,5 +14,6 @@ namespace core {
 
 		virtual ~GuiLeaf();
 
+		virtual GuiData GetRenderData() = 0;
 	};
 }

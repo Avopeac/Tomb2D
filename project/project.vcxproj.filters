@@ -110,12 +110,6 @@
     <ClCompile Include="..\src\gui_image.cpp">
       <Filter>Source\Core.Graphics.Gui</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\gui_table_layout.cpp">
-      <Filter>Source\Core.Graphics.Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\gui_icon.cpp">
-      <Filter>Source\Core.Graphics.Gui</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\gui_leaf.cpp">
       <Filter>Source\Core.Graphics.Gui</Filter>
     </ClCompile>
@@ -299,15 +293,6 @@
       <Filter>Source\Core.Graphics.Gui</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gui_enums.h">
-      <Filter>Source\Core.Graphics.Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\abstract_gui_layout.h">
-      <Filter>Source\Core.Graphics.Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\gui_table_layout.h">
-      <Filter>Source\Core.Graphics.Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\gui_icon.h">
       <Filter>Source\Core.Graphics.Gui</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gui_leaf.h">

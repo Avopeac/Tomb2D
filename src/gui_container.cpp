@@ -15,9 +15,4 @@ void GuiContainer::Arrange()
 {
 	glm::vec2 parent_size = GetArrangedSize();
 	glm::vec2 parent_pos = GetArrangedPosition();
-
-	if (layout_)
-	{
-		layout_->Arrange(children_, parent_pos, parent_size);
-	}
 }

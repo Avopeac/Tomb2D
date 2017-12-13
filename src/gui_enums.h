@@ -8,25 +8,17 @@ namespace core {
 		Leaf,
 	};
 
-	enum class GuiSizeProperty
-	{
-		Auto,
-		Fill,
-		Absolute,
-		Relative,
-	};
-
-	enum class GuiHorizontalAlignmentProperty
+	enum class GuiHorizontalAnchorPoint
 	{
 		Left,
-		Right,
 		Center,
+		Right,
 	};
 
-	enum class GuiVerticalAlignmentProperty
+	enum class GuiVerticalAnchorPoint
 	{
 		Top,
+		Middle,
 		Bottom,
-		Center,
 	};
 }

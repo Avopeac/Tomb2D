@@ -134,12 +134,10 @@
     <ClCompile Include="..\src\config.cpp" />
     <ClCompile Include="..\src\controller_system.cpp" />
     <ClCompile Include="..\src\entity_core_system.cpp" />
-    <ClCompile Include="..\src\gui_icon.cpp" />
     <ClCompile Include="..\src\gui_image.cpp" />
     <ClCompile Include="..\src\gui_leaf.cpp" />
     <ClCompile Include="..\src\gui_panel.cpp" />
     <ClCompile Include="..\src\gui_renderer.cpp" />
-    <ClCompile Include="..\src\gui_table_layout.cpp" />
     <ClCompile Include="..\src\render_quad.cpp" />
     <ClCompile Include="..\src\sample_game_application.cpp" />
     <ClCompile Include="..\src\text.cpp" />
@@ -170,7 +168,6 @@
   <ItemGroup>
     <ClInclude Include="..\src\abstract_core_system.h" />
     <ClInclude Include="..\src\abstract_gui_element.h" />
-    <ClInclude Include="..\src\abstract_gui_layout.h" />
     <ClInclude Include="..\src\application.h" />
     <ClInclude Include="..\src\application_manager.h" />
     <ClInclude Include="..\src\application_system_server.h" />
@@ -194,12 +191,10 @@
     <ClInclude Include="..\src\gui_core_system.h" />
     <ClInclude Include="..\src\gui_data_message_queue.h" />
     <ClInclude Include="..\src\gui_enums.h" />
-    <ClInclude Include="..\src\gui_icon.h" />
     <ClInclude Include="..\src\gui_image.h" />
     <ClInclude Include="..\src\gui_leaf.h" />
     <ClInclude Include="..\src\gui_panel.h" />
     <ClInclude Include="..\src\gui_renderer.h" />
-    <ClInclude Include="..\src\gui_table_layout.h" />
     <ClInclude Include="..\src\gui_tree.h" />
     <ClInclude Include="..\src\gui_container.h" />
     <ClInclude Include="..\src\input_core_system.h" />

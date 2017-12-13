@@ -4,8 +4,7 @@
 #include "gui_tree.h"
 #include "gui_container.h"
 #include "gui_panel.h"
-#include "gui_icon.h"
-#include "gui_table_layout.h"
+#include "gui_image.h"
 #include "application_system_server.h"
 
 using namespace core;
@@ -14,32 +13,22 @@ GuiTree::GuiTree(const ApplicationSystemServer &server,
 	GuiDataMessageQueue &gui_queue) :
 	server_(server), gui_queue_(gui_queue)
 {
-	GuiImage image(server_, "assets/textures/ui/vert_grad_gray.png", 
-		BlendMode::SrcAlpha, BlendMode::OneMinusSrcAlpha,
-		Wrapping::ClampToEdge, Wrapping::ClampToEdge, 
-		MagnificationFiltering::Linear,
-		MinificationFiltering::LinearMipmapLinear);
 
-	GuiImage icon_image(server_, "assets/textures/ui/cursorSword_silver.png",
+	auto top_bar = std::make_shared<GuiPanel>(nullptr);
+	top_bar->SetArrangedPosition(glm::vec2(0.0f, server_.GetGraphics().GetBackbufferHeight() - 32));
+	top_bar->SetArrangedSize(glm::vec2(server_.GetGraphics().GetBackbufferWidth(), 32));
+	top_bar->SetVisible(true);
+
+
+	auto image0 = top_bar->AddChildElement<GuiImage>(server_, "assets/textures/ui/vert_grad_gray.png",
 		BlendMode::SrcAlpha, BlendMode::OneMinusSrcAlpha,
 		Wrapping::ClampToEdge, Wrapping::ClampToEdge,
 		MagnificationFiltering::Linear,
 		MinificationFiltering::LinearMipmapLinear);
 
-	auto top_bar = std::make_shared<GuiPanel>(nullptr, image);
-	top_bar->SetArrangedPosition(glm::vec2(0.0f, server_.GetGraphics().GetBackbufferHeight() - 32));
-	top_bar->SetArrangedSize(glm::vec2(server_.GetGraphics().GetBackbufferWidth(), 32));
-	top_bar->SetVisible(true);
-	top_bar->SetLayout<GuiTableLayout>(3, 3, glm::vec2(0.1f / 3.0f), glm::vec2(1.0f / 3.0f));
+	image0->SetVisible(true);
 
-	auto icon = top_bar->AddChildElement<GuiIcon>(icon_image);
-	icon->SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty::Center);
-	icon->SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty::Center);
-	icon->SetWidthProperty(GuiSizeProperty::Fill);
-	icon->SetHeightProperty(GuiSizeProperty::Fill);
-	icon->SetVisible(true);
-
-	top_containers_.push_back(top_bar);
+	canvas_elements_.push_back(top_bar);
 }
 
 GuiTree::~GuiTree()
@@ -48,39 +37,36 @@ GuiTree::~GuiTree()
 
 void GuiTree::Update(float delta_time)
 {
-	for (auto it = top_containers_.begin(); it != top_containers_.end(); ++it)
+
+	for (auto i = canvas_elements_.begin(); i!= canvas_elements_.end(); i++)
 	{
-		auto * container = (*it).get();
+		auto * element = (*i).get();
 
-		if (container && container->IsVisible())
+		if (element->IsVisible())
 		{
-			container->Arrange();
-
-			DrawElement(*it);
-
-			for (auto it = container->GetChildElementBeginIterator();
-				it != container->GetChildElementEndIterator(); ++it)
-			{
-				DrawElement(*it);
-			}
+			DrawElement(*i);
 		}
 	}
 }
 
-void GuiTree::DrawElement(const std::shared_ptr<AbstractGuiElement>& element)
+void GuiTree::DrawElement(const std::shared_ptr<AbstractGuiElement> &element)
 {
-	if (element && element->IsVisible())
+	if (element->GetType() == GuiElementType::Leaf)
 	{
-		gui_queue_.Push(element->GetRenderData());
+		GuiLeaf * leaf = static_cast<GuiLeaf*>(element.get());
 
-		if (element->GetType() == GuiElementType::Container)
+		gui_queue_.Push(leaf->GetRenderData());
+
+	}
+	else if (element->GetType() == GuiElementType::Container)
+	{
+		auto * container = static_cast<GuiContainer*>(element.get());
+		for (auto it = container->GetChildElementBeginIterator();
+			it != container->GetChildElementEndIterator(); ++it)
 		{
-			auto * container = static_cast<GuiContainer*>(element.get());
-			for (auto it = container->GetChildElementBeginIterator();
-				it != container->GetChildElementEndIterator(); ++it)
-			{
-				DrawElement(*it);
-			}
-		}		
+			DrawElement(*it);
+		}
 	}
 }
+
+

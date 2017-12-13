@@ -11,7 +11,7 @@ namespace core {
 
 	class GuiTree
 	{
-		std::vector<std::shared_ptr<GuiContainer>> top_containers_;
+		std::vector<std::shared_ptr<AbstractGuiElement>> canvas_elements_;
 
 		const ApplicationSystemServer &server_;
 		
@@ -28,6 +28,6 @@ namespace core {
 
 	private:
 
-		void DrawElement(const std::shared_ptr<AbstractGuiElement> &container);
+		void DrawElement(const std::shared_ptr<AbstractGuiElement> &element);
 	};
 }

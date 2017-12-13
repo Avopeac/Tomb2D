@@ -24,10 +24,8 @@ namespace core {
 		glm::vec2 arranged_size_;
 
 		GuiElementType type_;
-		GuiSizeProperty width_property_;
-		GuiSizeProperty height_property_;
-		GuiHorizontalAlignmentProperty horizontal_alignment_;
-		GuiVerticalAlignmentProperty vertical_alignment_;
+		GuiVerticalAnchorPoint vertical_anchor_;
+		GuiHorizontalAnchorPoint horizontal_achor_;
 
 	public:
 
@@ -43,21 +41,15 @@ namespace core {
 
 		AbstractGuiElement& operator=(AbstractGuiElement &&) = delete;
 
-		virtual GuiData GetRenderData() = 0;
-
 		virtual glm::vec2 GetPreferredSize() = 0;
 
 		virtual glm::vec2 GetPreferredSizeRelative() = 0;
 
-		GuiVerticalAlignmentProperty GetVerticalAlignmentProperty() const;
-
-		GuiHorizontalAlignmentProperty GetHorizontalAlignmentProperty() const;
-		
-		GuiSizeProperty GetWidthProperty() const;
-
-		GuiSizeProperty GetHeightProperty() const;
-
 		GuiElementType GetType() const;
+
+		GuiVerticalAnchorPoint GetVerticalAnchorPoint() const;
+
+		GuiHorizontalAnchorPoint GetHorizontalAnchorPoint() const;
 
 		size_t GetUniqueId() const;
 
@@ -68,14 +60,10 @@ namespace core {
 		const glm::vec2 &GetArrangedPosition() const;
 
 		void SetVisible(bool visible);
+		
+		void SetVerticalAnchorPoint(GuiVerticalAnchorPoint anchor);
 
-		void SetHeightProperty(GuiSizeProperty height);
-
-		void SetWidthProperty(GuiSizeProperty width);
-
-		void SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty alignment);
-
-		void SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty alignment);
+		void SetHorizontalAnchorPoint(GuiHorizontalAnchorPoint anchor);
 
 		void SetArrangedSize(const glm::vec2 &arranged_size);
 		

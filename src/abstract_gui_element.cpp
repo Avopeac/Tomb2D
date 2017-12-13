@@ -9,29 +9,19 @@ AbstractGuiElement::AbstractGuiElement(GuiElementType type) :
 {
 }
 
-GuiVerticalAlignmentProperty AbstractGuiElement::GetVerticalAlignmentProperty() const
-{
-	return vertical_alignment_;
-}
-
-GuiHorizontalAlignmentProperty AbstractGuiElement::GetHorizontalAlignmentProperty() const
-{
-	return horizontal_alignment_;
-}
-
-GuiSizeProperty AbstractGuiElement::GetWidthProperty() const
-{
-	return width_property_;
-}
-
-GuiSizeProperty AbstractGuiElement::GetHeightProperty() const
-{
-	return height_property_;
-}
-
 GuiElementType AbstractGuiElement::GetType() const
 {
 	return type_;
+}
+
+GuiVerticalAnchorPoint AbstractGuiElement::GetVerticalAnchorPoint() const
+{
+	return vertical_anchor_;
+}
+
+GuiHorizontalAnchorPoint AbstractGuiElement::GetHorizontalAnchorPoint() const
+{
+	return horizontal_achor_;
 }
 
 size_t AbstractGuiElement::GetUniqueId() const
@@ -59,24 +49,14 @@ void AbstractGuiElement::SetVisible(bool visible)
 	visible_ = visible;
 }
 
-void AbstractGuiElement::SetHeightProperty(GuiSizeProperty height)
+void AbstractGuiElement::SetVerticalAnchorPoint(GuiVerticalAnchorPoint anchor)
 {
-	height_property_ = height;
+	vertical_anchor_ = anchor;
 }
 
-void AbstractGuiElement::SetWidthProperty(GuiSizeProperty width)
+void AbstractGuiElement::SetHorizontalAnchorPoint(GuiHorizontalAnchorPoint anchor)
 {
-	width_property_ = width;
-}
-
-void AbstractGuiElement::SetVerticalAlignmentProperty(GuiVerticalAlignmentProperty alignment)
-{
-	vertical_alignment_ = alignment;
-}
-
-void AbstractGuiElement::SetHorizontalAlignmentProperty(GuiHorizontalAlignmentProperty alignment)
-{
-	horizontal_alignment_ = alignment;
+	horizontal_achor_ = anchor;
 }
 
 void AbstractGuiElement::SetArrangedSize(const glm::vec2 & arranged_size)
