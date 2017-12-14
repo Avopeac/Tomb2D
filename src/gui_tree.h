@@ -17,6 +17,9 @@ namespace core {
 		
 		GuiDataMessageQueue &gui_queue_;
 
+		size_t width_px_;
+		size_t height_px_;
+
 	public:
 
 		GuiTree(const ApplicationSystemServer &server,
@@ -27,6 +30,8 @@ namespace core {
 		void Update(float delta_time);
 
 	private:
+
+		void Arrange(AbstractGuiElement * const element);
 
 		void DrawElement(const std::shared_ptr<AbstractGuiElement> &element);
 	};

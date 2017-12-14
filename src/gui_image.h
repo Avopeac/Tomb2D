@@ -57,10 +57,6 @@ namespace core {
 
 		size_t GetTextureHeight() const;
 
-		virtual glm::vec2 GetPreferredSize() override;
-
-		virtual glm::vec2 GetPreferredSizeRelative() override;
-
 		virtual GuiData GetRenderData() override;
 	};
 }

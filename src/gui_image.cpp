@@ -95,17 +95,7 @@ size_t GuiImage::GetTextureHeight() const
 	return texture_height_;
 }
 
-glm::vec2 core::GuiImage::GetPreferredSize()
-{
-	return glm::vec2();
-}
-
-glm::vec2 core::GuiImage::GetPreferredSizeRelative()
-{
-	return glm::vec2();
-}
-
-GuiData core::GuiImage::GetRenderData()
+GuiData GuiImage::GetRenderData()
 {
 	GuiData data{};
 

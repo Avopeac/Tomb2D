@@ -19,13 +19,20 @@ namespace core {
 		size_t uid_;
 
 		bool visible_ = true;
+		bool has_arranged_size_ = false;
+		bool has_arranged_position_ = false;
 
-		glm::vec2 arranged_position_;
+		glm::vec2 preferred_relative_size_;
 		glm::vec2 arranged_size_;
+		glm::vec2 arranged_position_;
 
 		GuiElementType type_;
 		GuiVerticalAnchorPoint vertical_anchor_;
 		GuiHorizontalAnchorPoint horizontal_achor_;
+
+		GuiVerticalAnchorPoint offset_vertical_anchor_;
+		GuiHorizontalAnchorPoint offset_horizontal_anchor_;
+		std::shared_ptr<AbstractGuiElement> offset_element_ = nullptr;
 
 	public:
 
@@ -41,9 +48,9 @@ namespace core {
 
 		AbstractGuiElement& operator=(AbstractGuiElement &&) = delete;
 
-		virtual glm::vec2 GetPreferredSize() = 0;
+		void SetPreferredSizeRelative(const glm::vec2 &preferred_size);
 
-		virtual glm::vec2 GetPreferredSizeRelative() = 0;
+		glm::vec2 GetPreferredSizeRelative();
 
 		GuiElementType GetType() const;
 
@@ -55,12 +62,14 @@ namespace core {
 
 		bool IsVisible() const;
 
+		bool IsArranged() const;
+
 		const glm::vec2 &GetArrangedSize() const;
 
 		const glm::vec2 &GetArrangedPosition() const;
 
 		void SetVisible(bool visible);
-		
+
 		void SetVerticalAnchorPoint(GuiVerticalAnchorPoint anchor);
 
 		void SetHorizontalAnchorPoint(GuiHorizontalAnchorPoint anchor);
@@ -68,5 +77,16 @@ namespace core {
 		void SetArrangedSize(const glm::vec2 &arranged_size);
 		
 		void SetArrangedPosition(const glm::vec2 &arranged_position);
+
+		void SetOffsetToElement(const std::shared_ptr<AbstractGuiElement> &offset_element,
+			GuiVerticalAnchorPoint offset_vertical_anchor,
+			GuiHorizontalAnchorPoint offset_horizontal_anchor);
+
+		const std::shared_ptr<AbstractGuiElement> &GetOffsetElement() const;
+
+		GuiVerticalAnchorPoint GetOffsetVerticalAnchor() const;
+
+		GuiHorizontalAnchorPoint GetOffsetHorizontalAnchor() const;
+
  	};
 }

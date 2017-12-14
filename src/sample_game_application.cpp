@@ -46,10 +46,10 @@ bool SampleGameApplication::StartUp(const core::ApplicationSystemServer &server,
 	glm::vec2(0, 0),
 	0.0f);
 
-	auto * character_animation = server.GetEntity().AddEntityComponent<game::SpriteAnimationComponent>(
-	character_entity->id, 
-	"assets/textures/temp/player_topdown.png", 
-	24, 11, 4, 0, 6);
+	//auto * character_animation = server.GetEntity().AddEntityComponent<game::SpriteAnimationComponent>(
+	//character_entity->id, 
+	//"assets/textures/temp/player_topdown.png", 
+	//24, 11, 4, 0, 6);
 
 	size_t sound_hash;
 	auto * sound = server.GetResource().GetSoundCache().
